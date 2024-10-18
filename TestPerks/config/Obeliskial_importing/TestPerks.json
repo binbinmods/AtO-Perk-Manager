@@ -1,0 +1,19 @@
+{
+    "Name": "TestPerks",
+    "Author": "binbin",
+    "Description": "Testing for perks",
+    "Version": "1.0.0",
+    "Date": 20241018,
+    "Link": "https://across-the-obelisk.thunderstore.io/",
+    "Dependencies": [
+        "stiffmeds-Obeliskial_Content-1.2.2"
+    ],
+    "ContentFolder": "TestPerks",
+    "Priority": 100,
+    "Type": [
+        "perk",
+        "perkNode"
+    ],
+    "Comment": "",
+    "Enabled": true
+}
