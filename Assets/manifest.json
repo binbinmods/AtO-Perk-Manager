@@ -1,0 +1,9 @@
+{
+    "name": "Perk Expansion Pack",
+    "version_number": "1.0.0",
+    "website_url": "https://github.com/binbinmods/Perks",
+    "description": "50+ New Perks",
+    "dependencies": [
+        "meds-Obeliskial_Content-1.2.2"
+    ]
+}

@@ -26,3 +26,7 @@ class Perk:
     ResistModifiedValue: int = 0
     Row: int = 0
     SpeedQuantity: int = 0
+    
+    def map_dict_to_obj(self, dict):
+        for k, v in dict.items():
+            setattr(self, k, v)

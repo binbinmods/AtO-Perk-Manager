@@ -57,7 +57,7 @@ def create_new_perk_node(perk:Perk,
     perkNode.NotStack=prevent_stacking
     perkNode.LockedInTown=locked_in_town
     perkNode.PerkRequired = previous_perk if previous_perk != None else ""
-    perkNode.Sprite=icon
+    #perkNode.Sprite=icon
 
     if category not in type_dict:
         raise TypeError("PerkNodeData - Invalid Category")
@@ -71,14 +71,11 @@ def save_object_to_json(obj,file_to_create):
         json.dump(obj.__dict__,f,indent=4)
     
 
-
-
 def create_new_perk_split():
     base = PerkNode()
     return base
 
-
-if __name__=="__main__":
+def test1():
     id = "zeal0"
     ac = "zeal"
     desc = ""
@@ -102,6 +99,27 @@ if __name__=="__main__":
     mod.save_object_to_json(new_perk_node,f"{config_directory}/perkNode",f"{new_perk_node.ID}.json")
 
     mod.create_json_to_load_folders(f"{directory_name}","Testing for perks",f"{importing_dir}",types=["perk","perkNode"])
+
+
+def get_perk_from_name(perk_name,perk_folder, is_vanilla=True)->Perk:
+    if is_vanilla:
+        perk_file = f"VanillaPerkData/perk/{perk_name}.json"
+    else:
+        perk_file = f"{perk_folder}/{perk_name}.json"
+    new_perk = Perk()
+    perk_dict = mod.create_dict_from_json(perk_file)
+    new_perk.map_dict_to_obj(perk_dict)
+    return new_perk
+
+def test2():
+    testname = "mainperkbleed0"
+    get_perk_from_name(testname)
+
+
+if __name__=="__main__":
+    #test1()
+    test2()
+
 
     
     
