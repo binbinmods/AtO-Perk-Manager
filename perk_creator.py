@@ -111,6 +111,18 @@ def get_perk_from_name(perk_name,perk_folder, is_vanilla=True)->Perk:
     new_perk.map_dict_to_obj(perk_dict)
     return new_perk
 
+
+def get_perk_node_from_name(perk_name,perk_folder, is_vanilla=True)->Perk:
+    if is_vanilla:
+        perk_file = f"VanillaPerkData/perk/{perk_name}.json"
+    else:
+        perk_file = f"{perk_folder}/{perk_name}.json"
+    new_perk = PerkNode()
+    perk_dict = mod.create_dict_from_json(perk_file)
+    new_perk.map_dict_to_obj(perk_dict)
+    return new_perk
+
+
 def test2():
     testname = "mainperkbleed0"
     get_perk_from_name(testname)

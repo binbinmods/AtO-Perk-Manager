@@ -285,7 +285,7 @@ class ExampleObject:
         self.favorite_numbers = [1, 2, 3, 4, 5]
         self.tags = ["python", "tkinter", "gui"]
 
-def show_current_values():
+def show_current_values(obj):
     info = "\n".join(f"{attr}: {getattr(obj, attr)}"
                     for attr in dir(obj)
                     if not attr.startswith('_') and
@@ -293,7 +293,7 @@ def show_current_values():
     info_label.config(text=info)
 
 def on_save(updated_obj):
-    show_current_values()
+    show_current_values(updated_obj)
 
 if __name__ == "__main__":
     root = tk.Tk()

@@ -9,6 +9,7 @@ from typing import List,Dict,Tuple
 from PIL import Image, ImageTk
 import perk_creator
 import object_editor
+from perk_node_class import PerkNode
 
 
 class TabbedTableApp:
@@ -80,7 +81,9 @@ class TabbedTableApp:
         btn = tk.Button(perk_node_frame,image=photo, relief="flat")
         btn.grid(row=row, column=col, padx=2, pady=2)
         perk:Perk  = perk_creator.get_perk_from_name(perk_name,"",is_vanilla=True)
-        btn.config(command=lambda p=perk: object_editor.EditObjectForm(root, perk, object_editor.on_save))
+        node_name = d["Id"]
+        perk_node:PerkNode = perk_creator.get_perk_from_name(node_name,"",is_vanilla=True)
+        btn.config(command=lambda p=perk: object_editor.EditObjectForm(root, p))
         
     def create_add_button(self,row,col,perk_node_frame):
         btn = tk.Button(perk_node_frame,image=self.add_sprite, relief="flat")
@@ -116,9 +119,11 @@ class TabbedTableApp:
         perk_list = self.get_perk_list(perk_path)
         self.add_perks_from_list_to_dict(perk_list)
 
+
     def add_single_perk_to_dict(self,perk_file):
         #TODO
         return
+
 
     def add_perks_from_list_to_dict(self,perk_list: List[Dict]):#Tuple[str,int,int,int,str]]):
         for perk_dict in perk_list:
@@ -127,8 +132,6 @@ class TabbedTableApp:
             sheet = perk_dict["Type"]
             self.perk_dict[sheet][(row,col)]=perk_dict
         
-
-
 
 if __name__ == "__main__":
     root = tk.Tk()
