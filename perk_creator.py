@@ -114,7 +114,7 @@ def get_perk_from_name(perk_name,perk_folder, is_vanilla=True)->Perk:
 
 def get_perk_node_from_name(perk_name,perk_folder, is_vanilla=True)->Perk:
     if is_vanilla:
-        perk_file = f"VanillaPerkData/perk/{perk_name}.json"
+        perk_file = f"VanillaPerkData/perkNode/{perk_name}.json"
     else:
         perk_file = f"{perk_folder}/{perk_name}.json"
     new_perk = PerkNode()

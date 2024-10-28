@@ -16,3 +16,7 @@ class PerkNode:
     Row: int = 1
     Sprite: str = 'bleed'
     Type: int = 1
+
+    def map_dict_to_obj(self, dict):
+        for k, v in dict.items():
+            setattr(self, k, v)
