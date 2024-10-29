@@ -2,6 +2,7 @@ from perk_class import Perk
 from perk_node_class import PerkNode
 import json
 import usefulModdingFunctions as mod
+import os
 
 type_dict = {"general":0,"physical":1,"elemental":2,"mystical":3}
 
@@ -66,7 +67,9 @@ def create_new_perk_node(perk:Perk,
     return perkNode
     
 def save_object_to_json(obj,file_to_create):
-    
+    if not file_to_create.endswith(".json"):
+        file_to_create+=".json"
+
     with open(file_to_create,"w") as f:
         json.dump(obj.__dict__,f,indent=4)
     
@@ -101,26 +104,34 @@ def test1():
     mod.create_json_to_load_folders(f"{directory_name}","Testing for perks",f"{importing_dir}",types=["perk","perkNode"])
 
 
-def get_perk_from_name(perk_name,perk_folder, is_vanilla=True)->Perk:
-    if is_vanilla:
-        perk_file = f"VanillaPerkData/perk/{perk_name}.json"
-    else:
-        perk_file = f"{perk_folder}/{perk_name}.json"
+def get_perk_from_name(perk_name,perk_folders)->Perk:#, is_vanilla=True)->Perk:
+    perk_file = ""
+    for folder in perk_folders:   
+        potential_file = f"{folder}/perk/{perk_name}.json"
+        if os.path.exists(potential_file):
+            perk_file = potential_file
+            break
+    if perk_file == "":
+        raise ValueError("Perk not Found")
     new_perk = Perk()
     perk_dict = mod.create_dict_from_json(perk_file)
     new_perk.map_dict_to_obj(perk_dict)
     return new_perk
 
 
-def get_perk_node_from_name(perk_name,perk_folder, is_vanilla=True)->Perk:
-    if is_vanilla:
-        perk_file = f"VanillaPerkData/perkNode/{perk_name}.json"
-    else:
-        perk_file = f"{perk_folder}/{perk_name}.json"
-    new_perk = PerkNode()
-    perk_dict = mod.create_dict_from_json(perk_file)
-    new_perk.map_dict_to_obj(perk_dict)
-    return new_perk
+def get_perk_node_from_name(perk_node_name,perk_folders)->PerkNode:#, is_vanilla=True)->Perk:
+    node_file = ""
+    for folder in perk_folders:   
+        potential_file = f"{folder}/perkNode/{perk_node_name}.json"
+        if os.path.exists(potential_file):
+            node_file = potential_file
+            break
+    if node_file == "":
+        raise ValueError("Perk Node not Found")
+    new_node = PerkNode()
+    node_dict = mod.create_dict_from_json(node_file)
+    new_node.map_dict_to_obj(node_dict)
+    return new_node
 
 
 def test2():
