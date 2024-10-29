@@ -4,19 +4,18 @@ import json
 import usefulModdingFunctions as mod
 import os
 
-type_dict = {"general":0,"physical":1,"elemental":2,"mystical":3}
+type_dict = {"General":0,"Physical":1,"Elemental":2,"Mystical":3}
 
 def create_new_perk(id:str,
                     aura_curse:str,
-                    desc:str,
                     icon:str):
     perk = Perk()
     
     perk.AuraCurseBonus=aura_curse
-    perk.CustomDescription=f"custom_binbin_{desc}"
+    perk.CustomDescription=f"custom_binbin_{id}"
     perk.Icon=icon
     perk.ID=f"binbin_mainperk_{id}"
-
+    perk.IconTextValue="+1"
     return perk
     
     
@@ -36,7 +35,7 @@ def create_new_perk_node(perk:Perk,
                          cost:int=3,
                          prevent_stacking:bool=False,
                          locked_in_town:bool=False,
-                         category:str="general"
+                         category:str="General"
                         ):
     
     perkNode = PerkNode()
@@ -44,6 +43,7 @@ def create_new_perk_node(perk:Perk,
     perk_base_id = perk.ID.split("_")[-1]
     perkNode.Column=col
     perkNode.Row=row
+
 
 
     if node_base!=None:
@@ -96,7 +96,7 @@ def test1():
                                          cost=3,
                                          prevent_stacking = False,
                                          locked_in_town=False,
-                                         category="general")
+                                         category="General")
     
     mod.save_object_to_json(new_perk,f"{config_directory}/perk",f"binbin_mainperk_{id}")
     mod.save_object_to_json(new_perk_node,f"{config_directory}/perkNode",f"{new_perk_node.ID}.json")

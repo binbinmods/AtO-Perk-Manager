@@ -16,11 +16,12 @@ PERK_FOLDER = "CustomPerks"
 PERK_PATH = f"{PERK_FOLDER}/perk"
 PERK_NODE_PATH = f"{PERK_FOLDER}/perkNode"
 
+SHEET_DICT = {0:"General",1:"Physical",2:"Elemental",3:"Mystical"}
+
 class PerkManagerApp:
 
     def __init__(self, master, custom_path_list):
-        self.perk_dict: Dict[int,Dict[Tuple[int,int],Dict]] = {0:{},1:{},2:{},3:{}}
-        self.sheet_dict = {0:"General",1:"Physical",2:"Elemental",3:"Mystical"}
+        self.perk_dict: Dict[int,Dict[Tuple[int,int],Dict]] = {0:{},1:{},2:{},3:{}}        
 
         self.sprite_images = []
         self.perk_names = []
@@ -64,11 +65,11 @@ class PerkManagerApp:
         for sheet, color in tabs:
             tab = ttk.Frame(self.notebook)
             sheet_info = self.perk_dict[sheet]
-            sheet_name = self.sheet_dict[sheet]
+            sheet_name = SHEET_DICT[sheet]
             self.notebook.add(tab, text=sheet_name)
-            self.create_table(tab, color, sheet_info)
+            self.create_table(tab, color, sheet_info,sheet_name)
 
-    def create_table(self, parent, bg_color, sheet_info:Dict[Tuple[int,int],str]):
+    def create_table(self, parent, bg_color, sheet_info:Dict[Tuple[int,int],str],sheet_name:str):
         # Create a frame with the specified background color
         perk_node_frame = tk.Frame(parent, bg=bg_color)
         perk_node_frame.pack(fill=tk.BOTH, expand=True)
@@ -84,7 +85,7 @@ class PerkManagerApp:
                     self.create_perk_node_button(row,col,perk_node_frame,perk_node)
 
                 else:
-                    self.create_add_button(row,col,perk_node_frame)
+                    self.create_add_button(row,col,perk_node_frame,sheet_name)
         
 
     def create_perk_node_button(self,row,col,frame,perk_node:PerkNode):
@@ -172,13 +173,13 @@ class PerkManagerApp:
                     self.child_nodes |= set(json_data["PerksConnected"])
     
 
-    def create_add_button(self,row,col,perk_node_frame):
+    def create_add_button(self,row,col,perk_node_frame,sheet_name:str):
         btn = tk.Button(perk_node_frame,image=self.add_sprite, relief="flat")
         btn.grid(row=row, column=col, padx=2, pady=2)
-        btn.config(command=lambda r=row,c=col,b=btn: self.add_new_node(perk_node_frame,b,r,c))
+        btn.config(command=lambda r=row,c=col,b=btn: self.add_new_node(perk_node_frame,b,r,c,sheet_name))
 
     
-    def add_new_node(self,parent_frame, source_button:tk.Button,row,col):
+    def add_new_node(self,parent_frame, source_button:tk.Button,row,col,sheet_name:str):
         popup = tk.Toplevel(parent_frame)
         popup.title(f"Create New Perk Node and Perk")
         
@@ -207,20 +208,20 @@ class PerkManagerApp:
             text="No - Single Node"
         )
         btn1.pack(pady=5)
-        btn1.config(command=lambda b=btn1: self.create_single_perk_node(frame,b,row,col))
+        btn1.config(command=lambda b=btn1: self.create_single_perk_node(frame,b,row,col,sheet_name))
 
         btn2 = ttk.Button(
             frame,
             text="Yes - Split Node",
         )
         btn2.pack(pady=5)
-        btn2.config(command=lambda b=btn2:self.create_split_perk_node(frame,b,row,col))
+        btn2.config(command=lambda b=btn2:self.create_split_perk_node(frame,b,row,col,sheet_name))
 
-    def create_split_perk_node(self,parent_element,source_button):
+    def create_split_perk_node(self,parent_element,source_button,sheet_name:str):
         print("split")
         return
 
-    def create_single_perk_node(self,parent_element,source_button,row,col):
+    def create_single_perk_node(self,parent_element,source_button,row,col,sheet_name:str):
         popup = tk.Toplevel(parent_element)
         popup.title(f"Create New Perk Node and Perk")
         
@@ -234,42 +235,77 @@ class PerkManagerApp:
         form_frame = ttk.Frame(popup, padding="20")
         form_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
-        (id,aura_curse,desc,icon,no_stack,locked_in_town,prev_perk) = "bleed0","bleed","bleed0","bleed",False,False,""
-        vars_to_pass = (id,aura_curse,desc,icon,no_stack,locked_in_town)
+        id = "bleed0"
+        aura_curse = "bleed"
+        icon = "bleed1"
+        no_stack = False
+        locked_in_town = False
+        prev_perk_id = ""
 
-        vars = [("ID",id),
-                ("AuraCurse",aura_curse),
-                ("Description",desc),
-                ("Sprite",icon),
-                ("Is the Perk Unstackable?",no_stack),
-                ("Is the Perk Locked in Town?",locked_in_town),
-                ("What is the required perk?",prev_perk),]
         # Create and place form elements
-        for i,var in enumerate(vars):
-            name = var[0]
-            v = var[1]
-            ttk.Label(form_frame, text=name).grid(
-                row=i, column=0, sticky=tk.W, pady=5
-            )
-            ttk.Entry(
-                form_frame,
-                textvariable=v
-            ).grid(row=i, column=1, padx=5, pady=5)
+        i=0
+        ttk.Label(form_frame, text="ID").grid(
+            row=i, column=0, sticky=tk.W, pady=5
+        )
+        ttk.Entry(
+            form_frame,
+            textvariable=id
+        ).grid(row=i, column=1, padx=5, pady=5)
+        i+=1
+        ttk.Label(form_frame, text="AuraCurse").grid(
+            row=i, column=0, sticky=tk.W, pady=5
+        )
+        ttk.Entry(
+            form_frame,
+            textvariable=aura_curse
+        ).grid(row=i, column=1, padx=5, pady=5)
+        i+=1
+        ttk.Label(form_frame, text="Sprite").grid(
+            row=i, column=0, sticky=tk.W, pady=5
+        )
+        ttk.Entry(
+            form_frame,
+            textvariable=icon            
+        ).grid(row=i, column=1, padx=5, pady=5)
+        i+=1
+        ttk.Label(form_frame, text="Is the Perk Unstackable?").grid(
+            row=i, column=0, sticky=tk.W, pady=5
+        )
+        ttk.Checkbutton(
+            form_frame,
+            variable=no_stack
+        ).grid(row=i, column=1, padx=5, pady=5)
+        i+=1
+        ttk.Label(form_frame, text="Is the Perk Locked in Town").grid(
+            row=i, column=0, sticky=tk.W, pady=5
+        )
+        ttk.Checkbutton(
+            form_frame,
+            textvariable=locked_in_town
+        ).grid(row=i, column=1, padx=5, pady=5)
+        i+=1
+        ttk.Label(form_frame, text="What is ID of the required perk? (if exists)").grid(
+            row=i, column=0, sticky=tk.W, pady=5
+        )
+        ttk.Entry(
+            form_frame,
+            textvariable=prev_perk_id            
+        ).grid(row=i, column=1, padx=5, pady=5)
         
-
+        i+=1
         # Save button
         ttk.Button(
             form_frame,
             text="Create",
-            command=lambda: self.create_and_save_single_perk_node(id,aura_curse,desc,icon,row,col)
-        ).grid(row=4, column=0, columnspan=2, pady=20)
+            command=lambda: self.create_and_save_single_perk_node(id,aura_curse,icon,row,col,sheet_name)
+        ).grid(row=i, column=0, columnspan=2, pady=20)
         
-    def create_and_save_single_perk_node(self,id,aura_curse,desc,icon,row,col):
+    def create_and_save_single_perk_node(self,id,aura_curse,icon,row,col,sheet_name:str):
         # Create the objects
-        new_perk:Perk = perk_creator.create_new_perk(id,
-                                                     aura_curse,
-                                                     desc,
-                                                     icon)
+        print(id)
+        print(aura_curse)
+        print(icon)
+        new_perk:Perk = perk_creator.create_new_perk(id,aura_curse,icon)
         prev_perk = ""
         no_stack = True
         lock_in_town = False
@@ -281,7 +317,7 @@ class PerkManagerApp:
                                                                    node_base=None,
                                                                    prevent_stacking=no_stack,
                                                                    locked_in_town=lock_in_town,
-                                                                   category=""
+                                                                   category=sheet_name
                                                                    )
         # Save objects to Json files
         perk_creator.save_object_to_json(new_perk,f"{PERK_PATH}/{new_perk.ID}")
