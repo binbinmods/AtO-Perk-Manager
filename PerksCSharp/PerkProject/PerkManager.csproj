@@ -12,7 +12,7 @@
       https://nuget.bepinex.dev/v3/index.json;
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
-    <RootNamespace>MultipleReroll</RootNamespace>
+    <RootNamespace>PerkManager</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>
@@ -36,14 +36,11 @@
     </Reference>
     <Reference Include="com.stiffmeds.obeliskialessentials">
       <HintPath>../../../!libs/Obeliskial_Essentials.dll</HintPath>
+      
     </Reference>
     <Reference Include="com.stiffmeds.obeliskialcontent">
       <HintPath>../../../!libs/Obeliskial_Content.dll</HintPath>
     </Reference>
   </ItemGroup>
-
-<Target Name="AfterBuild">
-     <Copy SourceFiles="$(OutputPath)/MultipleReroll.dll" DestinationFolder="../../../../plugins" ContinueOnError="false" />
-</Target>
 
 </Project>
