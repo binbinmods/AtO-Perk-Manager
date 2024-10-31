@@ -98,7 +98,7 @@ class PerkManagerApp:
         btn = tk.Button(frame,image=photo, relief="flat")
         btn.grid(row=row, column=col, padx=2, pady=2)
 
-        btn.config(command=lambda p=perk_node: self.handle_perk_node_click(frame,p))
+        btn.config(command=lambda p=perk_node: self.handle_perk_node_click(frame,btn,p))
 
 
     def is_parent_node(self,perk_node:PerkNode):
@@ -121,10 +121,10 @@ class PerkManagerApp:
         mod.save_object_to_json(node,f"{save_location}",node_filename)
         print(f"Saved PerkNode: {node.ID}")
 
-    def handle_perk_node_click(self,parent,perk_node:PerkNode):
+    def handle_perk_node_click(self,parent,pressed_button,perk_node:PerkNode):
         if (self.is_parent_node(perk_node)):
             print(f"found parent {perk_node.ID}")
-            self.parent_node_popup(parent,perk_node)
+            self.parent_node_popup(parent,pressed_button,perk_node)
         object_editor.EditObjectForm(parent, perk_node,on_save=self.save_perk_node)
 
         associated_perk_name = perk_node.Perk
@@ -148,13 +148,14 @@ class PerkManagerApp:
         connected_perks:List[str] = perk_node.PerksConnected
         connected_nodes = [perk_creator.get_perk_node_from_name(perk_node,self.folders) for perk_node in connected_perks]
 
+        sheet = SHEET_DICT[perk_node.Type]
         child_node_frame.grid()
         for ind,node in enumerate(connected_nodes):
             row = 1
             col = ind+1
             print("creating child nodes")
             self.create_perk_node_button(row,col,child_node_frame,node)
-        self.create_add_button(row,col+1,child_node_frame)
+        self.create_add_button(row,col+1,child_node_frame,sheet_name=sheet)
 
 
     def create_child_perk_button(frame,perk_node:PerkNode):
@@ -164,6 +165,8 @@ class PerkManagerApp:
     def set_parent_child_nodes(self,perk_node_path):#List[Tuple[str,int,int,int,str]]:
         #returns list of tuple of associated perk, page, row and column
         for filename in os.listdir(perk_node_path):
+            if not filename.endswith(".json"):
+                continue
             file_to_open = f"{perk_node_path}/{filename}"
             with open(file_to_open) as f:
                 json_data= json.load(f)
@@ -328,6 +331,9 @@ class PerkManagerApp:
         l = []
 
         for filename in sorted(os.listdir(perk_node_path),reverse=True):
+            if not filename.endswith(".json"):
+                continue
+
             file_to_open = f"{perk_node_path}/{filename}"
             with open(file_to_open) as f:
                 json_data= json.load(f)

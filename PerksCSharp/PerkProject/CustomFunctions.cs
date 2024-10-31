@@ -168,6 +168,13 @@ namespace PerkManager
             }
         }
 
+
+        public static void AddImmunityToHero(string immunity, ref Hero _character)
+        {
+            if (!_character.AuracurseImmune.Contains(immunity))
+                _character.AuracurseImmune.Add(immunity);
+        }
+
         public static void IncreaseChargesByStacks(string auraCurseToModify, float stacks_per_bonus, string auraCurseDependent, ref Character _character, string traitName)
         {
             // increases the amount of ACtoModify that by. 
@@ -176,6 +183,10 @@ namespace PerkManager
             int n_stacks = _character.GetAuraCharges(auraCurseDependent);
             int toIncrease = FloorToInt(n_stacks / stacks_per_bonus);
             _character.ModifyAuraCurseQuantity(auraCurseToModify, toIncrease);
+        }
+
+        public static AuraCurseData GetAuraCurseData(string ac){
+            return Globals.Instance.GetAuraCurseData(ac);
         }
 
         public static string TextChargesLeft(int currentCharges, int chargesTotal)
@@ -313,6 +324,18 @@ namespace PerkManager
                 }
             }
             return stacks;
+        }
+
+        public static void DealIndirectDamageToAllMonsters(Enums.DamageType damageType, int amount){
+            Plugin.Log.LogDebug(debugBase+"Dealing Indirect Damage");
+            NPC[] teamNpc = MatchManager.Instance.GetTeamNPC();
+            for (int index = 0; index<teamNpc.Length; ++index)
+            {
+                NPC npc = teamNpc[index];
+                if (npc!=null && npc.Alive&& !npc.IsHero){
+                    npc.IndirectDamage(damageType, amount);
+                }
+            }
         }
 
         public static bool CharacterHasPerkForSet(string perkName, bool flag, AtOManager __instance,Character _characterTarget){
