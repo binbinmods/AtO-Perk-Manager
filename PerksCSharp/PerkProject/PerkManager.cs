@@ -34,16 +34,6 @@ namespace PerkManager{
         {
             // __instance is the "source" character, target is the target
 
-            
-            // if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance,"zeale") && auxInt<0)
-            // { // zeal1e: When this hero loses Zeal, deal indirect Holy and Fire damage equal to 4x the number of stacks lost to all monsters.
-            //     Log.LogDebug(debugBase+"zeal1e");
-                
-            //     int damageToDeal = Functions.FuncRoundToInt(-4*auxInt);
-            //     DealIndirectDamageToAllMonsters(Enums.DamageType.Holy,damageToDeal);
-            //     DealIndirectDamageToAllMonsters(Enums.DamageType.Fire,damageToDeal);
-            // }
-
             // zeal1f: If this hero dies with Zeal, deal indirect Mind damage to all enemies equal to 5x their Burn/Insane stacks.
             if (theEvent == Enums.EventActivation.Killed && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance,"zeal1f") && __instance.HasEffect("zeal"))
             { 
@@ -56,7 +46,7 @@ namespace PerkManager{
             if (theEvent == Enums.EventActivation.AuraCurseSet && !__instance.IsHero && __instance != null && AtOManager.Instance.TeamHavePerk(debugBase+"weak1b")&&__instance.HasEffect("weak"))
             { 
                 Log.LogDebug(debugBase+"weak1b");
-                auxInt *= Functions.FuncRoundToInt(0.8f);
+                auxInt = Functions.FuncRoundToInt(0.8f*auxInt);
                 
             }
             
