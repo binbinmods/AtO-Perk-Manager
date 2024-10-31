@@ -104,9 +104,8 @@ namespace PerkManager
                     }
                 }
             }
-
-
         }
+
 
         public static void WhenYouGainXGainY(string gainedAuraCurse, string desiredAuraCurse, string appliedAuraCurse, int n_charges_incoming, int n_bonus_charges, float multiplier, ref Character _character, string traitName)
         {
@@ -336,6 +335,22 @@ namespace PerkManager
                     npc.IndirectDamage(damageType, amount);
                 }
             }
+        }
+
+        public static Character GetRandomCharacter(Character[] array)
+        {
+            List<Character> validCharacters =[];
+            for(int index = 0; index<array.Length;index++)
+            {
+                Character _character = array[index];
+                if (_character.Alive&&_character!=null)
+                {
+                    validCharacters.Add(_character);
+                }
+            }
+            
+            int i = MatchManager.Instance.GetRandomIntRange(0, validCharacters.Count);
+            return validCharacters[i];
         }
 
         public static bool CharacterHasPerkForSet(string perkName, bool flag, AtOManager __instance,Character _characterTarget){

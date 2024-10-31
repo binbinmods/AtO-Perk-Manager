@@ -92,10 +92,10 @@ namespace PerkManager{
             medsTexts[perkStem + "shackle1f"] = "Shackles on monsters increases all damage received by 1 per base Speed.";
 
             // Custom Text for Mitigate
-            medsTexts[perkStem + "mitigate1a"] = "At the start of your turn, gain 1 Mitigate, but only stack to 5.";
+            medsTexts[perkStem + "mitigate1a"] = "At the start of your turn, gain 1 Mitigate. Mitigate on this hero only stacks to 5.";
             medsTexts[perkStem + "mitigate1b"] = "Mitigate on this hero does not lose charges at start of turn and stacks to 12.";
             medsTexts[perkStem + "mitigate1c"] = "At the start of your turn, gain 7 Block per Mitigate charge.";
-            medsTexts[perkStem + "mitigate1d"] = "Mitigate reduces incoming damage by 2 per charge, but loses all charges at the start of your turn.";
+            medsTexts[perkStem + "mitigate1d"] = "Mitigate on this hero reduces incoming damage by 2 per charge, but loses all charges at the start of your turn.";
             medsTexts[perkStem + "mitigate1e"] = "Mitigate on heroes and monsters increases damage done by 10% per charge.";
 
             // Custom Text for Poison
@@ -103,7 +103,7 @@ namespace PerkManager{
             medsTexts[perkStem + "poison2e"] = "Poison on heroes and monsters reduces Slashing resistance by 0.25% per charge.";
             medsTexts[perkStem + "poison2f"] = "Poison on monsters reduces all resistances by 5% for every 100 charges.";
             medsTexts[perkStem + "poison2g"] = "When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
-            medsTexts[perkStem + "poison2h"] = "-1 Poison. When this hero applies poison, deal Mind damage to the target equal to 30% of their Poison charges.";
+            medsTexts[perkStem + "poison2h"] = "-1 Poison. When this hero applies poison, deal indirect Mind damage to the target equal to 30% of their Poison charges.";
 
 
             // Custom Text for Bleed
@@ -212,7 +212,7 @@ namespace PerkManager{
             medsTexts[perkStem + "courage1d"] = "Courage increases Shield gained by this hero by 1 per charge.";
 
             // Custom Text for Vitality
-            medsTexts[perkStem + "vitality1d"] = "Vitality on this hero dispels poison.";
+            medsTexts[perkStem + "vitality1d"] = "Vitality on this hero dispels Poison.";
 
 
 
