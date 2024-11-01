@@ -1,0 +1,14 @@
+{
+    "Column": 4,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_disarm1b",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_disarm1b",
+    "PerkRequired": "",
+    "PerksConnected": [],
+    "Row": 1,
+    "Sprite": "disarm",
+    "Type": 0,
+    "row": 6
+}

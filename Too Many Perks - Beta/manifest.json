@@ -1,0 +1,10 @@
+{
+    "name": "Too_Many_Perks",
+    "version_number": "0.3.2",
+    "website_url": "https://github.com/binbinmods/Perks",
+    "description": "Adds a lot of new Perks",
+    "dependencies": [
+        "meds-Obeliskial_Essentials-1.3.0",
+        "meds-Obeliskial_Content-1.2.2"
+    ]
+}

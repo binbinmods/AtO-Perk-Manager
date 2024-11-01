@@ -1,0 +1,16 @@
+{
+    "Column": 1,
+    "Cost": "PerkCostBase",
+    "ID": "binbin_perknode_disarm1",
+    "LockedInTown": false,
+    "NotStack": false,
+    "Perk": "",
+    "PerkRequired": "",
+    "PerksConnected": [
+        "binbin_mainperk_disarm1a",
+        "binbin_mainperk_disarm1b"
+    ],
+    "Row": 3,
+    "Sprite": "perk",
+    "Type": 0
+}

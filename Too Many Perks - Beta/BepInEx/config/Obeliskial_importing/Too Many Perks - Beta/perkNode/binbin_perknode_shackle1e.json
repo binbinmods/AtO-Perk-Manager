@@ -1,0 +1,14 @@
+{
+    "Column": 8,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_shackle1e",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_shackle1e",
+    "PerkRequired": "",
+    "PerksConnected": [],
+    "Row": 1,
+    "Sprite": "shackle",
+    "Type": 1,
+    "row": 6
+}

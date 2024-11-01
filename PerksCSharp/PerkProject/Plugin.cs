@@ -49,14 +49,16 @@ namespace PerkManager{
             
             
             // Custom Text for Experience
-            medsTexts[perkStem + "exp_base"] = "Start with 10 Experience. Gain 10 Experience on level up.";
-            medsTexts[perkStem + "exp_advanced"] = "Start with 40 Experience. Gain 40 Experience on level up.";
+            medsTexts[perkStem + "exp0"] = "Start with 10 Experience. Gain 10 Experience on level up.";
+            medsTexts[perkStem + "exp1"] = "Start with 10 Experience. Gain 10 Experience on level up.";
+            medsTexts[perkStem + "exp2"] = "Start with 10 Experience. Gain 10 Experience on level up.";
+            medsTexts[perkStem + "exp3"] = "Start with 40 Experience. Gain 40 Experience on level up.";
             
             // Custom Text for Max HP
             // medsTexts[perkStem + "health6a"] = "+16 Max HP.";
             medsTexts[perkStem + "health6b"] = "-12 Max HP. Gain 12 Max HP on level up.";
-            medsTexts[perkStem + "health6b"] = "+36 Max HP. Lose 14 Max HP on level up";
-            medsTexts[perkStem + "health6c"] = "At the start of your turn, if you are at max HP, gain 2 Vitality.";
+            medsTexts[perkStem + "health6c"] = "+36 Max HP. Lose 14 Max HP on level up";
+            medsTexts[perkStem + "health6d"] = "At the start of your turn, if you are at max HP, gain 2 Vitality.";
 
             // Custom Text for Resistances
             // medsTexts[perkStem + "resistance5a"] = "+8% Resistances.";
@@ -84,7 +86,7 @@ namespace PerkManager{
             medsTexts[perkStem + "silence1b"] = "Silence on this hero cannot be dispelled unless specified, but increases all damage by 7.";
 
             // Custom Text for Shackle
-            // medsTexts[perkStem + "shackle1a"] = "+1 Charge";
+            medsTexts[perkStem + "shackle1a"] = "+1 Charge";
             medsTexts[perkStem + "shackle1b"] = "This hero is immune to Shackle.";
             medsTexts[perkStem + "shackle1c"] = "Shackle cannot be prevented.";
             medsTexts[perkStem + "shackle1d"] = "At start of your turn, gain Fortify equal to your twice your Shackles.";
@@ -122,8 +124,8 @@ namespace PerkManager{
             // Custom Text for Block
             medsTexts[perkStem + "block5b"] = "If Restricted Power is enabled, increases Max Charges to 600.";
             medsTexts[perkStem + "block5c"] = "At start of combat, apply 2 Block to all heroes.";
-            //medsTexts[perkStem + "block5d"] = "Block only functions if you are above 50% Max Health [Currently not working].";
-            medsTexts[perkStem + "block5e"] = "When this hero gains Block, they deal 1 Blunt to themselves and a random monster.";
+            medsTexts[perkStem + "block5d"] = "When this hero gains Block, they deal 1 Blunt to themselves and a random monster.";
+            //medsTexts[perkStem + "block5e"] = "Block only functions if you are above 50% Max Health [Currently not working].";
 
             // Custom Text for Taunt
             medsTexts[perkStem + "taunt1e"] = "Taunt on this hero can stack and increases damage by 1 per charge.";

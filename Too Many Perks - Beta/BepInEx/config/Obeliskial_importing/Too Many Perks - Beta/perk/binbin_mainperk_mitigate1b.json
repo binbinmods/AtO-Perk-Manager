@@ -1,0 +1,23 @@
+{
+    "AdditionalCurrency": 0,
+    "AdditionalShards": 0,
+    "AuraCurseBonus": "mitigate",
+    "AuraCurseBonusValue": 0,
+    "CardClass": "",
+    "CustomDescription": "custom_binbin_mainperk_mitigate1b",
+    "DamageFlatBonus": "None",
+    "DamageFlatBonusValue": 0,
+    "EnergyBegin": 0,
+    "HealQuantity": 0,
+    "Icon": "mitigate",
+    "IconTextValue": "+1",
+    "ID": "binbin_mainperk_mitigate1b",
+    "Level": 0,
+    "MainPerk": true,
+    "MaxHealth": 0,
+    "ObeliskPerk": false,
+    "ResistModified": "None",
+    "ResistModifiedValue": 0,
+    "Row": 0,
+    "SpeedQuantity": 0
+}
