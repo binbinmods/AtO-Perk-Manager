@@ -69,8 +69,10 @@ namespace PerkManager{
             // Custom Text for Gold
             //medsTexts[perkStem + "currency6a"] = "+225 Gold.";
             medsTexts[perkStem + "currency6b"] = "Gain 125 gold on level up.";
-            medsTexts[perkStem + "currency6c"] = "Increases chance for Scarabs to spawn by 10%.";
-            medsTexts[perkStem + "currency6d"] = "For every 2,000 gold you have, gain +10% damage.";
+            //medsTexts[perkStem + "currency6c"] = "Increases chance for Scarabs to spawn by 10%."; CANNOT BE DONE EASILY
+            medsTexts[perkStem + "currency6c"] = "For every 2,000 gold you have, gain +10% damage.";
+            medsTexts[perkStem + "currency6d"] = "Rerolling the shop costs 25% less.";
+            medsTexts[perkStem + "currency6e"] = "Divinations cost 15% less.";
 
             // Custom Text for Shards
             //medsTexts[perkStem + "shards5a"] = "+225 Shards";
@@ -112,19 +114,19 @@ namespace PerkManager{
             medsTexts[perkStem + "bleed2d"] = "If Restricted Power is enabled, increases Max Charges to 300.";
             medsTexts[perkStem + "bleed2e"] = "When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
             medsTexts[perkStem + "bleed2f"] = "Bleed on monsters reduces Piercing resist by 0.25% per charge.";
-            medsTexts[perkStem + "bleed2g"] = "When this hero kills an enemy with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
+            medsTexts[perkStem + "bleed2g"] = "When a monster dies with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
             
             // Custom Text for Thorns
             medsTexts[perkStem + "thorns1d"] = "Cannot be purged unless specified.";
             medsTexts[perkStem + "thorns1e"] = "When a monster with Thorns dies, transfer their Thorns charges to a random hero.";
 
             // Custom Text for Reinforce
-            medsTexts[perkStem + "reinforce1d"] = "Reinforce increases Block charges by 2 per charge of Reinforce.";
+            medsTexts[perkStem + "reinforce1d"] = "Reinforce on this hero increases Block charges received by 1 per charge of Reinforce.";
 
             // Custom Text for Block
             medsTexts[perkStem + "block5b"] = "If Restricted Power is enabled, increases Max Charges to 600.";
             medsTexts[perkStem + "block5c"] = "At start of combat, apply 2 Block to all heroes.";
-            medsTexts[perkStem + "block5d"] = "When this hero gains Block, they deal 1 Blunt to themselves and a random monster.";
+            medsTexts[perkStem + "block5d"] = "When this hero gains Block, they deal 1 Blunt to themselves and a random monster. [BROKEN]   ";
             //medsTexts[perkStem + "block5e"] = "Block only functions if you are above 50% Max Health [Currently not working].";
 
             // Custom Text for Taunt

@@ -365,6 +365,10 @@ namespace PerkManager
             return _characterTarget != null && __instance.TeamHavePerk(perkBase+perkName)&& flag;
         }
 
+        public static bool TeamHasPerk(string perkName){
+            return AtOManager.Instance.TeamHavePerk(perkBase+perkName);
+        }
+
         public static bool TeamHasPerkForConsume(string perkName, bool flag, AtOManager __instance,Character _characterCaster){
             return _characterCaster != null && __instance.TeamHavePerk(perkBase+perkName) && flag;
         }

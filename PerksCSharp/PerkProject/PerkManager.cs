@@ -8,29 +8,31 @@ using static UnityEngine.Mathf;
 using static PerkManager.Plugin;
 using static PerkManager.CustomFunctions;
 using TMPro.Examples;
-using System.Reflection;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
+
 
 namespace PerkManager{
     [HarmonyPatch]
     public class PerkPatches
     {
-        // [HarmonyPostfix]
-        // [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.BeginAdventure))]
-        // public static void BeginAdventurePostfix()
-        // {
-        //     // TODO
-        //     // currency6c"] = "Increases chance for Scarabs to spawn by 10%.";
-        //     // shards5c"] = "Increases chance for cards to be corrupted by 2%.";
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.BeginAdventure))]
+        public static void BeginAdventurePostfix(ref AtOManager __instance)
+        {
+            // TODO
+            // currency6c"] = "Increases chance for Scarabs to spawn by 10%." - CANNOT BE DONE;
+            // shards5c"] = "Increases chance for cards to be corrupted by 2%." - Handled in RewrittenFunctions;
+            // medsTexts[perkStem + "resistance5d"] = "Maximum resistances for heroes and monsters are now 97%. - Rewritten Functions";
 
-        //     // XP Perks
-        //     Hero[] teamHero = MatchManager.Instance.GetTeamHero();
-        //     for (int i =0; i<teamHero.Length; i++)
-        //     {
-        //         Hero _hero = teamHero[i];
-        //         HandleExpPerks(_hero);
-        //     }
-        // }
+            // XP Perks
+            Hero[] teamHero = MatchManager.Instance.GetTeamHero();
+            for (int i =0; i<teamHero.Length; i++)
+            {
+                Hero _hero = teamHero[i];
+                HandleExpPerks(_hero);
+            }
+            
+        }
 
         public static void HandleExpPerks(Hero _hero)
         {
@@ -53,9 +55,6 @@ namespace PerkManager{
         public static void HeroLevelUpPrefix(ref AtOManager __instance, int heroIndex, string traitId)
         {  
             // TODO:
-            // resistance5b"] = "-4% Resistances. Gain 4% to all Resistances on level up";
-            // resistance5c"] = "+12% Resistances. Lose 4% to all Resistances on level up"
-
             Hero[] teamAtO = MatchManager.Instance.GetTeamHero();
             Hero hero = teamAtO[heroIndex];
 
@@ -68,20 +67,58 @@ namespace PerkManager{
                 teamAtO[heroIndex].ModifyMaxHP(AmountToIncreasePerLevel);
             }
             if (CharacterObjectHavePerk(hero,"shards5b")){
-                // medsTexts[perkStem + "shards5b"] = "Gain 125 shards on level up."; - NEEDS MULTIPLAYER
+                // medsTexts[perkStem + "shards5b"] = "Gain 125 shards on level up."; - multiplayer?
                 int AmountToIncreasePerLevel = 125;
                 AtOManager.Instance.GivePlayer(1,AmountToIncreasePerLevel, anim: true);
                 
             }
             if (CharacterObjectHavePerk(hero,"currency6b")){
-                // medsTexts[perkStem + "currency6b"] = "Gain 125 gold on level up."; - NEEDS MULTIPLAYER
+                // medsTexts[perkStem + "currency6b"] = "Gain 125 gold on level up."; - NEEDS MULTIPLAYER?
                 int AmountToIncreasePerLevel = 125;
                 AtOManager.Instance.GivePlayer(0,AmountToIncreasePerLevel, anim: true);
                 
             }
 
+
+            if (CharacterObjectHavePerk(hero,"resistance5b")){
+                // medsTexts[perkStem + "resistance5b"] = "-4% Resistances. Gain 4% to all Resistances on level up";
+                Plugin.Log.LogDebug(debugBase+"Attempting to add resistances");
+                int AmountToIncreasePerLevel = 4;
+                string perkName = perkBase+"resistance5b";
+                PerkData perk = Globals.Instance.GetPerkData(perkName);
+                perk.ResistModified = Enums.DamageType.All;
+                perk.ResistModifiedValue += AmountToIncreasePerLevel;
+
+                Dictionary<string, PerkData> perkDictionary = Traverse.Create(Globals.Instance).Field("_PerksSource").GetValue<Dictionary<string, PerkData>>();
+                if (perkDictionary.ContainsKey(perkName))
+                {
+                    Plugin.Log.LogDebug(debugBase+"Setting perk dictionary");
+                    perkDictionary[perkName] = perk;
+                }
+                Traverse.Create(Globals.Instance).Field("_PerksSource").SetValue(perkDictionary);
+            }
+
+            if (CharacterObjectHavePerk(hero,"resistance5c")){
+                // medsTexts[perkStem + "resistance5c"] = "+12% Resistances. Lose 4% to all Resistances on level up";            
+                Plugin.Log.LogDebug(debugBase+"Attempting to add resistances");
+                int AmountToIncreasePerLevel = -4;
+                string perkName = perkBase+"resistance5b";
+                PerkData perk = Globals.Instance.GetPerkData(perkName);
+                perk.ResistModified = Enums.DamageType.All;
+                perk.ResistModifiedValue += AmountToIncreasePerLevel;
+
+                Dictionary<string, PerkData> perkDictionary = Traverse.Create(Globals.Instance).Field("_PerksSource").GetValue<Dictionary<string, PerkData>>();
+                if (perkDictionary.ContainsKey(perkName))
+                {
+                    Plugin.Log.LogDebug(debugBase+"Setting perk dictionary");
+                    perkDictionary[perkName] = perk;
+                }
+                Traverse.Create(Globals.Instance).Field("_PerksSource").SetValue(perkDictionary);
+            }
+
             HandleExpPerks(hero);
         }
+
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(MatchManager),"GenerateHeroes")]
@@ -108,6 +145,40 @@ namespace PerkManager{
             
         }
  
+        
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Globals), nameof(Globals.GetCostReroll))]
+        public static int GetRerollCostPostfix(ref Globals __instance, ref int __result)
+        {
+            // medsTexts[perkStem + "currency6d"] = "Rerolling the shop costs 25% less.";
+
+            if (TeamHasPerk("currency6d"))
+            {
+                return RoundToInt(0.75f*__result);
+            }
+            else
+            {
+                return __result;
+            }
+        }
+        
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Globals), nameof(Globals.GetDivinationCost))]
+        public static int GetDivinationCost(ref Globals __instance, ref int __result)
+        {
+            // medsTexts[perkStem + "currency6e"] = "Divinations cost 15% less.";
+
+            if (TeamHasPerk("currency6e"))
+            {
+                return RoundToInt(0.85f*__result);
+            }
+            else
+            {
+                return __result;
+            }
+        }
+
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.SetEvent))]
         public static void SetEventPrefix(ref Character __instance,     
@@ -117,24 +188,21 @@ namespace PerkManager{
                                             string auxString = "")
 
         {
-            // Killed is "this character was killed" --> triggers things like resurrect
+            // Not sure on this, but: Killed is "this character was killed" --> triggers things like resurrect
             // CharacterKilled is "a character was killed" --> triggers things like Yogger's Innate
 
             // __instance is the "source" character, target is the target
 
 
             // TODO:
-            // poison2g: When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
-            // poison2h: -1 Poison. When this hero applies poison, deal Mind damage to the target equal to 30% of their Poison charges.";
             // bleed2g: When this hero kills an enemy with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
             // bleed2e: When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
             // //block5d: Block only functions if you are above 50% Max Health [Currently not working].";
-            // reinforce1d: Reinforce increases Block charges by 2 per charge of Reinforce.";
-            // reinforce1d: .";
-            // resistance5d"] = "Maximum resistances for heroes and monsters are now 97%.";
+
             Hero[] teamHero = MatchManager.Instance.GetTeamHero();
             NPC[] teamNpc = MatchManager.Instance.GetTeamNPC();
             
+
 
             if (theEvent == Enums.EventActivation.Killed && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance,"zeal1f") && __instance.HasEffect("zeal"))
             { 
@@ -154,6 +222,21 @@ namespace PerkManager{
                 auxInt = Functions.FuncRoundToInt(0.8f*auxInt);
                 
             }
+            if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero && __instance != null && !target.IsHero && CharacterObjectHavePerk(__instance,"poison2h"))
+            { 
+                // poison2h: -1 Poison. When this hero applies poison, deal Mind damage to the target equal to 30% of their Poison charges.";
+                int n = target.GetAuraCharges("poison");
+                int damageToDeal = RoundToInt(n*0.3f);
+                target.IndirectDamage(Enums.DamageType.Mind,damageToDeal);
+            }
+
+            if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance,"reinforce1d")&&auxString=="block")
+            { 
+                // reinforce1d: Reinforce on this hero increases Block received by 1 per charge of Reinforce.";
+                int n = __instance.GetAuraCharges("reinforce");
+                auxInt += n;
+                
+            }
             if (theEvent == Enums.EventActivation.BeginCombat && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance,debugBase+"block5c"))
             { 
                 // block5c: At start of combat, apply 2 Block to all heroes.";
@@ -162,10 +245,45 @@ namespace PerkManager{
                 bool allNpcs = false;
                 ApplyAuraCurseTo("block",2,allHeroes,allNpcs,false,false,ref __instance,ref teamHero,ref teamNpc,"","");
             }
-            // if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero &&__instance != null && CharacterObjectHavePerk(target,debugBase+"block5c"))
+
+            if (theEvent == Enums.EventActivation.CharacterKilled && !__instance.IsHero && __instance != null && TeamHasPerk("poison2g") && __instance.HasEffect("poison"))
+            {
+            // poison2g: When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
+                int n = __instance.GetAuraCharges("poison");
+                int toApply = RoundToInt(n*0.5f);
+                Character randomNPC = GetRandomCharacter(teamNpc);
+                randomNPC.SetAura(__instance,GetAuraCurseData("poison"),toApply);                
+            }
+            if (theEvent == Enums.EventActivation.CharacterKilled && !__instance.IsHero && __instance != null && TeamHasPerk("thorns1e") && __instance.HasEffect("thorns"))
+            {
+            // thorns1e when a monster with Thorns dies, transfer their Thorns charges to a random hero.
+                int n = __instance.GetAuraCharges("thorns");
+                int toApply = RoundToInt(n*1.0f);
+                Character randomHero = GetRandomCharacter(teamHero);
+                randomHero.SetAura(__instance,GetAuraCurseData("thorns"),toApply);                
+            }
+            if (theEvent == Enums.EventActivation.CharacterKilled && !__instance.IsHero && __instance != null && TeamHasPerk("bleed2g") && __instance.HasEffect("bleed"))
+            {
+            // bleed2g: an enemy dies with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
+                int n = __instance.GetAuraCharges("bleed");
+                int toDeal = RoundToInt(n*0.25f);
+                DealIndirectDamageToAllMonsters(Enums.DamageType.None,toDeal);
+                
+            }
+
+            if (theEvent == Enums.EventActivation.Hit && __instance.IsHero && !target.IsHero && target.Alive && __instance != null && CharacterObjectHavePerk(__instance,"bleed2e"))
+            {
+                // bleed2e: When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
+                int n = target.GetAuraCharges("bleed");
+                int toHeal = RoundToInt(n*0.25f);
+                __instance.IndirectHeal(toHeal);                
+            }
+
+
+            // if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero &&__instance != null && CharacterObjectHavePerk(target,debugBase+"block5d"))
             // { 
             //     // block5e: When this hero gains Block, they deal 1 Blunt to themselves and a random monster.";
-            //     Plugin.Log.LogDebug(debugBase+"block5e");
+            //     Plugin.Log.LogDebug(debugBase+"block5d");
             //     int damageToDeal = 1;
             //     Enums.DamageType damageType = Enums.DamageType.Blunt;
             //     int modifiedDamage = __instance.DamageWithCharacterBonus(damageToDeal,damageType,Enums.CardClass.None);
@@ -182,7 +300,7 @@ namespace PerkManager{
             //shackle1d: At start of your turn, gain Fortify equal to your twice your Shackles
             // mitigate1a: At the start of your turn, gain 1 Mitigate, but only stack to 5.";
             // mitigate1c: At the start of your turn, gain 7 Block per Mitigate charge.";
-            // TODO "health6c"] = "At the start of your turn, if you are at max HP, gain 2 Vitality.";
+            // health6c"] = "At the start of your turn, if you are at max HP, gain 2 Vitality.";
 
             if (CharacterObjectHavePerk(__instance,"shackle1d"))
             {
@@ -199,6 +317,29 @@ namespace PerkManager{
                 int n_charges = 7*__instance.GetAuraCharges("mitigate");
                 __instance.SetAuraTrait(__instance,"block",n_charges);
             }
+            if (CharacterObjectHavePerk(__instance,"health6c"))
+            {
+                if(__instance.GetMaxHP()<=__instance.HpCurrent)
+                {
+                    int n_charges = 2;
+                    __instance.SetAuraTrait(__instance,"vitality",n_charges);
+                }
+            }
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Character),nameof(Character.GetTraitDamagePercentModifiers))]
+        public static void GetTraitDamagePercentModifiersPostfix(ref Character __instance, ref float __result)
+        {
+            if (CharacterObjectHavePerk(__instance,"currency6d"))
+            {
+                // currency6d"] = "For every 2,000 gold you have, gain +10% damage.";
+
+                int currencyAmount = AtOManager.Instance.GetPlayerGold();
+                int percentToIncrease = FloorToInt(10*currencyAmount/2000);
+                __result+=percentToIncrease;
+            }
+
         }
 
 
@@ -232,8 +373,6 @@ namespace PerkManager{
 
 
         
-
-        
         [HarmonyPostfix]
         [HarmonyPatch(typeof(AtOManager),"GlobalAuraCurseModificationByTraitsAndItems")]
         public static void BinbinGlobalAuraCurseModificationByTraitsAndItemsPostfix(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget){
@@ -260,14 +399,6 @@ namespace PerkManager{
                 case "bless":
                     if (_type=="set")
                     {
-                        int v1 = Traverse.Create(__result).Field("increasedDirectDamageReceivedPerStack").GetValue<int>();
-                        int v2 = Traverse.Create(__result).Field("increasedDirectDamageReceivedPerStack2").GetValue<int>();
-                        Plugin.Log.LogDebug(debugBase+" testing nonworking function with Traverse: "+v1);
-                        Plugin.Log.LogDebug(debugBase+" testing nonworking function with Traverse v2: "+v2);
-
-                        Traverse.Create(__result).Field("increasedDirectDamageReceivedPerStack").SetValue(4);
-                        int afterSet = Traverse.Create(__result).Field("increasedDirectDamageReceivedPerStack").GetValue<int>();
-                        Plugin.Log.LogDebug(debugBase+" testing nonworking function using Setter: "+afterSet);
 
                     }
                     break;
@@ -802,6 +933,8 @@ namespace PerkManager{
                     break;
             }
             
+
+        
         }
 
     }

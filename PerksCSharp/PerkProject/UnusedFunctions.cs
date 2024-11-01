@@ -11,7 +11,7 @@ using TMPro.Examples;
 using System.Collections.Generic;
 
 namespace PerkManager{
-    [HarmonyPatch]
+    // [HarmonyPatch]
     public class PerkUnused
     {
         // [HarmonyPrefix]
