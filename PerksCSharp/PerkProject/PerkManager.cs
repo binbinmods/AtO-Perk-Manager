@@ -294,7 +294,7 @@ namespace PerkManager
 
             }
 
-            if (theEvent == Enums.EventActivation.Hit && __instance.IsHero && !target.IsHero && target.Alive && __instance != null && CharacterObjectHavePerk(__instance, "bleed2e"))
+            if (theEvent == Enums.EventActivation.Hitted && __instance.IsHero && !target.IsHero && target.Alive && __instance != null && CharacterObjectHavePerk(__instance, "bleed2e"))
             {
                 // bleed2e: When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
                 int n = target.GetAuraCharges("bleed");

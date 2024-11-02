@@ -9,7 +9,8 @@
     "PerksConnected": [
         "nodeperkHealth6a",
         "binbin_perknode_health6b",
-        "binbin_perknode_health6c"
+        "binbin_perknode_health6c",
+        "binbin_perknode_health6d"
     ],
     "Row": 6,
     "Sprite": "heart",

@@ -1,0 +1,17 @@
+{
+    "Column": 3,
+    "Cost": "PerkCostAdvanced",
+    "ID": "nodeperkShards5",
+    "LockedInTown": true,
+    "NotStack": false,
+    "Perk": "",
+    "PerkRequired": "nodeperkShards4",
+    "PerksConnected": [
+        "nodeperkShards5a",
+        "binbin_perknode_shards5b",
+        "binbin_perknode_shards5c"
+    ],
+    "Row": 5,
+    "Sprite": "dust",
+    "Type": 0
+}

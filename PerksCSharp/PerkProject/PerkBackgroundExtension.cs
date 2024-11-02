@@ -17,13 +17,13 @@ namespace PerkManager{
         public static bool SetForNodesPrefix(PerkNodeAmplify __instance, int _numNodes){
             Plugin.Log.LogDebug(Plugin.debugBase + "Extending Clickbox for Perks");
             PolygonCollider2D component = __instance.GetComponent<PolygonCollider2D>();
-            float scaleFactor = -0.7f*(_numNodes-1);
+            float horizontalShift = -0.7f*(_numNodes-1);
             if (_numNodes == 2)
             {
                 __instance.bg2.gameObject.SetActive(true);
                 __instance.bg3.gameObject.SetActive(false);
                 __instance.bg4.gameObject.SetActive(false);
-                __instance.amplifyNodes.localPosition = new Vector3(scaleFactor, __instance.amplifyNodes.localPosition.y, __instance.amplifyNodes.localPosition.z);
+                __instance.amplifyNodes.localPosition = new Vector3(horizontalShift, __instance.amplifyNodes.localPosition.y, __instance.amplifyNodes.localPosition.z);
                 component.points = __instance.bg2.GetComponent<PolygonCollider2D>().points;
             }
             else if (_numNodes == 3)
@@ -31,7 +31,7 @@ namespace PerkManager{
                 __instance.bg2.gameObject.SetActive(false);
                 __instance.bg3.gameObject.SetActive(true);
                 __instance.bg4.gameObject.SetActive(false);
-                __instance.amplifyNodes.localPosition = new Vector3(scaleFactor, __instance.amplifyNodes.localPosition.y, __instance.amplifyNodes.localPosition.z);
+                __instance.amplifyNodes.localPosition = new Vector3(horizontalShift, __instance.amplifyNodes.localPosition.y, __instance.amplifyNodes.localPosition.z);
                 component.points = __instance.bg3.GetComponent<PolygonCollider2D>().points;
             }
             else
@@ -39,10 +39,16 @@ namespace PerkManager{
                 __instance.bg2.gameObject.SetActive(false);
                 __instance.bg3.gameObject.SetActive(false);
                 __instance.bg4.gameObject.SetActive(true);
-                __instance.amplifyNodes.localPosition = new Vector3(scaleFactor, __instance.amplifyNodes.localPosition.y, __instance.amplifyNodes.localPosition.z);
-                float localWidthStretch = _numNodes/4.0f;
-                __instance.bg4.transform.localScale = new Vector3(localWidthStretch,1.0f,1.0f);
-                component.points = __instance.bg4.GetComponent<PolygonCollider2D>().points;
+                __instance.amplifyNodes.localPosition = new Vector3(horizontalShift, __instance.amplifyNodes.localPosition.y, __instance.amplifyNodes.localPosition.z);
+                float scaleFactor = _numNodes/4.0f;
+                __instance.bg4.transform.localScale = new Vector3(scaleFactor,1.0f,1.0f);
+                PolygonCollider2D backgroundComponent = __instance.bg4.GetComponent<PolygonCollider2D>();
+                Vector2[] originalPoints = backgroundComponent.points;
+                for (int i = 0; i < originalPoints.Length; i++)
+                {
+                    originalPoints[i] = new Vector2(originalPoints[i].x * scaleFactor, originalPoints[i].y);                    
+                }
+                component.points = originalPoints;
             }
             
             return false;
@@ -55,5 +61,6 @@ namespace PerkManager{
             // No idea why but this debug log seems to be necessary for the other prefix to work. No clue what's going on.
             Plugin.Log.LogDebug(Plugin.debugBase + "Draw Tree");
         }
+
     }
 }

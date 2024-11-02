@@ -348,9 +348,6 @@ def add_perks_to_existing_node(node:PerkNode, n_perks_to_add,is_vanilla):
 
         connected_nodes.append(p.ID)
 
-
-
-
     save_object_to_json(node,NODE_DIR+node.ID)
 
 
@@ -450,7 +447,11 @@ def handle_adding_perks_to_vanilla_nodes():
 
 def handle_creating_new_split_nodes():
     tuples = [
-        ("health6",2)
+        ("health6",3),
+        ("resistance5",3),
+        ("currency6",4),
+        ("shards5",2),
+        ("block5",3),
     ]
     for tuple in tuples:
         node_id = VANILLA_NODE_STEM+tuple[0].capitalize()
