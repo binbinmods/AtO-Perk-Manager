@@ -78,13 +78,15 @@ PERK_DIR = "CustomPerks/perk/"
 
 def create_new_perk(id:str,
                     aura_curse:str="",
+                    aura_curse_bonus:int = 0,
                     icon:str=""):
     
     if id.startswith(PERK_ID_STEM):
         id = id.replace(PERK_ID_STEM,'')
     
     perk = Perk() 
-    perk.AuraCurseBonus=aura_curse
+    perk.AuraCurseBonus="None"# if aura_curse_bonus == 0 else aura_curse
+    perk.AuraCurseBonusValue=aura_curse_bonus
     perk.CustomDescription=f"{PERK_DESC_STEM}{id}"
     perk.Icon=icon
     perk.ID= f"{PERK_ID_STEM}{id}" 
@@ -246,7 +248,7 @@ def create_perk_from_id(short_ID):
     ac_str = ac if is_ac else ""
     icon = ac if is_ac else ""
     icon = ac if ac in additional_sprites else ""
-    p = create_new_perk(id,ac_str,icon)
+    p = create_new_perk(id=id,aura_curse=ac_str,icon=icon)
     file_name = p.ID
     save_object_to_json(p,PERK_DIR+file_name)
     #print(p.CustomDescription)
@@ -272,7 +274,7 @@ def create_perk_nodes_from_base(base:str):
     #print(perk_base.PerksConnected)
     for connected_perk in perk_base.PerksConnected:
         id,ac_str,icon = get_perk_inputs_from_id(connected_perk)
-        perk = create_new_perk(id,ac_str,icon)
+        perk = create_new_perk(id=id,aura_curse=ac_str,icon=icon)
 
         new_perk_node_name = NODE_ID_STEM+id
         p = create_new_perk_node_improved(perk=perk,
@@ -328,7 +330,7 @@ def add_perks_to_existing_node(node:PerkNode, n_perks_to_add,is_vanilla):
     for i in range(n_perks_to_add):
         next_perk_id = PERK_ID_STEM+perk_base+chr(last_letter+i+1)
         id,ac_str,icon = get_perk_inputs_from_id(next_perk_id)
-        new_perk:Perk = create_new_perk(id,ac_str,icon)
+        new_perk:Perk = create_new_perk(id=id,aura_curse=ac_str,icon=icon)
         save_object_to_json(new_perk,PERK_DIR+new_perk.ID)
 
         new_perk_node_name = NODE_ID_STEM+id
@@ -354,7 +356,7 @@ def add_perks_to_existing_node(node:PerkNode, n_perks_to_add,is_vanilla):
 
 def create_new_perk_node_and_perk_jsons(source_node:PerkNode,full_perk_id:str):
     id,ac_str,icon = get_perk_inputs_from_id(full_perk_id)
-    new_perk:Perk = create_new_perk(id,ac_str,icon)
+    new_perk:Perk = create_new_perk(id=id,aura_curse=ac_str,icon=icon)
     save_object_to_json(new_perk,PERK_DIR+new_perk.ID)
 
     new_perk_node_name = NODE_ID_STEM+id

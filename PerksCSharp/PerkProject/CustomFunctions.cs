@@ -375,7 +375,9 @@ namespace PerkManager
 
         public static bool CharacterObjectHavePerk(Character _character, string _perk_id)
         {
-            return AtOManager.Instance.CharacterHavePerk(_character.SubclassName, _perk_id);
+            if (_perk_id.StartsWith(perkBase))
+                AtOManager.Instance.CharacterHavePerk(_character.SubclassName, _perk_id);
+            return AtOManager.Instance.CharacterHavePerk(_character.SubclassName, perkBase+_perk_id);
         }
 
 
