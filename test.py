@@ -4,7 +4,7 @@ from tkinter import messagebox
 import json
 
 
-file_to_open = "CustomPerks/perk/binbin_mainperk_zeal1d.json"
-with open(file_to_open) as f:
-    json_data= json.load(f)
-    print(json_data)
+s = "2345678i"
+s= s.replace("234",'')
+
+print(s)

@@ -66,15 +66,25 @@ aura_curse_string = '''bless
 additional_sprites = set([file.split(".png")[0] for file in os.listdir("Assets/perkSprites") if file.endswith(".png")])
 aura_curses=set(aura_curse_string.split())
 
+PERK_DESC_STEM = "custom_binbin_mainperk_"
+PERK_ID_STEM = "binbin_mainperk_"
+NODE_ID_STEM = "binbin_perknode_"
+
+NODE_DIR = "CustomPerks/perkNode/"
+PERK_DIR = "CustomPerks/perk/"
+
 def create_new_perk(id:str,
                     aura_curse:str="",
                     icon:str=""):
-    perk = Perk()
     
+    if id.startswith(PERK_ID_STEM):
+        id = id.replace(PERK_ID_STEM,'')
+    
+    perk = Perk() 
     perk.AuraCurseBonus=aura_curse
-    perk.CustomDescription=f"custom_binbin_mainperk_{id}"
+    perk.CustomDescription=f"{PERK_DESC_STEM}{id}"
     perk.Icon=icon
-    perk.ID=f"binbin_mainperk_{id}"
+    perk.ID= f"{PERK_ID_STEM}{id}" 
     perk.IconTextValue="+1"
     perk.CardClass="None"
     if id=="shackle1a":
@@ -211,7 +221,7 @@ def get_perk_from_name(perk_name,perk_folders)->Perk:#, is_vanilla=True)->Perk:
     return new_perk
 
 
-def get_perk_node_from_name(perk_node_name,perk_folders)->PerkNode:#, is_vanilla=True)->Perk:
+def get_perk_node_from_name(perk_node_name,perk_folders:list[str])->PerkNode:#, is_vanilla=True)->Perk:
     node_file = ""
     for folder in perk_folders:   
         potential_file = f"{folder}/perkNode/{perk_node_name}.json"        
@@ -234,34 +244,34 @@ def create_perk_from_id(short_ID):
     icon = ac if is_ac else ""
     icon = ac if ac in additional_sprites else ""
     p = create_new_perk(id,ac_str,icon)
-    perk_path = "CustomPerks/perk/"
     file_name = p.ID
-    save_object_to_json(p,perk_path+file_name)
+    save_object_to_json(p,PERK_DIR+file_name)
     #print(p.CustomDescription)
+
+def get_perk_inputs_from_id(full_id:str):
+    match_list = re.split(r'(\d+)', full_id)
+    id = full_id.split("_")[-1]
+    ac = match_list[0].split("_")[-1]
+    is_ac = ac in aura_curses
+    ac_str = ac if is_ac else ""
+    icon = ac if is_ac else ""
+    icon = ac if ac in additional_sprites else ""
+    return (id,ac_str,icon)
+
 
 def create_perk_nodes_from_base(base:str):
     perk_base_name = base
-    file_name_stem = "binbin_perknode_"
-    perk_node_filename = file_name_stem+perk_base_name
+    perk_node_filename = NODE_ID_STEM+perk_base_name
     perk_folders = ["CustomPerks"]
     #print(perk_node_filename)
     perk_base:PerkNode = get_perk_node_from_name(perk_node_filename,perk_folders)
-    perk_node_path = "CustomPerks/perkNode/"
-    perk_path = "CustomPerks/perk/"
 
     #print(perk_base.PerksConnected)
     for connected_perk in perk_base.PerksConnected:
-        full_id = connected_perk
-        match_list = re.split(r'(\d+)', full_id)
-        id = full_id.split("_")[-1]
-        ac = match_list[0].split("_")[-1]
-        is_ac = ac in aura_curses
-        ac_str = ac if is_ac else ""
-        icon = ac if is_ac else ""
-        icon = ac if ac in additional_sprites else ""
+        id,ac_str,icon = get_perk_inputs_from_id(connected_perk)
         perk = create_new_perk(id,ac_str,icon)
 
-        new_perk_node_name = file_name_stem+id
+        new_perk_node_name = NODE_ID_STEM+id
         p = create_new_perk_node_improved(perk=perk,
                             perk_node_name=new_perk_node_name,
                             col=perk_base.Column,
@@ -272,17 +282,15 @@ def create_perk_nodes_from_base(base:str):
                             category=perk_base.Type
                             )
         #print(p.ID)
-        save_object_to_json(p,perk_node_path+p.ID)
-        save_object_to_json(perk,perk_path+perk.ID)
+        save_object_to_json(p,NODE_DIR+p.ID)
+        save_object_to_json(perk,PERK_DIR+perk.ID)
 
 def create_new_perk_base(id,row,col,n:int=0,category:str="General"):
-        node_stem = "binbin_perknode_"
-        perk_stem = "binbin_mainperk_"
         p = PerkNode()
-        p.ID=node_stem+id
+        p.ID=NODE_ID_STEM+id
         p.Column = col
         p.Row = row
-        p.PerksConnected=[node_stem+id+chr(ord('a')+i) for i in range(n)]
+        p.PerksConnected=[NODE_ID_STEM+id+chr(ord('a')+i) for i in range(n)]
         p.Type=type_dict[category]
         p.Perk=""
         p.Sprite="perk"
@@ -294,16 +302,37 @@ def create_all_perk_jsons(tuple_array):
         id,r,c,n,category = tuple
         print(id)
         p:PerkNode = create_new_perk_base(id,r,c,n,category)
-        save_object_to_json(p,f"CustomPerks/perkNode/{p.ID}")
+        save_object_to_json(p,f"{NODE_DIR}{p.ID}")
         #print(p.PerksConnected)
         create_perk_nodes_from_base(id)
 
+def add_perks_to_existing_node(node:PerkNode, n_perks_to_add,is_vanilla):
+    connected_nodes:list[str] = node.PerksConnected
+    if len(connected_nodes) == 0:
+        raise ValueError("Incorrect Node type")
+    
+    last_letter = ord('a')
+    for existing_node in connected_nodes:
+        if existing_node[-1].isdigit():
+            raise ValueError("Connected Perk has wrong format: " + existing_node)
+        if ord(existing_node[-1])>last_letter:
+            last_letter=ord(existing_node[-1])
+    
+    if is_vanilla==False:
+        raise ValueError("Non-Vanilla implemenation not added yet")
 
-if __name__=="__main__":
-    #test1()
-    #test2()
-    #create_perk_nodes_from_base("scourge1")
-    # id,row,col,number of nodes, sheet
+    perk_base = node.ID.replace("nodeperk",'').lower()
+    for i in range(n_perks_to_add):
+        next_perk_id = PERK_ID_STEM+perk_base+chr(last_letter+i+1)
+        connected_nodes.append(next_perk_id)
+        id,ac_str,icon = get_perk_inputs_from_id(next_perk_id)
+        new_perk:Perk = create_new_perk(id,ac_str,icon)
+        save_object_to_json(new_perk,PERK_DIR+new_perk.ID)    
+
+    save_object_to_json(node,NODE_DIR+node.ID)
+
+
+def handle_new_nodes():
     tuples = [
         (
             "disarm1",
@@ -335,3 +364,25 @@ if __name__=="__main__":
         ),
     ]
     create_all_perk_jsons(tuples)
+
+def handle_adding_perks_to_vanilla_nodes():
+    tuples = [
+        ("poison2",5),
+        ("bleed2",4),
+        ("thorns1",2),
+        ("reinforce1",1),
+        ("taunt1",1)
+    ]
+    for tuple in tuples:
+        node_name,n = tuple
+
+        node:PerkNode = get_perk_node_from_name(f"nodeperk{node_name.capitalize()}",["VanillaPerkData"])
+        add_perks_to_existing_node(node,n,True)
+
+if __name__=="__main__":
+    
+    handle_new_nodes()
+    handle_adding_perks_to_vanilla_nodes()
+
+
+    

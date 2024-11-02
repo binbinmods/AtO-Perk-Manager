@@ -195,8 +195,6 @@ namespace PerkManager{
 
 
             // TODO:
-            // bleed2g: When this hero kills an enemy with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
-            // bleed2e: When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
             // //block5d: Block only functions if you are above 50% Max Health [Currently not working].";
 
             Hero[] teamHero = MatchManager.Instance.GetTeamHero();
