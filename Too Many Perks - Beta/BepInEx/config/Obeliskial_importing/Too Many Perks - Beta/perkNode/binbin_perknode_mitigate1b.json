@@ -7,8 +7,7 @@
     "Perk": "binbin_mainperk_mitigate1b",
     "PerkRequired": "",
     "PerksConnected": [],
-    "Row": 1,
+    "Row": 6,
     "Sprite": "mitigate",
-    "Type": 1,
-    "row": 6
+    "Type": 1
 }

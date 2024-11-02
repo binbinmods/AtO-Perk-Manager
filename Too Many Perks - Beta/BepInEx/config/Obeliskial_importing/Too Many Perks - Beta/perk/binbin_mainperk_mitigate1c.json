@@ -3,7 +3,7 @@
     "AdditionalShards": 0,
     "AuraCurseBonus": "mitigate",
     "AuraCurseBonusValue": 0,
-    "CardClass": "",
+    "CardClass": "None",
     "CustomDescription": "custom_binbin_mainperk_mitigate1c",
     "DamageFlatBonus": "None",
     "DamageFlatBonusValue": 0,

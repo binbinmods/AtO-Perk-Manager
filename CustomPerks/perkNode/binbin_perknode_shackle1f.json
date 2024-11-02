@@ -7,8 +7,7 @@
     "Perk": "binbin_mainperk_shackle1f",
     "PerkRequired": "",
     "PerksConnected": [],
-    "Row": 1,
+    "Row": 6,
     "Sprite": "shackle",
-    "Type": 1,
-    "row": 6
+    "Type": 1
 }

@@ -70,6 +70,9 @@ PERK_DESC_STEM = "custom_binbin_mainperk_"
 PERK_ID_STEM = "binbin_mainperk_"
 NODE_ID_STEM = "binbin_perknode_"
 
+VANILLA_NODE_STEM = "nodeperk"
+VANILLA_PERK_STEM = "mainperk"
+
 NODE_DIR = "CustomPerks/perkNode/"
 PERK_DIR = "CustomPerks/perk/"
 
@@ -154,7 +157,7 @@ def create_new_perk_node_improved(perk:Perk,
     perkNode = PerkNode()
     perkNode.Perk=perk.ID
     perkNode.Column=col
-    perkNode.row = row
+    perkNode.Row = row
     perkNode.PerkRequired=previous_perk if previous_perk != None else ""
     #perkNode.Cost=cost
     perkNode.NotStack=prevent_stacking
@@ -324,12 +327,76 @@ def add_perks_to_existing_node(node:PerkNode, n_perks_to_add,is_vanilla):
     perk_base = node.ID.replace("nodeperk",'').lower()
     for i in range(n_perks_to_add):
         next_perk_id = PERK_ID_STEM+perk_base+chr(last_letter+i+1)
-        connected_nodes.append(next_perk_id)
         id,ac_str,icon = get_perk_inputs_from_id(next_perk_id)
         new_perk:Perk = create_new_perk(id,ac_str,icon)
-        save_object_to_json(new_perk,PERK_DIR+new_perk.ID)    
+        save_object_to_json(new_perk,PERK_DIR+new_perk.ID)
+
+        new_perk_node_name = NODE_ID_STEM+id
+        p = create_new_perk_node_improved(perk=new_perk,
+                            perk_node_name=new_perk_node_name,
+                            col=node.Column,
+                            row=node.Row,
+                            sprite=icon,
+                            cost=node.Cost,
+                            prevent_stacking=True,
+                            category=node.Type
+                            )
+        p.PerkRequired=node.PerkRequired
+        save_object_to_json(p,NODE_DIR+p.ID)
+
+        connected_nodes.append(p.ID)
+
+
+
 
     save_object_to_json(node,NODE_DIR+node.ID)
+
+
+def create_new_perk_node_and_perk_jsons(source_node:PerkNode,full_perk_id:str):
+    id,ac_str,icon = get_perk_inputs_from_id(full_perk_id)
+    new_perk:Perk = create_new_perk(id,ac_str,icon)
+    save_object_to_json(new_perk,PERK_DIR+new_perk.ID)
+
+    new_perk_node_name = NODE_ID_STEM+id
+    p = create_new_perk_node_improved(perk=new_perk,
+                        perk_node_name=new_perk_node_name,
+                        col=source_node.Column,
+                        row=source_node.Row,
+                        sprite=icon,
+                        cost=source_node.Cost,
+                        prevent_stacking=True,
+                        category=source_node.Type
+                        )
+    p.PerkRequired=source_node.PerkRequired
+    source_node.PerksConnected.append(p.ID)
+    save_object_to_json(p,NODE_DIR+p.ID)
+
+
+def create_new_split_node(node_id:str,n_to_add:int):
+    orig_node:PerkNode = get_perk_node_from_name(node_id,["VanillaPerkData"])
+    orig_perk_id = orig_node.Perk
+    new_perk_id = orig_perk_id + "a"
+    old_node_id = orig_node.ID
+    new_node_id = orig_node.ID+"a"
+    orig_node.ID=new_node_id
+    save_object_to_json(orig_node,NODE_DIR+new_node_id)
+
+    orig_node.PerksConnected=[new_node_id]
+    orig_node.Perk = ""
+
+    
+    orig_perk:Perk = get_perk_from_name(orig_perk_id,["VanillaPerkData"])
+    orig_perk.ID= new_perk_id
+    save_object_to_json(orig_perk,PERK_DIR+new_perk_id)
+
+    for i in range(1,n_to_add+1):
+        next_letter = chr(ord('a')+i)
+        next_perk_id = PERK_ID_STEM+orig_perk_id.replace(VANILLA_PERK_STEM,'')+next_letter
+        create_new_perk_node_and_perk_jsons(orig_node,next_perk_id)
+            
+    orig_node.ID=old_node_id
+    save_object_to_json(orig_node,NODE_DIR+orig_node.ID)
+
 
 
 def handle_new_nodes():
@@ -376,13 +443,26 @@ def handle_adding_perks_to_vanilla_nodes():
     for tuple in tuples:
         node_name,n = tuple
 
-        node:PerkNode = get_perk_node_from_name(f"nodeperk{node_name.capitalize()}",["VanillaPerkData"])
+        node:PerkNode = get_perk_node_from_name(f"{VANILLA_NODE_STEM}{node_name.capitalize()}",["VanillaPerkData"])
         add_perks_to_existing_node(node,n,True)
+
+def handle_creating_new_split_nodes():
+    tuples = [
+        ("health6",2)
+    ]
+    for tuple in tuples:
+        node_id = VANILLA_NODE_STEM+tuple[0].capitalize()
+        n_to_add = tuple[1]
+        create_new_split_node(node_id,n_to_add)
+        
+
+
 
 if __name__=="__main__":
     
     handle_new_nodes()
     handle_adding_perks_to_vanilla_nodes()
+    handle_creating_new_split_nodes()
 
 
     

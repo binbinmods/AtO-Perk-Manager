@@ -25,7 +25,8 @@ namespace PerkManager{
             // medsTexts[perkStem + "resistance5d"] = "Maximum resistances for heroes and monsters are now 97%. - Rewritten Functions";
 
             // XP Perks
-            Hero[] teamHero = MatchManager.Instance.GetTeamHero();
+            Hero[] teamHero = PlayerManager.Instance.GetTeamHero();
+            // List<Hero> heroes = PlayerManager.Instance.GetTeamHero
             for (int i =0; i<teamHero.Length; i++)
             {
                 Hero _hero = teamHero[i];
@@ -148,7 +149,7 @@ namespace PerkManager{
         
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Globals), nameof(Globals.GetCostReroll))]
-        public static int GetRerollCostPostfix(ref Globals __instance, ref int __result)
+        public static int GetRerollCostPostfix(ref int __result)
         {
             // medsTexts[perkStem + "currency6d"] = "Rerolling the shop costs 25% less.";
 
@@ -715,11 +716,11 @@ namespace PerkManager{
                             __result.ConsumedAtTurnBegin = false;
                             __result.MaxCharges = 12;
                         }
-                        if(CharacterHasPerkForSet("mitigate1d",SetAppliesToHeroes,__instance,_characterTarget))
-                        {
-                            __result.IncreasedDirectDamageReceivedPerStack = -2;
-                            __result.ConsumeAll=true;
-                        }
+                        // if(CharacterHasPerkForSet("mitigate1d",SetAppliesToHeroes,__instance,_characterTarget))
+                        // {
+                        //     __result.IncreasedDirectDamageReceivedPerStack = -2;
+                        //     __result.ConsumeAll=true;
+                        // }
                         if(TeamHasPerkForSet("mitigate1e",AppliesGlobally,__instance,_characterTarget))
                         {
                             __result.AuraDamageType=Enums.DamageType.All;
