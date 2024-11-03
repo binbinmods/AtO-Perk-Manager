@@ -95,6 +95,20 @@ def create_new_perk(id:str,
     if id=="shackle1a":
         perk.AuraCurseBonus="shackle"
         perk.AuraCurseBonusValue = 1
+    if id=="health6b":
+        perk.MaxHealth = -12
+    if id=="health6c":
+        perk.MaxHealth = 36
+    if id=="resistance5b":
+        perk.ResistModified = "All"
+        perk.ResistModifiedValue = -4
+    if id=="resistance5c":
+        perk.ResistModified = "All"
+        perk.ResistModifiedValue = 12
+    if id=="paralyze1a":
+        perk.AuraCurseBonus="paralyze"
+        perk.AuraCurseBonusValue = 1
+
     return perk
     
     

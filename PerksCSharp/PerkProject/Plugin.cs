@@ -56,8 +56,8 @@ namespace PerkManager{
             
             // Custom Text for Max HP
             // medsTexts[perkStem + "health6a"] = "+16 Max HP.";
-            medsTexts[perkStem + "health6b"] = "-12 Max HP. Gain 12 Max HP on level up.";
-            medsTexts[perkStem + "health6c"] = "+36 Max HP. Lose 14 Max HP on level up";
+            medsTexts[perkStem + "health6b"] = "Max HP -12. Gain 12 Max HP on level up.";
+            medsTexts[perkStem + "health6c"] = "Max HP +36. Lose 14 Max HP on level up";
             medsTexts[perkStem + "health6d"] = "At the start of your turn, if you are at max HP, gain 2 Vitality.";
 
             // Custom Text for Resistances
@@ -86,6 +86,18 @@ namespace PerkManager{
             // Custom Text for Silence
             medsTexts[perkStem + "silence1a"] = "This hero is immune to Silence.";
             medsTexts[perkStem + "silence1b"] = "Silence on this hero cannot be dispelled unless specified, but increases all damage by 7.";
+
+            // Custom Text for Sight
+            medsTexts[perkStem + "sight1d"] = "At the start of your turn, gain 1 Evasion for every enemy with 100 or more Sight charges.";
+            medsTexts[perkStem + "sight1e"] = "When a monster reaches 100 charges of Sight, Dispel Sight and Purge 3.";
+
+            // Custom Text for Fast
+            medsTexts[perkStem + "fast1b"] = "Fast on this hero can stack, but loses all charges at the start of turn.";
+            medsTexts[perkStem + "fast1c"] = "Fast on this hero falls off at the end of turn.";
+
+            // Custom Text for Slow
+            medsTexts[perkStem + "slow1b"] = "Slow on monsters can stack up to 10, but only reduces Speed by 1 per charge";
+            medsTexts[perkStem + "slow1c"] = "Slow on heroes can stack up to 10, but only reduces Speed by 1 per charge";
 
             // Custom Text for Shackle
             medsTexts[perkStem + "shackle1a"] = "+1 Charge";
@@ -136,27 +148,30 @@ namespace PerkManager{
             medsTexts[perkStem + "burn1e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
             
             // Custom Text for Chill
-            medsTexts[perkStem + "chill1e"] = "Chill reduces Cold and Mind resistance by 0.5% per charge.";
-            medsTexts[perkStem + "chill1f"] = "At the start of your turn, suffer 3 Chill.";
+            medsTexts[perkStem + "chill1e"] = "Chill on monsters reduces Cold and Mind resistance by 0.5% per charge.";
+            medsTexts[perkStem + "chill1f"] = "At the start of your turn, suffer 3 Chill. Chill on this hero reduces Speed by 1 for every 10 charges";
+            medsTexts[perkStem + "chill1g"] = "Chill on this hero reduces Speed by 1 for every 3 charges but does not reduce Cold resistance.";
             
             // Custom Text for Sparks
             medsTexts[perkStem + "sparks1d"] = "Gain +1 Lightning Damage for every 5 stacks of Spark on this hero.";
+            medsTexts[perkStem + "sparks1e"] = "Spark deal Fire damage. Spark decreases Fire resistance by 0.5% per charge and Lightning resistance by 0.5% per charge.";
+            medsTexts[perkStem + "sparks1f"] = "When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
             
             // Custom Text for Shield
-            // medsTexts[perkStem + "shield1a"] = "+ Charges";
-            medsTexts[perkStem + "shield1b"] = "If Restricted Power is enabled, increases Max Charges to 300.";
-            medsTexts[perkStem + "shield1c"] = "At start of combat, apply 4 Shield to all heroes.";
+            // medsTexts[perkStem + "shield5a"] = "+ Charges";
+            medsTexts[perkStem + "shield5b"] = "If Restricted Power is enabled, increases Max Charges to 300.";
+            medsTexts[perkStem + "shield5c"] = "At start of combat, apply 4 Shield to all heroes.";
             
             // Custom Text for Wet
             medsTexts[perkStem + "wet1d"] = "Wet does not dispel or prevent Burn.";
             
             // Custom Text for Inspire
-            medsTexts[perkStem + "inspire1d"] = "Draw 1 extra card per turn, -4 max hand size.";
+            medsTexts[perkStem + "inspire1d"] = "If this hero ends their turn with 4 or more cards, gain 1 Inspire";
             
             // Custom Text for Energize
             medsTexts[perkStem + "energize1a"] = "At start of your first turn, gain 1 Energize.";
             medsTexts[perkStem + "energize1b"] = "If you end your turn with 4 or more energy, gain 1 Energize.";
-            medsTexts[perkStem + "energize1c"] = "Energize gives 2 energy per charge, but you can only have a maximum of 1 energize.";
+            medsTexts[perkStem + "energize1c"] = "Energize gives 2 energy per charge, but you can only have a maximum of 1 Energize.";
             medsTexts[perkStem + "energize1d"] = "Energize decreases damage received by 1 per charge.";
 
             // Custom Text for Spellsword
@@ -200,6 +215,7 @@ namespace PerkManager{
             // Custom Text for Insane
             medsTexts[perkStem + "insane2d"] = "Insane increases the effectiveness of Crack by 3% per charge.";
             medsTexts[perkStem + "insane2e"] = "At start of their turn, monsters gain 1 Scourge for every 30 Insane charges on them.";
+            medsTexts[perkStem + "insane2f"] = "Insane on this hero increases the effectiveness of sharp by 1% per charge.";
             
             // Custom Text for Dark
             medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage.";
@@ -218,6 +234,8 @@ namespace PerkManager{
             // Custom Text for Vitality
             medsTexts[perkStem + "vitality1d"] = "Vitality on this hero dispels Poison.";
 
+            // Custom Text for Vitality
+            medsTexts[perkStem + "bless1d"] = "Bless on all heroes increases Slashing, Fire, and Holy damage by 3% per charge but does not increase damage by 1.";
 
 
 
