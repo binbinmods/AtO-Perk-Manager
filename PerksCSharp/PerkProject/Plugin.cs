@@ -108,7 +108,7 @@ namespace PerkManager{
             medsTexts[perkStem + "shackle1f"] = "Shackles on monsters increases all damage received by 1 per base Speed.";
 
             // Custom Text for Mitigate
-            medsTexts[perkStem + "mitigate1a"] = "At the start of your turn, gain 1 Mitigate. Mitigate on this hero only stacks to 5.";
+            medsTexts[perkStem + "mitigate1a"] = "At the start of your turn, gain 2 Mitigate.";
             medsTexts[perkStem + "mitigate1b"] = "Mitigate on this hero does not lose charges at start of turn and stacks to 12.";
             medsTexts[perkStem + "mitigate1c"] = "At the start of your turn, gain 7 Block per Mitigate charge.";
             medsTexts[perkStem + "mitigate1d"] = "Mitigate on this hero reduces incoming damage by 2 per charge, but loses all charges at the start of your turn.";
@@ -119,7 +119,7 @@ namespace PerkManager{
             medsTexts[perkStem + "poison2e"] = "Poison on heroes and monsters reduces Slashing resistance by 0.25% per charge.";
             medsTexts[perkStem + "poison2f"] = "Poison on monsters reduces all resistances by 5% for every 100 charges.";
             medsTexts[perkStem + "poison2g"] = "When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
-            medsTexts[perkStem + "poison2h"] = "-1 Poison. When this hero applies poison, deal indirect Mind damage to the target equal to 30% of their Poison charges.";
+            medsTexts[perkStem + "poison2h"] = "-1 Poison. When this hero applies Poison, deal indirect Mind damage to the target equal to 30% of their Poison charges.";
 
 
             // Custom Text for Bleed
@@ -192,7 +192,7 @@ namespace PerkManager{
             medsTexts[perkStem + "zeal1c"] = "Zeal on all heroes can stack, but reduces Speed by 2 per charge.";
             medsTexts[perkStem + "zeal1d"] = "Zeal on heroes and monsters increases all resistances by 0.5% per Wet charge.";
             medsTexts[perkStem + "zeal1e"] = "When this hero loses Zeal at end of turn, deal indirect Holy and Fire damage to all monsters equal to 4x the number of charges lost.";
-            // medsTexts[perkStem + "zealf"] = "If this hero dies with Zeal, deal indirect Fire damage equal to 5x their insane to every monster.";
+            // medsTexts[perkStem + "zeal1f"] = "If this hero dies with Zeal, deal indirect Fire damage equal to 5x their insane to every monster.";
 
             // Custom text for Scourge
             medsTexts[perkStem + "scourge1a"] = "Scourge +1.";
@@ -218,7 +218,7 @@ namespace PerkManager{
             medsTexts[perkStem + "insane2f"] = "At start of their turn, monsters gain 1 Scourge for every 30 Insane charges on them.";
             
             // Custom Text for Dark
-            medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.25% per charge in addition to reducing Shadow resistance..";
+            medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.5% per charge in addition to reducing Shadow resistance..";
 
             // Custom Text for Sanctify
             medsTexts[perkStem + "sanctify2d"] = "Every 5 stacks of Sanctify increase the number of Dark charges needed for an explosion by 1.";
@@ -234,7 +234,7 @@ namespace PerkManager{
             // Custom Text for Vitality
             medsTexts[perkStem + "vitality1d"] = "Vitality on this hero dispels Poison.";
 
-            // Custom Text for Vitality
+            // Custom Text for Bless
             medsTexts[perkStem + "bless1d"] = "Bless on all heroes increases Slashing, Fire, and Holy damage by 3% per charge but does not increase damage by 1.";
 
 
