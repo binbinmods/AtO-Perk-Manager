@@ -409,6 +409,8 @@ namespace PerkManager
 
             if (theEvent == Enums.EventActivation.Heal && __instance.IsHero && __instance.Alive && __instance != null && target.IsHero && target.Alive && target != null && CharacterObjectHavePerk(__instance, "heal5b"))
             {
+                Plugin.Log.LogDebug(debugBase+"heal5c");
+                Plugin.Log.LogDebug(debugBase+" HP remaining: " +target.GetHpLeftForMax());
                 if (target.GetHpLeftForMax()<=0)
                 {
                     target.SetAuraTrait(__instance,"powerful",1);
@@ -515,6 +517,11 @@ namespace PerkManager
                 int n_zeal = FloorToInt(n_sanctify*0.05f);
                 AuraCurseData zeal = GetAuraCurseData("zeal");                
                 __instance.SetAura(__instance,zeal,n_zeal,useCharacterMods:false);
+            }
+            if (TeamHasPerk("insane2f"))
+            {
+                int n_charges = FloorToInt(__instance.GetAuraCharges("insane")/30);
+                __instance.SetAuraTrait(__instance, "scourge", n_charges);
             }
 
         }
@@ -1609,9 +1616,6 @@ namespace PerkManager
                             __result.ConsumedDamageChargesBasedOnACCharges = GetAuraCurseData("Sight");
                             __result.DamageWhenConsumedPerCharge = 2;
                         }
-
-
-
                     }
                     if (_type == "consume")
                     {
@@ -1644,14 +1648,16 @@ namespace PerkManager
                         {
                             __result.Preventable = false;
                             __result.AuraDamageIncreasedPercent = -25;
+                            __result.HealDonePercent = -25;
                         }
                     }
                     if (_type == "consume")
                     {
-                        if (TeamHasPerkForSet("weak1c", ConsumeAppliesToMonsters, __instance, _characterCaster))
+                        if (TeamHasPerkForConsume("weak1c", ConsumeAppliesToMonsters, __instance, _characterCaster))
                         {
                             __result.Preventable = false;
                             __result.AuraDamageIncreasedPercent = -25;
+                            __result.HealDonePercent = -25;                        
                         }
 
 

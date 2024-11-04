@@ -102,7 +102,7 @@ namespace PerkManager{
             // Custom Text for Shackle
             medsTexts[perkStem + "shackle1a"] = "+1 Charge applied";
             medsTexts[perkStem + "shackle1b"] = "This hero is immune to Shackle.";
-            medsTexts[perkStem + "shackle1c"] = "Shackle cannot be prevented.";
+            medsTexts[perkStem + "shackle1c"] = "Shackle cannot be prevented by Immunity or Buffer.";
             medsTexts[perkStem + "shackle1d"] = "At start of your turn, gain Fortify equal to your twice your Shackles.";
             medsTexts[perkStem + "shackle1e"] = "Shackle increases Dark charges you apply by 1 per charge of Shackle.";
             medsTexts[perkStem + "shackle1f"] = "Shackles on monsters increases all damage received by 1 per base Speed.";
@@ -205,7 +205,7 @@ namespace PerkManager{
             medsTexts[perkStem + "weak1a"] = "Weak +1.";
             //medsTexts[perkStem + "weak1b"] = "Weak on heroes and monsters can stack but reduces damages by 15% per charge. Maximum damage reduction is 70%";
             medsTexts[perkStem + "weak1b"] = "Weak on monsters reduces the application of Auras and Curses by 20%.";
-            medsTexts[perkStem + "weak1c"] = "Weak cannot be prevented by immunity or buffer, but only reduces damage by 25%.";
+            medsTexts[perkStem + "weak1c"] = "Weak cannot be prevented by Immunity or Buffer, but reduces damage and healing by 25% instead of 50%.";
             medsTexts[perkStem + "weak1d"] = "This hero is immune to Weak.";
             
             // Custom Text for Healing
@@ -215,7 +215,7 @@ namespace PerkManager{
             // Custom Text for Insane
             medsTexts[perkStem + "insane2d"] = "Crack on monsters increases Blunt damage by an addition 1 for every 40 charges of Insane on that monster.";
             medsTexts[perkStem + "insane2e"] = "Insane on this hero increases the effectiveness of sharp by 1% per charge.";
-            medsTexts[perkStem + "insane2f"] = "At start of their turn, monsters gain 1 Scourge for every 30 Insane charges on them.";
+            medsTexts[perkStem + "insane2f"] = "At the start of every round, monsters gain 1 Scourge for every 30 Insane charges on them.";
             
             // Custom Text for Dark
             medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.5% per charge in addition to reducing Shadow resistance..";
