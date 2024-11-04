@@ -469,6 +469,28 @@ def handle_new_nodes():
             3,
             "Elemental"
         ),
+        # (
+        #     "zeal1",
+        #     6,
+        #     2,
+        #     5,
+        #     "Elemental"
+        # ),
+        # (
+        #     "scourge1",
+        #     6,
+        #     5,
+        #     5,
+        #     "Elemental"
+        # ),
+        # (
+        #     "weak1",
+        #     6,
+        #     8,
+        #     4,
+        #     "Elemental"
+        # ),
+        
     ]
     create_all_perk_jsons(tuples)
 
@@ -485,6 +507,13 @@ def handle_adding_perks_to_vanilla_nodes():
         ("spark2",3),
         ("wet1",1),
         ("inspire0",1),
+        ("insane2",3),
+        ("dark2",1),
+        ("sanctify2",2),
+        ("decay1",2),
+        ("courage1",1),
+        ("vitality1",1),
+        ("bless1",1),
     ]
     for tuple in tuples:
         node_name,n = tuple
@@ -502,7 +531,7 @@ def handle_creating_new_split_nodes():
         ("fast0",2),
         ("slow0",2),
         ("shield5",2),
-
+        ("heal5",2),
     ]
     for tuple in tuples:
         node_id = VANILLA_NODE_STEM+tuple[0].capitalize()
