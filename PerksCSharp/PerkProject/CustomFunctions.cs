@@ -306,6 +306,8 @@ namespace PerkManager
             MatchManager.Instance.CreateLogCardModification(selectedCard.InternalId, MatchManager.Instance.GetHero(_character.HeroIndex));
         }
 
+
+        
         public static int CountAllStacks(string auraCurse, Hero[] teamHero, NPC[] teamNpc){
             int stacks = 0;
             for (int index = 0; index < teamHero.Length; ++index)

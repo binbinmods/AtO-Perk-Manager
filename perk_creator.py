@@ -108,6 +108,11 @@ def create_new_perk(id:str,
     if id=="paralyze1a":
         perk.AuraCurseBonus="paralyze"
         perk.AuraCurseBonusValue = 1
+        perk.CustomDescription=""
+    if id=="poison2h":
+        perk.AuraCurseBonus="poison"
+        perk.AuraCurseBonusValue = -1
+
 
     return perk
     
@@ -413,6 +418,7 @@ def create_new_split_node(node_id:str,n_to_add:int):
 
 
 def handle_new_nodes():
+    #name, row, col, number, sheet
     tuples = [
         (
             "disarm1",
@@ -442,6 +448,27 @@ def handle_new_nodes():
             6,
             "Physical"
         ),
+        (
+            "energize1",
+            6,
+            8,
+            4,
+            "Elemental"
+        ),
+        (
+            "spellsword1",
+            6,
+            2,
+            4,
+            "Elemental"
+        ),
+        (
+            "paralyze1",
+            6,
+            5,
+            3,
+            "Elemental"
+        ),
     ]
     create_all_perk_jsons(tuples)
 
@@ -451,7 +478,13 @@ def handle_adding_perks_to_vanilla_nodes():
         ("bleed2",4),
         ("thorns1",2),
         ("reinforce1",1),
-        ("taunt1",1)
+        ("taunt1",1),
+        ("sight1",2),
+        ("burn2",1),
+        ("chill2",3),
+        ("spark2",3),
+        ("wet1",1),
+        ("inspire0",1),
     ]
     for tuple in tuples:
         node_name,n = tuple
@@ -466,6 +499,10 @@ def handle_creating_new_split_nodes():
         ("currency6",4),
         ("shards5",2),
         ("block5",3),
+        ("fast0",2),
+        ("slow0",2),
+        ("shield5",2),
+
     ]
     for tuple in tuples:
         node_id = VANILLA_NODE_STEM+tuple[0].capitalize()

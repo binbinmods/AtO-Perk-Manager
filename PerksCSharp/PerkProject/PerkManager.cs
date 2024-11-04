@@ -14,6 +14,8 @@ using UnityEngine.TextCore.LowLevel;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 using UnityEngine;
+using System.Diagnostics.Tracing;
+using System.Dynamic;
 
 
 namespace PerkManager
@@ -211,7 +213,15 @@ namespace PerkManager
             }
         }
 
-
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Character), nameof(Character.GetTraitHealReceivedPercentBonus))]
+        public static void GetTraitHealReceivedPercentBonusPostfix(ref Character __instance, ref float __result)    
+        {
+            if (CharacterObjectHavePerk(__instance,"heal5c") && __instance.IsHero && __instance.Alive && __instance!=null)
+            {
+                __result+=0.35f;
+            }
+        }
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.SetEvent))]
@@ -220,7 +230,6 @@ namespace PerkManager
                                             ref int auxInt,
                                             Character target = null,
                                             string auxString = "")
-
         {
             // Not sure on this, but: Killed is "this character was killed" --> triggers things like resurrect
             // CharacterKilled is "a character was killed" --> triggers things like Yogger's Innate
@@ -240,6 +249,7 @@ namespace PerkManager
 
             if (theEvent == Enums.EventActivation.BeginCombat)
                 paralyzeCounters = [0, 0, 0, 0];
+            
 
             if (theEvent == Enums.EventActivation.Killed && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance, "zeal1f") && __instance.HasEffect("zeal"))
             {
@@ -267,7 +277,14 @@ namespace PerkManager
                 target.IndirectDamage(Enums.DamageType.Mind, damageToDeal);
             }
 
-            if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance, "reinforce1d") && auxString == "block")
+            if (theEvent == Enums.EventActivation.AuraCurseSet && target.IsHero && target != null && target.Alive && target.HasEffect("courage") && TeamHasPerk("courage1d") && auxString == "shield")
+            {
+                // medsTexts[perkStem + "courage1d"] = "Courage increases Shield gained by this hero by 1 per charge.";
+                int n = target.GetAuraCharges("courage");
+                auxInt += n;
+
+            }
+            if (theEvent == Enums.EventActivation.AuraCurseSet && target.IsHero && target != null && target.Alive && target.HasEffect("reinforce") && TeamHasPerk("reinforce1d") && auxString == "block")
             {
                 // reinforce1d: Reinforce on this hero increases Block received by 1 per charge of Reinforce.";
                 int n = __instance.GetAuraCharges("reinforce");
@@ -349,6 +366,39 @@ namespace PerkManager
                 int toHeal = RoundToInt(n * 0.25f);
                 __instance.IndirectHeal(toHeal);
             }
+            if (theEvent == Enums.EventActivation.Hitted && __instance.IsHero && !target.IsHero && target.Alive && __instance != null && CharacterObjectHavePerk(__instance, "spark2f"))
+            {
+                // medsTexts[perkStem + "spark2f"] = "When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
+                int n = target.GetAuraCharges("spark");
+                int toDeal = RoundToInt(n * 0.2f);
+                int npcIndex = target.NPCIndex;
+                int[] sides = [npcIndex-1,npcIndex-1];
+                foreach (int side in sides)
+                {
+                    if (side>=0&&side<teamNpc.Length){
+                        NPC sideTarget = teamNpc[side];
+                        if (sideTarget.Alive && sideTarget!=null)
+                            sideTarget.IndirectDamage(Enums.DamageType.Lightning,toDeal);
+                    }
+                }
+            }
+            if (theEvent == Enums.EventActivation.CastCard && __instance.IsHero && __instance.Alive && __instance!=null && CharacterObjectHavePerk(__instance, "spellsword1d"))
+            {
+            // medsTexts[perkStem + "spellsword1d"] = "When this hero cast a Spell or Attack that costs 4 or more, gain 1 Spellsword";
+                CardData _castedCard = Traverse.Create(__instance).Field("castedCard").GetValue<CardData>();
+                if (_castedCard!=null && _castedCard.EnergyCost>=4 && (_castedCard.HasCardType(Enums.CardType.Attack)||_castedCard.HasCardType(Enums.CardType.Spell)))
+                    __instance.SetAuraTrait(__instance,"spellsword",1);
+            }
+
+            if (theEvent == Enums.EventActivation.Heal && __instance.IsHero && __instance.Alive && __instance != null && target.IsHero && target.Alive && target != null && CharacterObjectHavePerk(__instance, "heal5b"))
+            {
+                if (target.GetHpLeftForMax()<=0)
+                {
+                    target.SetAuraTrait(__instance,"powerful",1);
+                }
+            }
+
+            
 
 
             // if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero &&__instance != null && CharacterObjectHavePerk(target,debugBase+"block5d"))
@@ -364,6 +414,8 @@ namespace PerkManager
             // }            
         }
 
+
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.BeginTurn))]
         public static void BeginTurnPostfix(ref Character __instance)
@@ -372,7 +424,7 @@ namespace PerkManager
             // mitigate1a: At the start of your turn, gain 1 Mitigate, but only stack to 5.";
             // mitigate1c: At the start of your turn, gain 7 Block per Mitigate charge.";
             // health6c"] = "At the start of your turn, if you are at max HP, gain 2 Vitality.";
-            // medsTexts[perkStem + "chill1f"] = "At the start of your turn, suffer 3 Chill. Chill on this hero reduces Speed by 1 for every 10 charges";
+            // medsTexts[perkStem + "chill2f"] = "At the start of your turn, suffer 3 Chill. Chill on this hero reduces Speed by 1 for every 10 charges";
             if (!__instance.Alive || __instance == null || MatchManager.Instance == null)
                 return;
 
@@ -402,7 +454,7 @@ namespace PerkManager
                     __instance.SetAuraTrait(__instance, "vitality", n_charges);
                 }
             }
-            if (CharacterObjectHavePerk(__instance, "chill1f"))
+            if (CharacterObjectHavePerk(__instance, "chill2f"))
             {
                 int n_charges = 3;
                 __instance.SetAuraTrait(__instance, "chill", n_charges);
@@ -415,6 +467,37 @@ namespace PerkManager
                 int n_charges = teamNPC.Count(npc => npc.Alive&&npc!=null&&npc.GetAuraCharges("sight")>=100);
                 __instance.SetAuraTrait(__instance, "evasion", n_charges);
 
+            }
+
+            if (CharacterObjectHavePerk(__instance, "energize1a"))
+            {
+            // medsTexts[perkStem + "energize1a"] = "At start of your first turn, gain 1 Energize.";
+                if (MatchManager.Instance.GetCurrentRound() == 1)                
+                    __instance.SetAuraTrait(__instance,"energize",1);
+            }
+
+            if (CharacterObjectHavePerk(__instance, "spellsword1c"))
+            {
+            // medsTexts[perkStem + "spellsword1c"] = "At the start of your turn, all heroes and monsters gain 1 Spellsword";
+                foreach(Hero hero in teamHero)
+                {
+                    if (hero.Alive && hero!=null)
+                        hero.SetAuraTrait(__instance,"spellsword",1);
+                }
+                foreach(NPC npc in teamNPC)
+                {
+                    if (npc.Alive && npc!=null)
+                        npc.SetAuraTrait(__instance,"spellsword",1);
+                }
+            }
+
+            // medsTexts[perkStem + "sanctify2e"] = "At start of their turn, heroes gain 1 Zeal for every 20 Sanctify charges on them.";
+            if (TeamHasPerk("sanctify2e")&&__instance.IsHero&&__instance!=null&&__instance.Alive&&__instance.HasEffect("sanctify"))
+            {
+                int n_sanctify = __instance.GetAuraCharges("sanctify");
+                int n_zeal = FloorToInt(n_sanctify*0.05f);
+                AuraCurseData zeal = GetAuraCurseData("zeal");                
+                __instance.SetAura(__instance,zeal,n_zeal,useCharacterMods:false);
             }
 
         }
@@ -480,10 +563,19 @@ namespace PerkManager
             {
                 if (MatchManager.Instance.CountHeroHand()>=4)
                 {
-                    AuraCurseData inspire = GetAuraCurseData("inspire");
-                    __instance.SetAura(__instance,inspire,1);
+                    __instance.SetAuraTrait(__instance,"inspire",1);
                 }
             }
+
+            // medsTexts[perkStem + "energize1b"] = "If you end your turn with 4 or more energy, gain 1 Energize.";
+            if (CharacterObjectHavePerk(__instance, "energize1d"))
+            {
+                if (__instance.EnergyCurrent>=4)
+                {
+                    __instance.SetAuraTrait(__instance,"energize",1);
+                }
+            }
+
 
         }
 
@@ -691,6 +783,51 @@ namespace PerkManager
                         }
                     }
                     break;
+                case "sharp":
+                // medsTexts[perkStem + "insane2e"] = "Insane on this hero increases the effectiveness of sharp by 1% per charge.";
+
+                    if (_type == "set")
+                    {
+                        if (CharacterHasPerkForSet("insane2e", AppliesGlobally, __instance, _characterTarget)&&_characterTarget.HasEffect("insane"))
+                        {
+                            int n = _characterTarget.GetAuraCharges("insane");
+                            __result.AuraDamageIncreasedPerStack*=(1+0.01f*n);
+                            __result.AuraDamageIncreasedPerStack2*=(1+0.01f*n);
+                            __result.AuraDamageIncreasedPerStack3*=(1+0.01f*n);
+                        }
+                    }
+                    if (_type == "consume")
+                    {
+                        if (CharacterHasPerkForConsume("insane2e", AppliesGlobally, __instance, _characterCaster)&&_characterCaster.HasEffect("insane"))
+                        {
+                            int n = _characterCaster.GetAuraCharges("insane");
+                            __result.AuraDamageIncreasedPerStack*=(1+0.01f*n);
+                            __result.AuraDamageIncreasedPerStack2*=(1+0.01f*n);
+                            __result.AuraDamageIncreasedPerStack3*=(1+0.01f*n);
+                        }
+                    }
+                    break;
+
+                case "crack":
+                // medsTexts[perkStem + "insane2d"] = "Crack on monsters increases Blunt damage by an addition 1 for every 40 charges of Insane on that monster.";
+
+                    if (_type == "set")
+                    {
+                        if (TeamHasPerkForSet("insane2d", SetAppliesToMonsters, __instance, _characterTarget)&&_characterTarget.HasEffect("insane"))
+                        {
+                            int n = _characterTarget.GetAuraCharges("insane");
+                            __result.IncreasedDirectDamageReceivedPerStack += FloorToInt(0.025f*n);
+                        }
+                    }
+                    if (_type == "consume")
+                    {
+                        if (TeamHasPerkForConsume("insane2d", ConsumeAppliesToMonsters, __instance, _characterCaster)&&_characterCaster.HasEffect("insane"))
+                        {
+                            int n = _characterCaster.GetAuraCharges("insane");
+                            __result.IncreasedDirectDamageReceivedPerStack += FloorToInt(0.025f*n);
+                        }
+                    }
+                    break;
 
                 case "shackle":
                     if (_type == "set")
@@ -806,6 +943,7 @@ namespace PerkManager
                         // poison2f: Poison on monsters reduces all resistances by 5% for every 100 charges.";
                         // poison2g: When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
                         // poison2h: -1 Poison. When this hero applies poison, deal Mind damage to the target equal to 30% of their Poison charges.";
+                        // medsTexts[perkStem + "decay1e"] = "Every stack of decay increases the damage dealt by poison by 20%.";
 
                         if (TeamHasPerkForSet("poison2d", AppliesGlobally, __instance, _characterTarget))
                         {
@@ -822,6 +960,13 @@ namespace PerkManager
                             __result.ResistModifiedPercentagePerStack2 = 5f;
                             __result.ChargesAuxNeedForOne2 = 100;
                         }
+                        if (TeamHasPerkForSet("decay1e", AppliesGlobally, __instance, _characterTarget)&&_characterTarget.HasEffect("decay"))
+                        {
+                            int n_decay = _characterTarget.GetAuraCharges("decay");
+                            float multiplier = 1 + 0.2f * n_decay;
+                            __result.DamageWhenConsumedPerCharge*=multiplier;                                                        
+                        }
+
 
                     }
                     if (_type == "consume")
@@ -841,6 +986,13 @@ namespace PerkManager
                             __result.ResistModifiedPercentagePerStack2 = 5f;
                             __result.ChargesAuxNeedForOne2 = 100;
                         }
+                        if (TeamHasPerkForConsume("decay1e", AppliesGlobally, __instance, _characterCaster)&&_characterCaster.HasEffect("decay"))
+                        {
+                            int n_decay = _characterCaster.GetAuraCharges("decay");
+                            float multiplier = 1 + 0.2f * n_decay;
+                            __result.DamageWhenConsumedPerCharge*=multiplier;                                                        
+                        }
+
 
                     }
                     break;
@@ -1004,7 +1156,77 @@ namespace PerkManager
                         }
                     }
                     break;
+                case "spellsword":
+                    // medsTexts[perkStem + "spellsword1a"] = "Max stacks +2";
+                    // medsTexts[perkStem + "spellsword1b"] = "Spellsword on heroes reduces incoming damage by 2, but does not increase damage";
 
+                    if (_type == "set")
+                    {
+                        
+                        if (CharacterHasPerkForSet("spellsword1a", AppliesGlobally, __instance, _characterTarget))
+                        {
+                            __result.MaxCharges+=2;
+                            if (__result.MaxMadnessCharges!=-1)
+                                __result.MaxMadnessCharges+=2;
+                        }
+                        if (TeamHasPerkForSet("spellsword1c", SetAppliesToHeroes, __instance, _characterTarget))
+                        {
+                            __result.AuraDamageType=Enums.DamageType.None;
+                            __result.AuraDamageIncreasedPerStack=0;
+                            __result.IncreasedDirectDamageReceivedPerStack=-2;
+                        }
+                    }
+                    if (_type == "consume")
+                    {
+                        if (CharacterHasPerkForConsume("spellsword1b", AppliesGlobally, __instance, _characterCaster))
+                        {
+                            __result.MaxCharges+=2;
+                            if (__result.MaxMadnessCharges!=-1)
+                                __result.MaxMadnessCharges+=2;
+
+                        }
+                        if (TeamHasPerkForConsume("spellsword1c", ConsumeAppliesToHeroes, __instance, _characterCaster))
+                        {
+                            __result.AuraDamageType=Enums.DamageType.None;
+                            __result.AuraDamageIncreasedPerStack=0;
+                            __result.IncreasedDirectDamageReceivedPerStack=-2;
+                        }
+
+                    }
+                    break;
+                case "energize":
+                    // medsTexts[perkStem + "energize1b"] = "Energize gives 2 energy per charge, but you can only have a maximum of 1 Energize.";
+                    // medsTexts[perkStem + "energize1c"] = "Energize increases all damage 1 per charge.";
+
+                    if (_type == "set")
+                    {
+                        if (CharacterHasPerkForSet("energize1b", SetAppliesToHeroes, __instance, _characterTarget))
+                        {
+                            __result.MaxCharges=1;
+                            __result.MaxMadnessCharges=1;
+                            __result.CharacterStatModifiedValuePerStack = 2;
+                        }
+                        if (CharacterHasPerkForSet("energize1c", SetAppliesToHeroes, __instance, _characterTarget))
+                        {
+                            __result.AuraDamageType=Enums.DamageType.All;
+                            __result.AuraDamageIncreasedPerStack=1;
+                        }
+                    }
+                    if (_type == "consume")
+                    {
+                        if (CharacterHasPerkForConsume("energize1b", ConsumeAppliesToHeroes, __instance, _characterCaster))
+                        {
+                            __result.MaxCharges=1;
+                            __result.MaxMadnessCharges=1;
+                            __result.CharacterStatModifiedValuePerStack = 2;
+                        }
+                        if (CharacterHasPerkForConsume("energize1c", ConsumeAppliesToHeroes, __instance, _characterCaster))
+                        {
+                            __result.AuraDamageType=Enums.DamageType.All;
+                            __result.AuraDamageIncreasedPerStack=1;
+                        }
+                    }
+                    break;
                 case "burn":
                     // scourge1e: Scourge on monsters increases burn damage by 15%/stack";
 
@@ -1029,24 +1251,24 @@ namespace PerkManager
                     }
                     break;
                 case "chill":
-                    // medsTexts[perkStem + "chill1e"] = "Chill reduces Cold and Mind resistance by 0.5% per charge.";
-                    // medsTexts[perkStem + "chill1f"] = "At the start of your turn, suffer 3 Chill. Chill on this hero reduces Speed by 1 for every 10 charges";
-                    // medsTexts[perkStem + "chill1g"] = "Chill on this hero reduces Speed by 1 for every 3 charges but does not reduce Cold resistance.";
+                    // medsTexts[perkStem + "chill2e"] = "Chill reduces Cold and Mind resistance by 0.5% per charge.";
+                    // medsTexts[perkStem + "chill2f"] = "At the start of your turn, suffer 3 Chill. Chill on this hero reduces Speed by 1 for every 10 charges";
+                    // medsTexts[perkStem + "chill2g"] = "Chill on this hero reduces Speed by 1 for every 3 charges but does not reduce Cold resistance.";
 
                     if (_type == "set")
                     {
-                        if (TeamHasPerkForSet("chill1e", SetAppliesToMonsters, __instance, _characterTarget))
+                        if (TeamHasPerkForSet("chill2e", SetAppliesToMonsters, __instance, _characterTarget))
                         {
                             __result.ResistModified = Enums.DamageType.Cold;
                             __result.ResistModified2 = Enums.DamageType.Mind;
                             __result.ResistModifiedPercentagePerStack = 0.5f;
                             __result.ResistModifiedPercentagePerStack2 = 0.5f;
                         }
-                        if (CharacterHasPerkForSet("chill1f", SetAppliesToHeroes, __instance, _characterTarget))
+                        if (CharacterHasPerkForSet("chill2f", SetAppliesToHeroes, __instance, _characterTarget))
                         {
                             __result.ChargesAuxNeedForOne1 = 10;
                         }
-                        if (CharacterHasPerkForSet("chill1g", SetAppliesToHeroes, __instance, _characterTarget))
+                        if (CharacterHasPerkForSet("chill2g", SetAppliesToHeroes, __instance, _characterTarget))
                         {
                             __result.ChargesAuxNeedForOne1 = 3;
                             __result.ResistModified = Enums.DamageType.None;
@@ -1056,18 +1278,18 @@ namespace PerkManager
                     }
                     if (_type == "consume")
                     {
-                        if (TeamHasPerkForConsume("chill1e", ConsumeAppliesToMonsters, __instance, _characterCaster))
+                        if (TeamHasPerkForConsume("chill2e", ConsumeAppliesToMonsters, __instance, _characterCaster))
                         {
                             __result.ResistModified = Enums.DamageType.Cold;
                             __result.ResistModified2 = Enums.DamageType.Mind;
                             __result.ResistModifiedPercentagePerStack = 0.5f;
                             __result.ResistModifiedPercentagePerStack2 = 0.5f;
                         }
-                        if (CharacterHasPerkForSet("chill1f", ConsumeAppliesToHeroes, __instance, _characterCaster))
+                        if (CharacterHasPerkForSet("chill2f", ConsumeAppliesToHeroes, __instance, _characterCaster))
                         {
                             __result.ChargesAuxNeedForOne1 = 10;
                         }
-                        if (CharacterHasPerkForConsume("chill1g", ConsumeAppliesToHeroes, __instance, _characterCaster))
+                        if (CharacterHasPerkForConsume("chill2g", ConsumeAppliesToHeroes, __instance, _characterCaster))
                         {
                             __result.ChargesAuxNeedForOne1 = 3;
                             __result.ResistModified = Enums.DamageType.None;
@@ -1079,6 +1301,8 @@ namespace PerkManager
                     break;
                 case "wet":
                     // zeald: Zeal on heroes and enemies increases all resistances by 0.5% per Wet charge
+                    // medsTexts[perkStem + "wet1d"] = "Wet does not Dispel or Prevent Burn.";
+
                     if (_type == "set")
                     {
                         if (CharacterHasPerkForSet("zeal1d", SetAppliesToHeroes, __instance, _characterTarget) && _characterTarget.HasEffect("zeal"))
@@ -1086,6 +1310,14 @@ namespace PerkManager
                             Plugin.Log.LogDebug(debugBase + "zeal1d");
                             __result.ResistModified3 = Enums.DamageType.All;
                             __result.ResistModifiedPercentagePerStack3 = 0.5f;
+                        }
+                        if (CharacterHasPerkForSet("wet1d", AppliesGlobally, __instance, _characterTarget))
+                        {
+                            // Not sure if this is working
+                            AuraCurseData noneAC = GetAuraCurseData("None");
+                            __result.PreventedAuraCurse=noneAC;
+                            __result.PreventedAuraCurseStackPerStack = 0;
+                            __result.RemoveAuraCurse = noneAC;
                         }
                     }
                     if (_type == "consume")
@@ -1096,27 +1328,56 @@ namespace PerkManager
                             __result.ResistModified3 = Enums.DamageType.All;
                             __result.ResistModifiedPercentagePerStack3 = 0.5f;
                         }
+                        if (CharacterHasPerkForConsume("wet1d", AppliesGlobally, __instance, _characterCaster))
+                        {
+                            // Not sure if this is working
+                            AuraCurseData noneAC = GetAuraCurseData("None");
+                            __result.PreventedAuraCurse=noneAC;
+                            __result.PreventedAuraCurseStackPerStack = 0;
+                            __result.RemoveAuraCurse = noneAC;
+                        }
+
                     }
                     break;
 
                 case "spark":
-                    // medsTexts[perkStem + "sparks1d"] = "Gain +1 Lightning Damage for every 5 stacks of Spark on this hero.";
+                    // medsTexts[perkStem + "spark2d"] = "Gain +1 Lightning Damage for every 5 stacks of Spark on this hero."
+                    // medsTexts[perkStem + "spark2e"] = "Spark deal Fire damage. Spark decreases Fire resistance by 0.5% per charge and Lightning resistance by 0.5% per charge.";
+
+
                     if (_type == "set")
                     {
-                        if (CharacterHasPerkForSet("sparks1d", SetAppliesToHeroes, __instance, _characterTarget))
+                        if (CharacterHasPerkForSet("spark2d", SetAppliesToHeroes, __instance, _characterTarget))
                         {
                             __result.AuraDamageType = Enums.DamageType.Lightning;
                             __result.AuraDamageIncreasedPerStack = 1;
                             __result.ChargesAuxNeedForOne1 = 5;
                         }
+                        if (TeamHasPerkForSet("spark2e", SetAppliesToHeroes, __instance, _characterTarget))
+                        {
+                            __result.DamageTypeWhenConsumed = Enums.DamageType.Fire;
+                            __result.ResistModified = Enums.DamageType.Lightning;
+                            __result.ResistModified2 = Enums.DamageType.Fire;
+                            __result.ResistModifiedPercentagePerStack = -0.5f;
+                            __result.ResistModifiedPercentagePerStack2 = -0.5f;
+
+                        }
                     }
                     if (_type == "consume")
                     {
-                        if (CharacterHasPerkForConsume("sparks1d", ConsumeAppliesToHeroes, __instance, _characterCaster))
+                        if (CharacterHasPerkForConsume("spark2d", ConsumeAppliesToHeroes, __instance, _characterCaster))
                         {
                             __result.AuraDamageType = Enums.DamageType.Lightning;
                             __result.AuraDamageIncreasedPerStack = 1;
                             __result.ChargesAuxNeedForOne1 = 5;
+                        }
+                        if (TeamHasPerkForConsume("spark2d", ConsumeAppliesToHeroes, __instance, _characterCaster))
+                        {
+                            __result.DamageTypeWhenConsumed = Enums.DamageType.Fire;
+                            __result.ResistModified = Enums.DamageType.Lightning;
+                            __result.ResistModified2 = Enums.DamageType.Fire;
+                            __result.ResistModifiedPercentagePerStack = -0.5f;
+                            __result.ResistModifiedPercentagePerStack2 = -0.5f;
                         }
                     }
                     break;
@@ -1184,9 +1445,25 @@ namespace PerkManager
                     }
                     break;
                 case "dark":
+                // medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.25% per charge in addition to reducing Shadow resistance..";
+                // medsTexts[perkStem + "burn1e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
+                // medsTexts[perkStem + "sanctify2d"] = "Every 5 stacks of Sanctify increase the number of Dark charges needed for an explosion by 1.";
+
                     if (_type == "set")
-                    {// medsTexts[perkStem + "burn1e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
-                        if (CharacterHasPerkForSet("burn1e", AppliesGlobally, __instance, _characterTarget) && _characterTarget.HasEffect("burn"))
+                    {                  
+                        if (TeamHasPerkForSet("dark2e", AppliesGlobally, __instance, _characterTarget))
+                        {
+                            __result.DamageTypeWhenConsumed = Enums.DamageType.Fire;
+                            __result.ResistModified2 = Enums.DamageType.Fire;
+                            __result.ResistModifiedPercentagePerStack2 = -0.5f;
+                        }
+                        if (TeamHasPerkForSet("sanctify2d", AppliesGlobally, __instance, _characterTarget)&&_characterTarget.HasEffect("sanctify"))
+                        {
+                            int n = _characterTarget.GetAuraCharges("sanctify");
+                            __result.ExplodeAtStacks += FloorToInt(0.2f*n);
+                            
+                        }
+                        if (TeamHasPerkForSet("burn2e", AppliesGlobally, __instance, _characterTarget) && _characterTarget.HasEffect("burn"))
                         {
                             int n_charges = _characterTarget.GetAuraCharges("burn");
                             float multiplier = 1 + 0.05f * n_charges;
@@ -1194,12 +1471,25 @@ namespace PerkManager
                         }
                     }
                     if (_type == "consume")
-                    {// medsTexts[perkStem + "burn1e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
-                        if (CharacterHasPerkForSet("burn1e", AppliesGlobally, __instance, _characterCaster))
+                    {
+                        if (TeamHasPerkForConsume("burn2e", AppliesGlobally, __instance, _characterCaster))
                         {
                             int n_charges = _characterCaster.GetAuraCharges("burn");
                             float multiplier = 1 + 0.05f * n_charges;
                             __result.DamageWhenConsumedPerCharge *= multiplier;
+
+                        }
+                        if (TeamHasPerkForConsume("sanctify2d", AppliesGlobally, __instance, _characterCaster)&&_characterCaster.HasEffect("sanctify"))
+                        {
+                            int n = _characterCaster.GetAuraCharges("sanctify");
+                            __result.ExplodeAtStacks += FloorToInt(0.2f*n);
+                            
+                        }
+                        if (TeamHasPerkForConsume("dark2e", AppliesGlobally, __instance, _characterCaster))
+                        {
+                            __result.DamageTypeWhenConsumed = Enums.DamageType.Fire;
+                            __result.ResistModified2 = Enums.DamageType.Fire;
+                            __result.ResistModifiedPercentagePerStack2 = -0.5f;
 
                         }
                     }
@@ -1208,24 +1498,14 @@ namespace PerkManager
 
 
 
-                case "insane":
-                    // weak1c: Monsters cannot be immune to Weak, but no longer have their damage reduced by Insane.";
+                case "decay":
+                // medsTexts[perkStem + "decay1d"] = "Decay purges Reinforce.";
 
                     if (_type == "set")
                     {
-                        if (TeamHasPerkForSet("weak1c", SetAppliesToMonsters, __instance, _characterTarget))
+                        if (TeamHasPerkForSet("decay1d", AppliesGlobally, __instance, _characterTarget))
                         {
-                            // __result.AuraDamageIncreasedPercent = 0;
-                            // __result.AuraDamageType = Enums.DamageType.None;
-                        }
-
-                    }
-                    if (_type == "consume")
-                    {
-                        if (TeamHasPerkForConsume("weak1c", SetAppliesToMonsters, __instance, _characterCaster))
-                        {
-                            // __result.AuraDamageIncreasedPercent = 0;
-                            // __result.AuraDamageType = Enums.DamageType.None;
+                            __result.RemoveAuraCurse = GetAuraCurseData("reinforce");
                         }
 
                     }
@@ -1332,40 +1612,18 @@ namespace PerkManager
                     break;
 
                 case "weak":
-                    // weak1a: Weak +1.";
-                    // weak1b: Weak on heroes and monsters can stack but reduces healing and damage by 20% per stack.";
                     // weak1c: Monsters cannot be immune to Weak, but no longer have their damage reduced by Insane.";
-                    // weak1d: This hero is immune to Weak.";
 
                     if (_type == "set")
                     {
-                        // if(TeamHasPerkForSet("weak1b",AppliesGlobally,__instance,_characterTarget))
-                        // {
-                        //     __result.GainCharges = true;
-                        //     __result.HealDonePercent = 0;
-                        //     __result.HealDonePercentPerStack = -20;
-                        //     __result.AuraDamageIncreasedPercent = 0;
-                        //     __result.AuraDamageIncreasedPercentPerStack = -20;
-                        // }
                         if (TeamHasPerkForSet("weak1c", SetAppliesToMonsters, __instance, _characterTarget))
                         {
                             __result.Preventable = false;
                             __result.AuraDamageIncreasedPercent = -25;
                         }
-
-
-
                     }
                     if (_type == "consume")
                     {
-                        // if(TeamHasPerkForConsume("weak1b",AppliesGlobally,__instance,_characterCaster))
-                        // {
-                        //     __result.GainCharges = true;
-                        //     __result.HealDonePercent = 0;
-                        //     __result.HealDonePercentPerStack = -20;
-                        //     __result.AuraDamageIncreasedPercent = 0;
-                        //     __result.AuraDamageIncreasedPercentPerStack = -20;
-                        // }
                         if (TeamHasPerkForSet("weak1c", ConsumeAppliesToMonsters, __instance, _characterCaster))
                         {
                             __result.Preventable = false;
@@ -1375,10 +1633,51 @@ namespace PerkManager
 
                     }
                     break;
+
+                case "vitality":
+                    // medsTexts[perkStem + "vitality1d"] = "Vitality on this hero dispels Poison.";
+
+                    if (_type == "set")
+                    {
+                        if (CharacterHasPerkForSet("vitality1d", SetAppliesToHeroes, __instance, _characterTarget))
+                        {
+                            __result.RemoveAuraCurse = GetAuraCurseData("poison");
+                        }
+
+                    }
+                    break;
+
+                case "bless":
+                    // medsTexts[perkStem + "bless1d"] = "Bless on all heroes increases Slashing, Fire, and Holy damage by 3% per charge but does not increase damage by 1.";
+
+                    if (_type == "set")
+                    {
+                        if (CharacterHasPerkForSet("bless1d", SetAppliesToHeroes, __instance, _characterTarget))
+                        {
+                            __result.AuraDamageType = Enums.DamageType.Slashing;
+                            __result.AuraDamageType2 = Enums.DamageType.Fire;
+                            __result.AuraDamageType3 = Enums.DamageType.Holy;
+                            __result.AuraDamageIncreasedPercentPerStack = 0.05f;
+                            __result.AuraDamageIncreasedPercentPerStack2 = 0.05f;
+                            __result.AuraDamageIncreasedPercentPerStack3 = 0.05f;
+                            __result.AuraDamageIncreasedPerStack = 0.0f;
+                        }
+                    }
+                    if (_type == "consume")
+                    {
+                        if (CharacterHasPerkForConsume("bless1d", ConsumeAppliesToHeroes, __instance, _characterCaster))
+                        {
+                            __result.AuraDamageType = Enums.DamageType.Slashing;
+                            __result.AuraDamageType2 = Enums.DamageType.Fire;
+                            __result.AuraDamageType3 = Enums.DamageType.Holy;
+                            __result.AuraDamageIncreasedPercentPerStack = 0.05f;
+                            __result.AuraDamageIncreasedPercentPerStack2 = 0.05f;
+                            __result.AuraDamageIncreasedPercentPerStack3 = 0.05f;
+                            __result.AuraDamageIncreasedPerStack = 0.0f;
+                        }
+                    }
+                    break;
             }
         }
-
-
-
     }
 }

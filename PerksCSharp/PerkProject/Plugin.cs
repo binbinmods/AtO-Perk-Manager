@@ -92,15 +92,15 @@ namespace PerkManager{
             medsTexts[perkStem + "sight1e"] = "When a monster reaches 100 charges of Sight, Dispel Sight and Purge 3.";
 
             // Custom Text for Fast
-            medsTexts[perkStem + "fast1b"] = "Fast on this hero can stack, but loses all charges at the start of turn.";
-            medsTexts[perkStem + "fast1c"] = "Fast on this hero falls off at the end of turn.";
+            medsTexts[perkStem + "fast0b"] = "Fast on this hero can stack, but loses all charges at the start of turn.";
+            medsTexts[perkStem + "fast0c"] = "Fast on this hero falls off at the end of turn.";
 
             // Custom Text for Slow
-            medsTexts[perkStem + "slow1b"] = "Slow on monsters can stack up to 10, but only reduces Speed by 1 per charge";
-            medsTexts[perkStem + "slow1c"] = "Slow on heroes can stack up to 10, but only reduces Speed by 1 per charge";
+            medsTexts[perkStem + "slow0b"] = "Slow on monsters can stack up to 10, but only reduces Speed by 1 per charge";
+            medsTexts[perkStem + "slow0c"] = "Slow on heroes can stack up to 10, but only reduces Speed by 1 per charge";
 
             // Custom Text for Shackle
-            medsTexts[perkStem + "shackle1a"] = "+1 Charge";
+            medsTexts[perkStem + "shackle1a"] = "+1 Charge applied";
             medsTexts[perkStem + "shackle1b"] = "This hero is immune to Shackle.";
             medsTexts[perkStem + "shackle1c"] = "Shackle cannot be prevented.";
             medsTexts[perkStem + "shackle1d"] = "At start of your turn, gain Fortify equal to your twice your Shackles.";
@@ -145,17 +145,17 @@ namespace PerkManager{
             medsTexts[perkStem + "taunt1e"] = "Taunt on this hero can stack and increases damage by 1 per charge.";
             
             // Custom Text for Burn
-            medsTexts[perkStem + "burn1e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
+            medsTexts[perkStem + "burn2e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
             
             // Custom Text for Chill
-            medsTexts[perkStem + "chill1e"] = "Chill on monsters reduces Cold and Mind resistance by 0.5% per charge.";
-            medsTexts[perkStem + "chill1f"] = "At the start of your turn, suffer 3 Chill. Chill on this hero reduces Speed by 1 for every 10 charges";
-            medsTexts[perkStem + "chill1g"] = "Chill on this hero reduces Speed by 1 for every 3 charges but does not reduce Cold resistance.";
+            medsTexts[perkStem + "chill2e"] = "Chill on monsters reduces Cold and Mind resistance by 0.5% per charge.";
+            medsTexts[perkStem + "chill2f"] = "At the start of your turn, suffer 3 Chill. Chill on this hero reduces Speed by 1 for every 10 charges";
+            medsTexts[perkStem + "chill2g"] = "Chill on this hero reduces Speed by 1 for every 3 charges but does not reduce Cold resistance.";
             
             // Custom Text for Sparks
-            medsTexts[perkStem + "sparks1d"] = "Gain +1 Lightning Damage for every 5 stacks of Spark on this hero.";
-            medsTexts[perkStem + "sparks1e"] = "Spark deal Fire damage. Spark decreases Fire resistance by 0.5% per charge and Lightning resistance by 0.5% per charge.";
-            medsTexts[perkStem + "sparks1f"] = "When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
+            medsTexts[perkStem + "spark2d"] = "Gain +1 Lightning Damage for every 5 stacks of Spark on this hero.";
+            medsTexts[perkStem + "spark2e"] = "Spark deal Fire damage. Spark decreases Fire resistance by 0.5% per charge and Lightning resistance by 0.5% per charge.";
+            medsTexts[perkStem + "spark2f"] = "When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
             
             // Custom Text for Shield
             // medsTexts[perkStem + "shield5a"] = "+ Charges";
@@ -163,23 +163,23 @@ namespace PerkManager{
             medsTexts[perkStem + "shield5c"] = "At start of combat, apply 4 Shield to all heroes.";
             
             // Custom Text for Wet
-            medsTexts[perkStem + "wet1d"] = "Wet does not dispel or prevent Burn.";
+            medsTexts[perkStem + "wet1d"] = "Wet does not Dispel or Prevent Burn.";
             
             // Custom Text for Inspire
-            medsTexts[perkStem + "inspire1d"] = "If this hero ends their turn with 4 or more cards, gain 1 Inspire";
+            medsTexts[perkStem + "inspire0d"] = "If this hero ends their turn with 4 or more cards, gain 1 Inspire";
             
             // Custom Text for Energize
             medsTexts[perkStem + "energize1a"] = "At start of your first turn, gain 1 Energize.";
-            medsTexts[perkStem + "energize1b"] = "If you end your turn with 4 or more energy, gain 1 Energize.";
-            medsTexts[perkStem + "energize1c"] = "Energize gives 2 energy per charge, but you can only have a maximum of 1 Energize.";
-            medsTexts[perkStem + "energize1d"] = "Energize decreases damage received by 1 per charge.";
+            medsTexts[perkStem + "energize1b"] = "Energize gives 2 energy per charge, but you can only have a maximum of 1 Energize.";
+            medsTexts[perkStem + "energize1c"] = "Energize increases all damage 1 per charge.";
+            medsTexts[perkStem + "energize1d"] = "If you end your turn with 4 or more energy, gain 1 Energize.";
+            
 
             // Custom Text for Spellsword
             medsTexts[perkStem + "spellsword1a"] = "Max stacks +2";
-            // medsTexts[perkStem + "spellsword1b"] = "At the start of your turn, gain 1 Spellsword";
-            medsTexts[perkStem + "spellsword1b"] = "At the start of your turn, all heroes and monsters gain 1 Spellsword";
-            medsTexts[perkStem + "spellsword1c"] = "Spellsword on heroes reduces incoming damage by 2, but does not increase damage";
-            medsTexts[perkStem + "spellsword1d"] = "When this hero cast a spell or attack that cost 5, gain 1 Spellsword";
+            medsTexts[perkStem + "spellsword1b"] = "Spellsword on heroes reduces incoming damage by 2, but does not increase damage";
+            medsTexts[perkStem + "spellsword1c"] = "At the start of your turn, all heroes and monsters gain 1 Spellsword";
+            medsTexts[perkStem + "spellsword1d"] = "When this hero cast a Spell or Attack that costs 4 or more, gain 1 Spellsword";
             
             // Custom Text for Paralyze
             // medsTexts[perkStem + "paralyze1a"] = "+1 Charge.";
@@ -213,20 +213,20 @@ namespace PerkManager{
             medsTexts[perkStem + "heal5c"] = "+35% Heal received.";
 
             // Custom Text for Insane
-            medsTexts[perkStem + "insane2d"] = "Insane increases the effectiveness of Crack by 3% per charge.";
-            medsTexts[perkStem + "insane2e"] = "At start of their turn, monsters gain 1 Scourge for every 30 Insane charges on them.";
-            medsTexts[perkStem + "insane2f"] = "Insane on this hero increases the effectiveness of sharp by 1% per charge.";
+            medsTexts[perkStem + "insane2d"] = "Crack on monsters increases Blunt damage by an addition 1 for every 40 charges of Insane on that monster.";
+            medsTexts[perkStem + "insane2e"] = "Insane on this hero increases the effectiveness of sharp by 1% per charge.";
+            medsTexts[perkStem + "insane2f"] = "At start of their turn, monsters gain 1 Scourge for every 30 Insane charges on them.";
             
             // Custom Text for Dark
-            medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage.";
+            medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.25% per charge in addition to reducing Shadow resistance..";
 
             // Custom Text for Sanctify
             medsTexts[perkStem + "sanctify2d"] = "Every 5 stacks of Sanctify increase the number of Dark charges needed for an explosion by 1.";
             medsTexts[perkStem + "sanctify2e"] = "At start of their turn, heroes gain 1 Zeal for every 20 Sanctify charges on them.";
 
             // Custom Text for Decay
-            medsTexts[perkStem + "decay1d"] = "Every stack of decay increases the damage dealt by poison by 20%.";
-            medsTexts[perkStem + "decay1e"] = "Decay purges Reinforce.";
+            medsTexts[perkStem + "decay1d"] = "Decay purges Reinforce on heroes and monsters.";
+            medsTexts[perkStem + "decay1e"] = "Every stack of decay increases the damage dealt by poison by 20%.";
 
             // Custom Text for Courage
             medsTexts[perkStem + "courage1d"] = "Courage increases Shield gained by this hero by 1 per charge.";

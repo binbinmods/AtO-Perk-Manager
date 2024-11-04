@@ -1,0 +1,18 @@
+{
+    "Column": 2,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_spellsword1",
+    "LockedInTown": false,
+    "NotStack": false,
+    "Perk": "",
+    "PerkRequired": "",
+    "PerksConnected": [
+        "binbin_perknode_spellsword1a",
+        "binbin_perknode_spellsword1b",
+        "binbin_perknode_spellsword1c",
+        "binbin_perknode_spellsword1d"
+    ],
+    "Row": 6,
+    "Sprite": "perk",
+    "Type": 2
+}

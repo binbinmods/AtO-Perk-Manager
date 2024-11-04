@@ -1,10 +1,10 @@
 {
     "Column": 1,
     "Cost": "PerkCostAdvanced",
-    "ID": "nodeperkBurn2e",
+    "ID": "binbin_perknode_burn2e",
     "LockedInTown": false,
     "NotStack": true,
-    "Perk": "mainperkburn2e",
+    "Perk": "binbin_mainperk_burn2e",
     "PerkRequired": "nodeperkBurn1",
     "PerksConnected": [],
     "Row": 5,

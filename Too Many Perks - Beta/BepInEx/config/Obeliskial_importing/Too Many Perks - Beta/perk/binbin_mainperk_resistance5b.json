@@ -16,8 +16,8 @@
     "MainPerk": true,
     "MaxHealth": 0,
     "ObeliskPerk": false,
-    "ResistModified": "None",
-    "ResistModifiedValue": 0,
+    "ResistModified": "All",
+    "ResistModifiedValue": -4,
     "Row": 0,
     "SpeedQuantity": 0
 }
