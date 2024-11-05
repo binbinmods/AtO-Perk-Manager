@@ -104,11 +104,11 @@ namespace PerkManager{
             medsTexts[perkStem + "shackle1b"] = "This hero is immune to Shackle.";
             medsTexts[perkStem + "shackle1c"] = "Shackle cannot be prevented by Immunity or Buffer.";
             medsTexts[perkStem + "shackle1d"] = "At start of your turn, gain Fortify equal to your twice your Shackles.";
-            medsTexts[perkStem + "shackle1e"] = "Shackle increases Dark charges you apply by 1 per charge of Shackle.";
+            medsTexts[perkStem + "shackle1e"] = "Shackle on this hero increases Dark charges applied by 1 per charge of Shackle.";
             medsTexts[perkStem + "shackle1f"] = "Shackles on monsters increases all damage received by 1 per base Speed.";
 
             // Custom Text for Mitigate
-            medsTexts[perkStem + "mitigate1a"] = "At the start of your turn, gain 2 Mitigate.";
+            medsTexts[perkStem + "mitigate1a"] = "At the start of your turn, gain 2 Mitigate, but only stacks to 5.";
             medsTexts[perkStem + "mitigate1b"] = "Mitigate on this hero does not lose charges at start of turn and stacks to 12.";
             medsTexts[perkStem + "mitigate1c"] = "At the start of your turn, gain 7 Block per Mitigate charge.";
             medsTexts[perkStem + "mitigate1d"] = "Mitigate on this hero reduces incoming damage by 2 per charge, but loses all charges at the start of your turn.";
@@ -215,7 +215,7 @@ namespace PerkManager{
             // Custom Text for Insane
             medsTexts[perkStem + "insane2d"] = "Crack on monsters increases Blunt damage by an addition 1 for every 40 charges of Insane on that monster.";
             medsTexts[perkStem + "insane2e"] = "Insane on this hero increases the effectiveness of sharp by 1% per charge.";
-            medsTexts[perkStem + "insane2f"] = "At the start of every round, monsters gain 1 Scourge for every 30 Insane charges on them.";
+            medsTexts[perkStem + "insane2f"] = "At the start of every round, heroes and monsters gain 1 Scourge for every 30 Insane charges on them.";
             
             // Custom Text for Dark
             medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.5% per charge in addition to reducing Shadow resistance..";

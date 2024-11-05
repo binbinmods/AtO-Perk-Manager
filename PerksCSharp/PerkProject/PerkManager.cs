@@ -277,6 +277,20 @@ namespace PerkManager
                 auxInt = Functions.FuncRoundToInt(0.8f * auxInt);
 
             }
+            if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero && __instance != null && TeamHasPerk("weak1b") && __instance.HasEffect("shackle"))
+            {
+                // shackle1e"] = "Shackle on this hero increases Dark charges you apply by 1 per charge of Shackle.";
+
+                Plugin.Log.LogDebug(debugBase + "shackle1e");
+                int n_shackle = __instance.GetAuraCharges("shackle");
+                __instance.ModifyAuraCurseQuantity("dark", n_shackle);
+                // if (auraCurseModifiers.ContainsKey(traitData.AuracurseBonus1.Id))
+                //     auraCurseModifiers[traitData.AuracurseBonus1.Id] += traitData.AuracurseBonusValue1;
+                // else
+                //     auraCurseModifiers[traitData.AuracurseBonus1.Id] = traitData.AuracurseBonusValue1;
+
+            }
+
             if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero && __instance != null && !target.IsHero && target.Alive&&target!=null&& CharacterObjectHavePerk(__instance, "poison2h"))
             {
                 // poison2h: -1 Poison. When this hero applies poison, deal Mind damage to the target equal to 30% of their Poison charges.";
@@ -442,11 +456,29 @@ namespace PerkManager
             // }            
         
 
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(Character), nameof(Character.SetAura))]
+        public static void SetAuraPrefix(ref Character __instance,
+                                            Character theCaster,
+                                            AuraCurseData _acData,
+                                            ref int charges,
+                                            bool fromTrait = false,
+                                            Enums.CardClass CC = Enums.CardClass.None,
+                                            bool useCharacterMods = true,
+                                            bool canBePreventable = true)
+        {
+            if(TeamHasPerk("weak1b"))
+            {
+                Plugin.Log.LogDebug(debugBase + "weak1b");
+                if (!theCaster.IsHero&&theCaster.HasEffect("weak"))
+                    charges = Functions.FuncRoundToInt(0.8f * charges);
+            }
+        }
 
-
+        // SetAura
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.BeginTurn))]
-        public static void BeginTurnPostfix(ref Character __instance)
+        public static void BeginTurnPrefix(ref Character __instance)
         {
             //shackle1d: At start of your turn, gain Fortify equal to your twice your Shackles
             // mitigate1a: At the start of your turn, gain 1 Mitigate, but only stack to 5. Does not charges at the start of your turn";
@@ -550,10 +582,18 @@ namespace PerkManager
 
         }
 
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(MatchManager), nameof(MatchManager.EndTurn))]
+        public static void MatchManagerEndTurnPrefix(Character __instance)
+        {
+            
+        }
+
+
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.EndTurn))]
-        public static void EndTurnPrefix(Character __instance)
+        public static void CharacterEndTurnPrefix(Character __instance)
         {
             if (!__instance.Alive || __instance == null || MatchManager.Instance == null)
                 return;
@@ -876,11 +916,11 @@ namespace PerkManager
                         {
                             __result.Preventable = false;
                         }
-                        if (CharacterHasPerkForSet("shackle1e", SetAppliesToHeroes, __instance, _characterTarget))
-                        {
-                            int n_charges = _characterTarget.GetAuraCharges("shackle");
-                            _characterTarget.ModifyAuraCurseQuantity("dark", n_charges);
-                        }
+                        // if (CharacterHasPerkForSet("shackle1e", SetAppliesToHeroes, __instance, _characterTarget))
+                        // {
+                        //     int n_charges = _characterTarget.GetAuraCharges("shackle");
+                        //     _characterTarget.ModifyAuraCurseQuantity("dark", n_charges);
+                        // }
                         if (TeamHasPerkForSet("shackle1f", SetAppliesToMonsters, __instance, _characterTarget))
                         {
                             int baseSpeed = _characterTarget.GetSpeed()[1];
@@ -896,11 +936,11 @@ namespace PerkManager
                         {
                             __result.Preventable = false;
                         }
-                        if (CharacterHasPerkForConsume("shackle1e", ConsumeAppliesToHeroes, __instance, _characterCaster))
-                        {
-                            int n_charges = _characterCaster.GetAuraCharges("shackle");
-                            _characterCaster.ModifyAuraCurseQuantity("dark", n_charges);
-                        }
+                        // if (CharacterHasPerkForConsume("shackle1e", ConsumeAppliesToHeroes, __instance, _characterCaster))
+                        // {
+                        //     int n_charges = _characterCaster.GetAuraCharges("shackle");
+                        //     _characterCaster.ModifyAuraCurseQuantity("dark", n_charges);
+                        // }
 
                         if (TeamHasPerkForConsume("shackle1f", ConsumeAppliesToMonsters, __instance, _characterCaster))
                         {
@@ -936,7 +976,9 @@ namespace PerkManager
                         {
                             __result.ConsumeAll = true;
                             __result.IncreasedDirectDamageReceivedPerStack = -2;
-                            Plugin.Log.LogDebug(debugBase + "Mitigate1d: set");
+                            // Plugin.Log.LogDebug(debugBase + "Mitigate1d: set");
+                            __result.ChargesMultiplierDescription=2;
+
 
                         }
                         if (TeamHasPerkForSet("mitigate1e", AppliesGlobally, __instance, _characterTarget))
@@ -964,7 +1006,8 @@ namespace PerkManager
                         {
                             __result.IncreasedDirectDamageReceivedPerStack = -2;
                             __result.ConsumeAll = true;
-                            Plugin.Log.LogDebug(debugBase + "Mitigate1d: Consume");
+                            __result.ChargesMultiplierDescription=2;
+                            // Plugin.Log.LogDebug(debugBase + "Mitigate1d: Consume");
 
                         }
                         if (TeamHasPerkForConsume("mitigate1e", AppliesGlobally, __instance, _characterCaster))
@@ -1214,6 +1257,7 @@ namespace PerkManager
                             __result.AuraDamageType=Enums.DamageType.None;
                             __result.AuraDamageIncreasedPerStack=0;
                             __result.IncreasedDirectDamageReceivedPerStack=-2;
+                            __result.ChargesMultiplierDescription=2;
                         }
                     }
                     if (_type == "consume")
@@ -1230,6 +1274,7 @@ namespace PerkManager
                             __result.AuraDamageType=Enums.DamageType.None;
                             __result.AuraDamageIncreasedPerStack=0;
                             __result.IncreasedDirectDamageReceivedPerStack=-2;
+                            __result.ChargesMultiplierDescription=2;
                         }
 
                     }
@@ -1349,7 +1394,9 @@ namespace PerkManager
                         {
                             Plugin.Log.LogDebug(debugBase + "zeal1d");
                             __result.ResistModified3 = Enums.DamageType.All;
-                            __result.ResistModifiedPercentagePerStack3 = 0.5f;
+                            // __result.ResistModifiedPercentagePerStack3 = 0.5f;
+                            __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.All, 0, 0.5f);
+
                         }
                         if (TeamHasPerkForSet("wet1d", AppliesGlobally, __instance, _characterTarget))
                         {
@@ -1366,7 +1413,8 @@ namespace PerkManager
                         {
                             //Plugin.Log.LogDebug(debugBase+"zeal1d");
                             __result.ResistModified3 = Enums.DamageType.All;
-                            __result.ResistModifiedPercentagePerStack3 = 0.5f;
+                            // __result.ResistModifiedPercentagePerStack3 = 0.5f;
+                            __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.All, 0, 0.5f);
                         }
                         if (TeamHasPerkForConsume("wet1d", AppliesGlobally, __instance, _characterCaster))
                         {
@@ -1697,9 +1745,9 @@ namespace PerkManager
                             __result.AuraDamageType = Enums.DamageType.Slashing;
                             __result.AuraDamageType2 = Enums.DamageType.Fire;
                             __result.AuraDamageType3 = Enums.DamageType.Holy;
-                            __result.AuraDamageIncreasedPercentPerStack = 0.05f;
-                            __result.AuraDamageIncreasedPercentPerStack2 = 0.05f;
-                            __result.AuraDamageIncreasedPercentPerStack3 = 0.05f;                            
+                            __result.AuraDamageIncreasedPercentPerStack = 3.0f;
+                            __result.AuraDamageIncreasedPercentPerStack2 = 3.0f;
+                            __result.AuraDamageIncreasedPercentPerStack3 = 3.0f;
                             __result.AuraDamageIncreasedPerStack = 0.0f;
                         }
                     }
@@ -1710,9 +1758,9 @@ namespace PerkManager
                             __result.AuraDamageType = Enums.DamageType.Slashing;
                             __result.AuraDamageType2 = Enums.DamageType.Fire;
                             __result.AuraDamageType3 = Enums.DamageType.Holy;
-                            __result.AuraDamageIncreasedPercentPerStack = 0.05f;
-                            __result.AuraDamageIncreasedPercentPerStack2 = 0.05f;
-                            __result.AuraDamageIncreasedPercentPerStack3 = 0.05f;
+                            __result.AuraDamageIncreasedPercentPerStack = 3.0f;
+                            __result.AuraDamageIncreasedPercentPerStack2 = 3.0f;
+                            __result.AuraDamageIncreasedPercentPerStack3 = 3.0f;
                             __result.AuraDamageIncreasedPerStack = 0.0f;
                         }
                     }
