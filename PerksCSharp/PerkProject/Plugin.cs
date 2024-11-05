@@ -213,9 +213,9 @@ namespace PerkManager{
             medsTexts[perkStem + "heal5c"] = "+35% Heal received.";
 
             // Custom Text for Insane
-            medsTexts[perkStem + "insane2d"] = "Crack on monsters increases Blunt damage by an addition 1 for every 40 charges of Insane on that monster.";
+            medsTexts[perkStem + "insane2d"] = "Crack on monsters increases Blunt damage by an additional 1 for every 40 charges of Insane on that monster.";
             medsTexts[perkStem + "insane2e"] = "Insane on this hero increases the effectiveness of sharp by 1% per charge.";
-            medsTexts[perkStem + "insane2f"] = "At the start of every round, heroes and monsters gain 1 Scourge for every 30 Insane charges on them.";
+            medsTexts[perkStem + "insane2f"] = "At the start of their turn, heroes and monsters gain 1 Scourge for every 30 Insane charges on them.";
             
             // Custom Text for Dark
             medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.5% per charge in addition to reducing Shadow resistance..";
