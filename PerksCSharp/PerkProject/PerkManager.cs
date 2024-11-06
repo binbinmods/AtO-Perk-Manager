@@ -469,41 +469,22 @@ namespace PerkManager
                 if (_castedCard != null && _castedCard.EnergyCost >= 4 && (_castedCard.HasCardType(Enums.CardType.Attack) || _castedCard.HasCardType(Enums.CardType.Spell)))
                     __instance.SetAuraTrait(__instance, "spellsword", 1);
             }
-            // Plugin.Log.LogDebug(debugBase+"somehow this breaks the game here?");
-            // if (theEvent == Enums.EventActivation.CastCard && __instance.IsHero && __instance.Alive && __instance != null && CharacterObjectHavePerk(__instance, "heal5b"))
-            // {
-            // Plugin.Log.LogDebug(debugBase+"somehow this breaks the game here 2?");
-            //     CardData _castedCard = Traverse.Create(__instance).Field("cardCasted").GetValue<CardData>();
-            //     Plugin.Log.LogDebug(debugBase + " HP remaining: " + target.GetHpLeftForMax());
-            //     if (_castedCard == null)
-            //     {
-
-            //     }
-            //     else
-            //     {
-            //         if (_castedCard != null && _castedCard.Heal > 0 && target.GetHpLeftForMax() <= 0)
-            //         {
-            //             Plugin.Log.LogDebug(debugBase + "heal5b");
-            //             target.SetAuraTrait(__instance, "powerful", 1);
-
-            //         }
-            //     }
-            // }
+            if (theEvent == Enums.EventActivation.AuraCurseSet && target.IsHero && target.Alive && target != null && CharacterObjectHavePerk(target,debugBase+"block5d"))
+            { 
+                // block5e: When this hero gains Block, they deal 1 Blunt to themselves and a random monster.";
+                Plugin.Log.LogDebug(debugBase+"block5d");
+                int damageToDeal = 1;
+                Enums.DamageType damageType = Enums.DamageType.Blunt;
+                int modifiedDamage = target.DamageWithCharacterBonus(damageToDeal,damageType,Enums.CardClass.None);
+                Character targetCharacter = GetRandomCharacter(teamNpc);
+                targetCharacter.IndirectDamage(damageType, modifiedDamage);
+                target.IndirectDamage(damageType, modifiedDamage);
+            }            
         }
 
 
 
-        // if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero &&__instance != null && CharacterObjectHavePerk(target,debugBase+"block5d"))
-        // { 
-        //     // block5e: When this hero gains Block, they deal 1 Blunt to themselves and a random monster.";
-        //     Plugin.Log.LogDebug(debugBase+"block5d");
-        //     int damageToDeal = 1;
-        //     Enums.DamageType damageType = Enums.DamageType.Blunt;
-        //     int modifiedDamage = __instance.DamageWithCharacterBonus(damageToDeal,damageType,Enums.CardClass.None);
-        //     Character targetCharacter = GetRandomCharacter(teamNpc);
-        //     targetCharacter.IndirectDamage(damageType, modifiedDamage);
-        //     __instance.IndirectDamage(damageType, modifiedDamage);
-        // }            
+        
 
 
         [HarmonyPrefix]
