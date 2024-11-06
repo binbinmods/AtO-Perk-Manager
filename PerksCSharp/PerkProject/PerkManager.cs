@@ -1100,6 +1100,17 @@ namespace PerkManager
 
                     if (_type == "set")
                     {
+                        if (CharacterHasPerkForSet("sharp1e", SetAppliesToHeroes, __instance, _characterTarget))
+                        {
+                            __result.MaxCharges=25;
+                            __result.MaxMadnessCharges=25;
+                            __result.AuraDamageIncreasedPerStack = 1.5f;
+                            __result.AuraDamageIncreasedPerStack2 = 1.5f;
+                            __result.AuraDamageIncreasedPerStack3 = 1.5f;
+                            __result.AuraDamageIncreasedPerStack4 = 1.5f;
+
+                        }
+                        
                         if (CharacterHasPerkForSet("insane2e", AppliesGlobally, __instance, _characterTarget) && _characterTarget.HasEffect("insane"))
                         {
                             int n = _characterTarget.GetAuraCharges("insane");
@@ -1107,9 +1118,20 @@ namespace PerkManager
                             __result.AuraDamageIncreasedPerStack2 *= 1 + 0.01f * n;
                             __result.AuraDamageIncreasedPerStack3 *= 1 + 0.01f * n;
                         }
+                        
                     }
                     if (_type == "consume")
                     {
+                        if (CharacterHasPerkForSet("sharp1e", ConsumeAppliesToHeroes, __instance, _characterCaster))
+                        {
+                            __result.MaxCharges=25;
+                            __result.MaxMadnessCharges=25;
+                            __result.AuraDamageIncreasedPerStack = 1.5f;
+                            __result.AuraDamageIncreasedPerStack2 = 1.5f;
+                            __result.AuraDamageIncreasedPerStack3 = 1.5f;
+                            __result.AuraDamageIncreasedPerStack4 = 1.5f;
+
+                        }
                         if (CharacterHasPerkForConsume("insane2e", AppliesGlobally, __instance, _characterCaster) && _characterCaster.HasEffect("insane"))
                         {
                             int n = _characterCaster.GetAuraCharges("insane");
@@ -1117,6 +1139,7 @@ namespace PerkManager
                             __result.AuraDamageIncreasedPerStack2 *= 1 + 0.01f * n;
                             __result.AuraDamageIncreasedPerStack3 *= 1 + 0.01f * n;
                         }
+                        
                     }
                     break;
 
