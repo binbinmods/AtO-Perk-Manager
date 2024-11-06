@@ -154,8 +154,11 @@ namespace PerkManager{
             medsTexts[perkStem + "sharp1e"] = "If Sharp would increase a damage type, it increases it by 1.5 damage per charge. Sharp on heroes only stacks to 25.";
 
             // Custom Text for Fury
-            medsTexts[perkStem + "fury1d"] = "For all heroes, at the end of turn, spread 70% of Fury to adjacent heroes. Fury ";
+            medsTexts[perkStem + "fury1d"] = "For all heroes, at the end of turn, spread 70% of Fury to adjacent heroes. Fury loses all charges at end of turn.";
             
+            // Custom Text for Crack
+            medsTexts[perkStem + "crack2d"] = "Crack on monsters reduces Speed by 1 for every 5 charges.";
+
             // Custom Text for Burn
             medsTexts[perkStem + "burn2e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
             

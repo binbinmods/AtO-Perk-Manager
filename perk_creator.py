@@ -84,6 +84,9 @@ def create_new_perk(id:str,
     if id.startswith(PERK_ID_STEM):
         id = id.replace(PERK_ID_STEM,'')
     
+    if (id.startswith("forttify1")):
+        id= id.replace("forttify1","fortify1")
+
     perk = Perk() 
     perk.AuraCurseBonus="None"# if aura_curse_bonus == 0 else aura_curse
     perk.AuraCurseBonusValue=aura_curse_bonus
@@ -187,7 +190,8 @@ def create_new_perk_node_improved(perk:Perk,
     perkNode.ID=perk_node_name
     perkNode.Cost = "PerkCostAdvanced"
     perkNode.Sprite = sprite
-
+    if (perk_node_name=="binbin_perknode_forttify1d"):
+        perkNode.Sprite = "fortify"
     return perkNode
 
 
@@ -247,13 +251,17 @@ def get_perk_from_name(perk_name,perk_folders)->Perk:#, is_vanilla=True)->Perk:
 
 def get_perk_node_from_name(perk_node_name,perk_folders:list[str])->PerkNode:#, is_vanilla=True)->Perk:
     node_file = ""
-    for folder in perk_folders:   
-        potential_file = f"{folder}/perkNode/{perk_node_name}.json"        
+    for folder in perk_folders:
+        if perk_node_name=="nodeperkFortify1":
+            potential_file = f"{folder}/perkNode/nodeperkForttify1.json" 
+        else:
+
+            potential_file = f"{folder}/perkNode/{perk_node_name}.json"        
         if os.path.exists(potential_file):
             node_file = potential_file
             break
     if node_file == "":
-        raise ValueError("Perk Node not Found")
+        raise ValueError("Perk Node not Found " +perk_node_name)
     new_node = PerkNode()
     node_dict = mod.create_dict_from_json(node_file)
     new_node.map_dict_to_obj(node_dict)
@@ -514,6 +522,16 @@ def handle_adding_perks_to_vanilla_nodes():
         ("courage1",1),
         ("vitality1",1),
         ("bless1",1),
+        ("powerful1",1),
+        ("fury1",1),
+        ("mark1",1),
+        ("fortify1",1),
+        ("sharp1",1),
+        ("energy2",1),
+        ("insulate1",1),
+        ("regeneration1",1),
+        ("stanza0",2),
+        ("crack2",1),
     ]
     for tuple in tuples:
         node_name,n = tuple

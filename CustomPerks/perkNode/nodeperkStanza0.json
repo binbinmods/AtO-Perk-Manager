@@ -1,0 +1,19 @@
+{
+    "Column": 9,
+    "Cost": "PerkCostAdvanced",
+    "ID": "nodeperkStanza0",
+    "LockedInTown": false,
+    "NotStack": false,
+    "Perk": "",
+    "PerkRequired": "",
+    "PerksConnected": [
+        "nodeperkStanza0a",
+        "nodeperkStanza0b",
+        "nodeperkStanza0c",
+        "binbin_perknode_stanza0d",
+        "binbin_perknode_stanza0e"
+    ],
+    "Row": 2,
+    "Sprite": "stanzai",
+    "Type": 3
+}

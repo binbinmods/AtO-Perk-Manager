@@ -1,0 +1,13 @@
+{
+    "Column": 0,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_fury1d",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_fury1d",
+    "PerkRequired": "nodeperkFury0",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "fury",
+    "Type": 1
+}
