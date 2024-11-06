@@ -99,6 +99,9 @@ namespace PerkManager{
             medsTexts[perkStem + "slow0b"] = "Slow on monsters can stack up to 10, but only reduces Speed by 1 per charge";
             medsTexts[perkStem + "slow0c"] = "Slow on heroes can stack up to 10, but only reduces Speed by 1 per charge";
 
+            // Custom Text for Mark
+            medsTexts[perkStem + "mark1d"] = "Once per combat, when an enemy reaches 10 Mark, apply 2 Taunt.";
+
             // Custom Text for Shackle
             medsTexts[perkStem + "shackle1a"] = "+1 Charge applied";
             medsTexts[perkStem + "shackle1b"] = "This hero is immune to Shackle.";
@@ -144,6 +147,15 @@ namespace PerkManager{
             // Custom Text for Taunt
             medsTexts[perkStem + "taunt1e"] = "Taunt on this hero can stack and increases damage by 1 per charge.";
             
+            // Custom Text for Fortify
+            medsTexts[perkStem + "fortify1d"] = "At the end of this hero's turn, gain 1 Reinforce for every 2 Fortify charges.";
+
+            // Custom Text for Sharp
+            medsTexts[perkStem + "sharp1e"] = "If Sharp would increase a damage type, it increases it by 1.5 damage per charge. Sharp on heroes only stacks to 25.";
+
+            // Custom Text for Fury
+            medsTexts[perkStem + "fury1d"] = "For all heroes, at the end of turn, spread 70% of Fury to adjacent heroes. Fury ";
+            
             // Custom Text for Burn
             medsTexts[perkStem + "burn2e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
             
@@ -157,6 +169,9 @@ namespace PerkManager{
             medsTexts[perkStem + "spark2e"] = "Spark deal Fire damage. Spark decreases Fire resistance by 0.5% per charge and Lightning resistance by 0.5% per charge.";
             medsTexts[perkStem + "spark2f"] = "When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
             
+            // Custom Text for Insulate
+            medsTexts[perkStem + "insulate1d"] = "Insulate on this hero prevents their Speed from being lowered by Chill.";
+
             // Custom Text for Shield
             // medsTexts[perkStem + "shield5a"] = "+ Charges";
             medsTexts[perkStem + "shield5b"] = "If Restricted Power is enabled, increases Max Charges to 300.";
@@ -181,6 +196,9 @@ namespace PerkManager{
             medsTexts[perkStem + "spellsword1c"] = "At the start of your turn, all heroes and monsters gain 1 Spellsword";
             medsTexts[perkStem + "spellsword1d"] = "When this hero cast a Spell or Attack that costs 4 or more, gain 1 Spellsword";
             
+            // Custom Text for Powerful
+            medsTexts[perkStem + "powerful1d"] = "If this hero gains Powerful when it is at max charges, gain 1 Vitality.";            
+
             // Custom Text for Paralyze
             // medsTexts[perkStem + "paralyze1a"] = "+1 Charge.";
             medsTexts[perkStem + "paralyze1b"] = "At the end of your turn, dispel Paralyze from all heroes.";
@@ -237,8 +255,12 @@ namespace PerkManager{
             // Custom Text for Bless
             medsTexts[perkStem + "bless1d"] = "Bless on all heroes increases Slashing, Fire, and Holy damage by 3% per charge but does not increase damage by 1.";
 
+            // Custom Text for Stanza
+            medsTexts[perkStem + "stanza0d"] = "On their first turn, this hero gains Stanza I. ";
+            medsTexts[perkStem + "stanza0e"] = "On their first turn, this hero gains Stanza II. This hero cannot gain Stanza I or Stanza III";
 
-
+            // Custom Text for Regeneration
+            medsTexts[perkStem + "regneration1d"] = "Regeneration on heroes prevents 1 Vulnerable per charge";
 
             // apply patches
             harmony.PatchAll();

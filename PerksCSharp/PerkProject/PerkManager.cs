@@ -27,6 +27,8 @@ namespace PerkManager
 
         public static bool blockShieldFlag = false;
 
+        public static bool mark1dFlag = true;
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.BeginAdventure))]
         public static void BeginAdventurePostfix(ref AtOManager __instance)
@@ -178,6 +180,11 @@ namespace PerkManager
                 {
                     AddImmunityToHero("shackle", ref _hero);
                 }
+                if (CharacterObjectHavePerk(_hero, "stanza0e"))
+                {
+                    AddImmunityToHero("stanzai", ref _hero);
+                    AddImmunityToHero("stanzaiii", ref _hero);
+                }
 
 
 
@@ -255,6 +262,7 @@ namespace PerkManager
 
             if (theEvent == Enums.EventActivation.BeginCombat)
                 paralyzeCounters = [0, 0, 0, 0];
+                mark1dFlag = true;
 
 
             if (theEvent == Enums.EventActivation.Killed && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance, "zeal1f") && __instance.HasEffect("zeal"))
@@ -269,12 +277,24 @@ namespace PerkManager
                 __instance.IndirectDamage(Enums.DamageType.Mind, damageToDeal);
             }
 
-            if (theEvent == Enums.EventActivation.AuraCurseSet && !__instance.IsHero && __instance != null && AtOManager.Instance.TeamHavePerk(debugBase + "weak1b") && __instance.HasEffect("weak"))
+            if (theEvent == Enums.EventActivation.AuraCurseSet && !__instance.IsHero && __instance.Alive && __instance != null && TeamHasPerk("mark1d") && __instance.HasEffect("mark"))
+            {
+                if (__instance.GetAuraCharges("mark")>=10 && mark1dFlag)
+                {
+                    __instance.SetAura(__instance,GetAuraCurseData("taunt"),2,useCharacterMods:false);
+                    mark1dFlag=false;
+                }
+            }
+            if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero && __instance.Alive &&__instance != null && TeamHasPerk("powerful1d") && __instance.HasEffect("powerful"))
             {
                 // weak1b: "Weak on monsters reduces the application of Auras and Curses by 20%.";
 
-                Plugin.Log.LogDebug(debugBase + "weak1b");
-                auxInt = Functions.FuncRoundToInt(0.8f * auxInt);
+                Plugin.Log.LogDebug(debugBase + "powerful1d");
+                AuraCurseData powerful = GetAuraCurseData("powerful");
+                if (__instance.GetAuraCharges("powerful") == powerful.MaxCharges || __instance.GetAuraCharges("powerful") == powerful.MaxCharges+7)
+                {
+                    __instance.SetAuraTrait(__instance,"vitality",1);
+                }
 
             }
             if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero && __instance != null && TeamHasPerk("weak1b") && __instance.HasEffect("shackle"))
@@ -429,9 +449,10 @@ namespace PerkManager
                 if (_castedCard != null && _castedCard.EnergyCost >= 4 && (_castedCard.HasCardType(Enums.CardType.Attack) || _castedCard.HasCardType(Enums.CardType.Spell)))
                     __instance.SetAuraTrait(__instance, "spellsword", 1);
             }
-
-            // if (theEvent == Enums.EventActivation.CastCard && __instance.IsHero && __instance.Alive && __instance != null && target.IsHero && target.Alive && target != null && CharacterObjectHavePerk(__instance, "heal5b"))
+            // Plugin.Log.LogDebug(debugBase+"somehow this breaks the game here?");
+            // if (theEvent == Enums.EventActivation.CastCard && __instance.IsHero && __instance.Alive && __instance != null && CharacterObjectHavePerk(__instance, "heal5b"))
             // {
+            // Plugin.Log.LogDebug(debugBase+"somehow this breaks the game here 2?");
             //     CardData _castedCard = Traverse.Create(__instance).Field("cardCasted").GetValue<CardData>();
             //     Plugin.Log.LogDebug(debugBase + " HP remaining: " + target.GetHpLeftForMax());
             //     if (_castedCard == null)
@@ -560,17 +581,31 @@ namespace PerkManager
             }
 
             // medsTexts[perkStem + "sanctify2e"] = "At start of their turn, heroes gain 1 Zeal for every 20 Sanctify charges on them.";
-            if (TeamHasPerk("sanctify2e") && __instance.IsHero && __instance != null && __instance.Alive && __instance.HasEffect("sanctify"))
+            if (TeamHasPerk("sanctify2e") && __instance.IsHero && __instance.HasEffect("sanctify"))
             {
                 int n_sanctify = __instance.GetAuraCharges("sanctify");
                 int n_zeal = FloorToInt(n_sanctify * 0.05f);
                 AuraCurseData zeal = GetAuraCurseData("zeal");
                 __instance.SetAura(__instance, zeal, n_zeal, useCharacterMods: false);
             }
-            if (TeamHasPerk("insane2f") && __instance != null && __instance.Alive && __instance.HasEffect("insane"))
+            if (TeamHasPerk("insane2f") && __instance != null && __instance.HasEffect("insane"))
             {
                 int n_charges = FloorToInt(__instance.GetAuraCharges("insane") / 30);
                 __instance.SetAuraTrait(__instance, "scourge", n_charges);
+            }
+            
+            if (CharacterObjectHavePerk(__instance,"stealh1d") && __instance.IsHero && !__instance.HasEffect("stealth"))
+            {
+                __instance.SetAura(__instance, GetAuraCurseData("stealth"), 1, useCharacterMods:false);
+            }
+            if (CharacterObjectHavePerk(__instance,"stanza0d") && __instance.IsHero)
+            {
+                __instance.SetAura(__instance, GetAuraCurseData("stanzai"), 1, useCharacterMods:false);
+            }
+
+            if (CharacterObjectHavePerk(__instance,"stanza0e") && __instance.IsHero)
+            {
+                __instance.SetAura(__instance, GetAuraCurseData("stanzaii"), 1, useCharacterMods:false);
             }
 
         }
@@ -592,8 +627,20 @@ namespace PerkManager
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(MatchManager), nameof(MatchManager.EndTurn))]
-        public static void MatchManagerEndTurnPrefix(Character __instance)
+        public static void MatchManagerEndTurnPrefix(MatchManager __instance)
         {
+            // medsTexts[perkStem + "inspire0d"] = "If this hero ends their turn with 4 or more cards, gain 1 Inspire";
+            Character character = __instance.GetCharacterActive();
+            if (CharacterObjectHavePerk(character, "inspire0d"))
+            {
+                Plugin.Log.LogDebug(debugBase + "Handsize at End of Turn: " + __instance.CountHeroHand());
+                if (__instance.CountHeroHand() >= 4)
+                {
+                    character.SetAuraTrait(character, "inspire", 1);
+                }
+            }
+
+            
 
         }
 
@@ -639,15 +686,6 @@ namespace PerkManager
                 }
 
             }
-            // medsTexts[perkStem + "inspire0d"] = "If this hero ends their turn with 4 or more cards, gain 1 Inspire";
-            if (CharacterObjectHavePerk(__instance, "inspire0d"))
-            {
-                Plugin.Log.LogDebug(debugBase + "Handsize at End of Turn: " + MatchManager.Instance.CountHeroHand());
-                if (MatchManager.Instance.CountHeroHand() >= 4)
-                {
-                    __instance.SetAuraTrait(__instance, "inspire", 1);
-                }
-            }
 
             // medsTexts[perkStem + "energize1b"] = "If you end your turn with 4 or more energy, gain 1 Energize.";
             if (CharacterObjectHavePerk(__instance, "energize1d"))
@@ -657,7 +695,14 @@ namespace PerkManager
                     __instance.SetAuraTrait(__instance, "energize", 1);
                 }
             }
-
+            
+            if (CharacterObjectHavePerk(__instance, "fortify1d"))
+            {
+                // foritfy1d: At end of turn, gain 1 Reinforce for every 2 Fortify you have?
+                int nFortify = __instance.GetAuraCharges("fortify"); 
+                int reinforceToApply = RoundToInt(nFortify*0.5f);
+                __instance.SetAuraTrait(__instance, "reinforce",reinforceToApply );
+            }
 
         }
 
@@ -728,6 +773,24 @@ namespace PerkManager
                         }
                     }
                     break;
+
+                case "stealth":
+                    if (_type == "set")
+                    {
+                        if (CharacterHasPerkForSet("stealth1d", SetAppliesToHeroes, __instance, _characterTarget))
+                        {
+                            __result.AuraDamageIncreasedPercentPerStack = 0.0f;
+                        }
+                    }
+                    if (_type == "consume")
+                    {
+                        if (CharacterHasPerkForConsume("stealth1d", ConsumeAppliesToHeroes, __instance, _characterCaster))
+                        {
+                            __result.AuraDamageIncreasedPercentPerStack = 0.0f;
+                        }
+                    }
+                    break;
+
                 case "fast":
                     if (_type == "set")
                     {
@@ -865,6 +928,27 @@ namespace PerkManager
                         }
                     }
                     break;
+                 case "fury":
+                    if (_type == "set")
+                    {
+                        if (CharacterHasPerkForSet("fury1d", SetAppliesToHeroes, __instance, _characterTarget)&&_characterTarget.HasEffect("bleed"))
+                        {  
+                            int n_bleed = _characterTarget.GetAuraCharges("bleed");
+                            float multplier = 0.02f;
+                            __result.AuraDamageIncreasedPercentPerStack += n_bleed*multplier;
+                        }
+                    }
+                    if (_type == "consume")
+                    {
+                        if (CharacterHasPerkForConsume("fury1d", ConsumeAppliesToHeroes, __instance, _characterCaster)&&_characterCaster.HasEffect("bleed"))
+                        {
+                            int n_bleed = _characterTarget.GetAuraCharges("bleed");
+                            float multplier = 0.03f;
+                            __result.AuraDamageIncreasedPercentPerStack += n_bleed*multplier;
+                        }
+                    }
+                    break;
+                
                 case "sharp":
                     // medsTexts[perkStem + "insane2e"] = "Insane on this hero increases the effectiveness of sharp by 1% per charge.";
 
@@ -1231,17 +1315,17 @@ namespace PerkManager
 
             switch (_acId)
             {
-                case "ac":
+                case "insulate":
                     if (_type == "set")
                     {
-                        if (CharacterHasPerkForSet("", AppliesGlobally, __instance, _characterTarget))
+                        if (TeamHasPerkForSet("", AppliesGlobally, __instance, _characterTarget))
                         {
 
                         }
                     }
                     if (_type == "consume")
                     {
-                        if (CharacterHasPerkForConsume("", AppliesGlobally, __instance, _characterCaster))
+                        if (TeamHasPerkForConsume("", AppliesGlobally, __instance, _characterCaster))
                         {
 
                         }
@@ -1361,6 +1445,11 @@ namespace PerkManager
                         {
                             __result.CharacterStatChargesMultiplierNeededForOne = 10;
                         }
+                        if (CharacterHasPerkForSet("insulate1d", SetAppliesToHeroes, __instance, _characterTarget)&&_characterCaster.HasEffect("insulate"))
+                        {
+                            __result.CharacterStatModified = Enums.CharacterStat.None;
+                            __result.CharacterStatAbsoluteValuePerStack = 0;
+                        }
                         if (CharacterHasPerkForSet("chill2g", SetAppliesToHeroes, __instance, _characterTarget))
                         {
                             __result.CharacterStatChargesMultiplierNeededForOne = 3;
@@ -1387,6 +1476,11 @@ namespace PerkManager
                             __result.CharacterStatChargesMultiplierNeededForOne = 3;
                             __result.ResistModified = Enums.DamageType.None;
                             __result.ResistModifiedPercentagePerStack = 0.0f;
+                        }
+                        if (CharacterHasPerkForConsume("insulate1d", ConsumeAppliesToHeroes, __instance, _characterCaster)&&_characterCaster.HasEffect("insulate"))
+                        {
+                            __result.CharacterStatModified = Enums.CharacterStat.None;
+                            __result.CharacterStatAbsoluteValuePerStack = 0;
                         }
 
 
@@ -1524,19 +1618,21 @@ namespace PerkManager
 
             switch (_acId)
             {
-                case "ac":
+                case "regeneration":
                     if (_type == "set")
                     {
-                        if (CharacterHasPerkForSet("", AppliesGlobally, __instance, _characterTarget))
+                        if (TeamHasPerkForSet("regeneration1d", SetAppliesToHeroes, __instance, _characterTarget))
                         {
-
+                            __result.PreventedAuraCurse=GetAuraCurseData("vulnerable");
+                            __result.PreventedAuraCurseStackPerStack = 1;
                         }
                     }
                     if (_type == "consume")
                     {
-                        if (CharacterHasPerkForConsume("", AppliesGlobally, __instance, _characterCaster))
+                        if (TeamHasPerkForConsume("regeneration1d", ConsumeAppliesToHeroes, __instance, _characterCaster))
                         {
-
+                            __result.PreventedAuraCurse=GetAuraCurseData("vulnerable");
+                            __result.PreventedAuraCurseStackPerStack = 1;
                         }
                     }
                     break;
