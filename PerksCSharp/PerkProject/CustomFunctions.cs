@@ -341,9 +341,19 @@ namespace PerkManager
 
         public static Character GetRandomCharacter(Character[] array)
         {
+            if (array==null)
+            {
+                Plugin.Log.LogDebug(debugBase+"Null Array");
+
+            }
             List<Character> validCharacters =[];
             for(int index = 0; index<array.Length;index++)
             {
+                if (array[index]==null)
+                {
+                    Plugin.Log.LogDebug(debugBase+"Null index");
+                    continue;
+                }
                 Character _character = array[index];
                 if (_character.Alive&&_character!=null)
                 {

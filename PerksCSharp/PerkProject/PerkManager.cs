@@ -28,6 +28,9 @@ namespace PerkManager
         public static bool blockShieldFlag = false;
 
         public static bool mark1dFlag = true;
+        public static bool poison2gFlag = true;
+        public static bool bleed2gFlag = true;
+        public static bool thorns1eFlag = true;
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.BeginAdventure))]
@@ -241,7 +244,8 @@ namespace PerkManager
                                             string auxString = "")
         {
             // Not sure on this, but: Killed is "this character was killed" --> triggers things like resurrect
-            // CharacterKilled is "a character was killed" --> triggers things like Yogger's Innate
+            // CharacterKilled is "a character was killed" --> triggers things like Yogger's Innate -- target is the character that was killed -- __instance might be the killer
+            // For some reason CharacterKilled events trigger twice, no clue why
 
             // __instance is the "source" character, target is the target
 
@@ -287,7 +291,7 @@ namespace PerkManager
             }
             if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero && __instance.Alive &&__instance != null && TeamHasPerk("powerful1d") && __instance.HasEffect("powerful"))
             {
-                // weak1b: "Weak on monsters reduces the application of Auras and Curses by 20%.";
+                // If this hero gains Powerful when it is at max charges, gain 1 Vitality.
 
                 Plugin.Log.LogDebug(debugBase + "powerful1d");
                 AuraCurseData powerful = GetAuraCurseData("powerful");
@@ -381,34 +385,50 @@ namespace PerkManager
                 ApplyAuraCurseTo("shield", 4, allHeroes, allNpcs, false, false, ref __instance, ref teamHero, ref teamNpc, "", "");
             }
 
-            if (theEvent == Enums.EventActivation.CharacterKilled && !__instance.IsHero && __instance != null && TeamHasPerk("poison2g") && __instance.HasEffect("poison"))
+            if (theEvent == Enums.EventActivation.CharacterKilled && !target.IsHero && target != null && TeamHasPerk("poison2g") && target.HasEffect("poison"))
             {
                 // poison2g: When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
                 Plugin.Log.LogDebug(debugBase + "poison2g");
+                if (poison2gFlag)
+                {
+                    poison2gFlag=false;
+                    int n = target.GetAuraCharges("poison");
+                    Plugin.Log.LogDebug(debugBase + "poison2g - n charges: " + n);
+                    int toApply = RoundToInt(n * 0.5f);
+                    Character randomNPC = GetRandomCharacter(teamNpc);
+                    // Plugin.Log.LogDebug(debugBase + "poison2g - random npc index: " + randomNPC.NPCIndex);
 
-                int n = __instance.GetAuraCharges("poison");
-                int toApply = RoundToInt(n * 0.5f);
-                Character randomNPC = GetRandomCharacter(teamNpc);
-                randomNPC.SetAura(__instance, GetAuraCurseData("poison"), toApply);
+                    randomNPC.SetAura(__instance, GetAuraCurseData("poison"), toApply,useCharacterMods:false);
+
+                }
+
             }
-            if (theEvent == Enums.EventActivation.CharacterKilled && !__instance.IsHero && __instance != null && TeamHasPerk("thorns1e") && __instance.HasEffect("thorns"))
+            if (theEvent == Enums.EventActivation.CharacterKilled && !target.IsHero && target != null && TeamHasPerk("thorns1e") && target.HasEffect("thorns"))
             {
                 // thorns1e when a monster with Thorns dies, transfer their Thorns charges to a random hero.
-                Plugin.Log.LogDebug(debugBase + "thors1e");
-
-                int n = __instance.GetAuraCharges("thorns");
-                int toApply = RoundToInt(n * 1.0f);
-                Character randomHero = GetRandomCharacter(teamHero);
-                randomHero.SetAura(__instance, GetAuraCurseData("thorns"), toApply);
+                Plugin.Log.LogDebug(debugBase + "thorns1e");
+                if (thorns1eFlag)
+                {
+                    thorns1eFlag = false;
+                    int n = target.GetAuraCharges("thorns");
+                    int toApply = RoundToInt(n * 1.0f);
+                    Character randomHero = GetRandomCharacter(teamHero);
+                    randomHero.SetAura(__instance, GetAuraCurseData("thorns"), toApply, useCharacterMods:false);
+                }
             }
-            if (theEvent == Enums.EventActivation.CharacterKilled && !__instance.IsHero && __instance != null && TeamHasPerk("bleed2g") && __instance.HasEffect("bleed"))
+            if (theEvent == Enums.EventActivation.CharacterKilled && !target.IsHero && target != null && TeamHasPerk("bleed2g") && target.HasEffect("bleed"))
             {
                 // bleed2g: an enemy dies with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
-                Plugin.Log.LogDebug(debugBase + "bleed2g");
-                int n = __instance.GetAuraCharges("bleed");
-                Plugin.Log.LogDebug(debugBase + "bleed2g Bleed charges: " + n);
-                int toDeal = RoundToInt(n * 0.25f);
-                DealIndirectDamageToAllMonsters(Enums.DamageType.None, toDeal);
+                if (bleed2gFlag)
+                {
+                    bleed2gFlag = false;
+                    Plugin.Log.LogDebug(debugBase + "bleed2g");
+                    int n = target.GetAuraCharges("bleed");
+                    Plugin.Log.LogDebug(debugBase + "bleed2g Bleed charges: " + n);
+                    int toDeal = RoundToInt(n * 0.25f);
+                    DealIndirectDamageToAllMonsters(Enums.DamageType.None, toDeal);
+
+                }
 
             }
 
@@ -514,6 +534,10 @@ namespace PerkManager
             // mitigate1c: At the start of your turn, gain 7 Block per Mitigate charge.";
             // health6c"] = "At the start of your turn, if you are at max HP, gain 2 Vitality.";
             // medsTexts[perkStem + "chill2f"] = "At the start of your turn, suffer 3 Chill. Chill on this hero reduces Speed by 1 for every 10 charges";
+            poison2gFlag = true;
+            bleed2gFlag = true;
+            thorns1eFlag = true;
+
             if (!__instance.Alive || __instance == null || MatchManager.Instance == null)
                 return;
 
@@ -1015,10 +1039,12 @@ namespace PerkManager
                         // }
                         if (TeamHasPerkForSet("shackle1f", SetAppliesToMonsters, __instance, _characterTarget))
                         {
+                            // Plugin.Log.LogDebug(debugBase + "shackle1f set - .Speed " + _characterTarget.Speed);
+                            // Plugin.Log.LogDebug(debugBase + "shackle1f set - GetSpeed[1] " + _characterTarget.GetSpeed()[1]);
                             int baseSpeed = _characterTarget.GetSpeed()[1];
-                            int n_charges = _characterTarget.GetAuraCharges("shackle");
+                            // int n_charges = _characterTarget.GetAuraCharges("shackle");
                             __result.IncreasedDamageReceivedType = Enums.DamageType.All;
-                            __result.IncreasedDirectDamageReceivedPerStack = RoundToInt(baseSpeed / n_charges / 2);
+                            __result.IncreasedDirectDamageReceivedPerStack = RoundToInt(baseSpeed * 0.5f);
 
                         }
                     }
@@ -1036,10 +1062,13 @@ namespace PerkManager
 
                         if (TeamHasPerkForConsume("shackle1f", ConsumeAppliesToMonsters, __instance, _characterCaster))
                         {
+                            // Plugin.Log.LogDebug(debugBase + "shackle1f consume - .Speed " + _characterCaster.Speed);
+                            // Plugin.Log.LogDebug(debugBase + "shackle1f consume - GetSpeed[1] " + _characterCaster.GetSpeed()[1]);
+
                             int baseSpeed = _characterCaster.GetSpeed()[1];
                             int n_charges = _characterCaster.GetAuraCharges("shackle");
                             __result.IncreasedDamageReceivedType = Enums.DamageType.All;
-                            __result.IncreasedDirectDamageReceivedPerStack = RoundToInt(baseSpeed / n_charges / 2);
+                            __result.IncreasedDirectDamageReceivedPerStack = RoundToInt(baseSpeed * 0.5f);
                         }
                     }
                     break;

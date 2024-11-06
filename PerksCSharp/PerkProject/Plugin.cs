@@ -108,7 +108,7 @@ namespace PerkManager{
             medsTexts[perkStem + "shackle1c"] = "Shackle cannot be prevented by Immunity or Buffer.";
             medsTexts[perkStem + "shackle1d"] = "At start of your turn, gain Fortify equal to your twice your Shackles.";
             medsTexts[perkStem + "shackle1e"] = "Shackle on this hero increases Dark charges applied by 1 per charge of Shackle.";
-            medsTexts[perkStem + "shackle1f"] = "Shackles on monsters increases all damage received by 1 per base Speed.";
+            medsTexts[perkStem + "shackle1f"] = "Shackle on monsters increases all damage received by 0.5 per base Speed per charge of Shackle.";
 
             // Custom Text for Mitigate
             medsTexts[perkStem + "mitigate1a"] = "At the start of your turn, gain 2 Mitigate, but only stacks to 5.";
@@ -121,7 +121,7 @@ namespace PerkManager{
             medsTexts[perkStem + "poison2d"] = "If Restricted Power is enabled, increases Max Charges to 300.";
             medsTexts[perkStem + "poison2e"] = "Poison on heroes and monsters reduces Slashing resistance by 0.25% per charge.";
             medsTexts[perkStem + "poison2f"] = "Poison on monsters reduces all resistances by 5% for every 100 charges.";
-            medsTexts[perkStem + "poison2g"] = "When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
+            medsTexts[perkStem + "poison2g"] = "Once per turn, when a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
             medsTexts[perkStem + "poison2h"] = "-1 Poison. When this hero applies Poison, deal indirect Mind damage to the target equal to 30% of their Poison charges.";
 
 
