@@ -13,6 +13,10 @@ namespace PerkManager
     public class CustomFunctions
     {
 
+        public static void PLog(string s)
+        {
+            Plugin.Log.LogDebug(debugBase+s);
+        }
         public static void TraitHeal(ref Character _character, ref Character _target, int healAmount, string traitName)
         {
             int _hp = healAmount;
@@ -373,7 +377,7 @@ namespace PerkManager
         {
             return _character!=null&&_character.Alive&&!_character.IsHero;
         }
-        
+
         public static bool CharacterHasPerkForSet(string perkName, bool flag, AtOManager __instance,Character _characterTarget){
             return flag && _characterTarget != null && __instance.CharacterHavePerk(_characterTarget.SubclassName,perkBase+perkName);
         }

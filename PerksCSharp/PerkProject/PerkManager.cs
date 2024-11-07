@@ -43,7 +43,8 @@ namespace PerkManager
             // resistance5d: Maximum resistances for heroes and monsters are now 97%. - Rewritten Functions";
 
             // XP Perks
-            Hero[] teamHero = PlayerManager.Instance.GetTeamHero();
+            // Hero[] teamHero = PlayerManager.Instance.GetTeamHero();
+            Hero[] teamHero = Traverse.Create(__instance).Field("teamAtO").GetValue<Hero[]>();
             // List<Hero> heroes = PlayerManager.Instance.GetTeamHero
             for (int i = 0; i < teamHero.Length; i++)
             {
@@ -729,17 +730,25 @@ namespace PerkManager
 
         }
 
-        [HarmonyPostfix]
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.ModifyHp))]
-        public static void ModifyHpPostfix(Character __instance, int _hp, bool _includeInStats = true, bool _refreshHP = true)
+        public static void ModifyHpPrefix(Character __instance, int _hp, bool _includeInStats = true, bool _refreshHP = true)
         {
-            if (_hp>0&&__instance.GetHpLeftForMax()>=0&&TeamHasPerk("heal5b")&&__instance!=null &&__instance.Alive&&__instance.IsHero)
+            if (MatchManager.Instance==null)
+                return;
+            if (!IsLivingHero(__instance)||MatchManager.Instance.GetHeroHeroActive()==null)
+                return;
+            
+            Hero activeHero = MatchManager.Instance.GetHeroHeroActive();            
+            PLog("Active Hero: " + activeHero.SubclassName);
+            PLog("Instance Hero: " + __instance.SubclassName);
+            if (_hp >= 0 &&__instance.GetHpLeftForMax()>=0 &&CharacterObjectHavePerk(activeHero,"heal5b")&&IsLivingHero(__instance)&&IsLivingHero(activeHero))
             {
                 __instance.SetAura(__instance,GetAuraCurseData("powerful"),2,useCharacterMods:false);
             }
         }
 
-
+       
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.EndTurn))]
         public static void CharacterEndTurnPrefix(Character __instance)
