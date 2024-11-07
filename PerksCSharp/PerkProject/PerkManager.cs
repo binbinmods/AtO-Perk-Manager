@@ -440,24 +440,32 @@ namespace PerkManager
                 int toHeal = RoundToInt(n * 0.25f);
                 target.IndirectHeal(toHeal);
             }
+            
             if (theEvent == Enums.EventActivation.Hitted && !__instance.IsHero && __instance.Alive && target.IsHero && target.Alive && __instance != null && target != null && CharacterObjectHavePerk(target, "spark2f"))
             {
                 // spark2f: When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
 
                 Plugin.Log.LogDebug(debugBase + "spark2f Hitted: " + target.SubclassName);
+
                 int n = __instance.GetAuraCharges("spark");
                 int toDeal = RoundToInt(n * 0.2f);
                 int npcIndex = __instance.NPCIndex;
-                int[] sides = [npcIndex - 1, npcIndex + 1];
-                foreach (int side in sides)
-                {
-                    if (side >= 0 && side < teamNpc.Length)
-                    {
-                        NPC sideTarget = teamNpc[side];
-                        if (sideTarget.Alive && sideTarget != null)
-                            sideTarget.IndirectDamage(Enums.DamageType.Lightning, toDeal);
-                    }
+                List<NPC> npcSides = MatchManager.Instance.GetNPCSides(npcIndex);
+                foreach (NPC sideTarget in npcSides)
+                {                    
+                    if (sideTarget!=null&&sideTarget.Alive)
+                        sideTarget.IndirectDamage(Enums.DamageType.Lightning, toDeal);
                 }
+                // int[] sides = [npcIndex - 1, npcIndex + 1];
+                // foreach (int side in sides)
+                // {
+                //     if (side >= 0 && side < teamNpc.Length)
+                //     {
+                //         NPC sideTarget = teamNpc[side];
+                //         if (sideTarget.Alive && sideTarget != null)
+                //             sideTarget.IndirectDamage(Enums.DamageType.Lightning, toDeal);
+                //     }
+                // }
             }
             if (theEvent == Enums.EventActivation.CastCard && __instance.IsHero && __instance.Alive && __instance != null && CharacterObjectHavePerk(__instance, "spellsword1d"))
             {
@@ -470,6 +478,29 @@ namespace PerkManager
                 if (_castedCard != null && _castedCard.EnergyCost >= 4 && (_castedCard.HasCardType(Enums.CardType.Attack) || _castedCard.HasCardType(Enums.CardType.Spell)))
                     __instance.SetAuraTrait(__instance, "spellsword", 1);
             }
+            // Plugin.Log.LogDebug(debugBase+"somehow this breaks the game here?");
+            // if (theEvent == Enums.EventActivation.CastCard && __instance.IsHero && __instance.Alive && __instance != null && CharacterObjectHavePerk(__instance, "heal5b"))
+            // {
+            //     Plugin.Log.LogDebug(debugBase+"somehow this breaks the game here 2?");
+            //     Plugin.Log.LogDebug(debugBase+"powerful heal - instance: " + __instance.SourceName);
+            //     Plugin.Log.LogDebug(debugBase+"powerful heal - target: " + target.SourceName);
+            //     CardData _castedCard = Traverse.Create(__instance).Field("cardCasted").GetValue<CardData>();
+            //     Plugin.Log.LogDebug(debugBase + " HP remaining: " + target.GetHpLeftForMax());
+            //     if (_castedCard == null)
+            //     {
+
+            //     }
+            //     else
+            //     {
+            //         if (_castedCard != null && _castedCard.Heal > 0 && target.GetHpLeftForMax() <= 0)
+            //         {
+            //             Plugin.Log.LogDebug(debugBase + "heal5b");
+            //             target.SetAuraTrait(__instance, "powerful", 1);
+
+            //         }
+            //     }
+            // }
+
             if (theEvent == Enums.EventActivation.AuraCurseSet && target.IsHero && target.Alive && target != null && CharacterObjectHavePerk(target,debugBase+"block5d"))
             { 
                 // block5e: When this hero gains Block, they deal 1 Blunt to themselves and a random monster.";
@@ -698,6 +729,15 @@ namespace PerkManager
 
         }
 
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Character), nameof(Character.ModifyHp))]
+        public static void ModifyHpPostfix(Character __instance, int _hp, bool _includeInStats = true, bool _refreshHP = true)
+        {
+            if (_hp>0&&__instance.GetHpLeftForMax()>=0&&TeamHasPerk("heal5b")&&__instance!=null &&__instance.Alive&&__instance.IsHero)
+            {
+                __instance.SetAura(__instance,GetAuraCurseData("powerful"),2,useCharacterMods:false);
+            }
+        }
 
 
         [HarmonyPrefix]

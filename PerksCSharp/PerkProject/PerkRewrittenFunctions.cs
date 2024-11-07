@@ -17,7 +17,6 @@ namespace PerkManager
     {
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Functions), nameof(Functions.GetCardByRarity))]
-
         public static bool GetCardByRarityPrefix(ref string __result, int rarity, CardData _cardData, bool isChallenge = false)
         {
             int num1 = 78;
@@ -109,7 +108,6 @@ namespace PerkManager
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.BonusResists))]
-
         public static bool BonusResistsPrefix(
                     ref Character __instance,
                     ref int __result,

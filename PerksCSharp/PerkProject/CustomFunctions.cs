@@ -365,6 +365,15 @@ namespace PerkManager
             return validCharacters[i];
         }
 
+        public static bool IsLivingHero(Character _character)
+        {
+            return _character!=null&&_character.Alive&&_character.IsHero;
+        }
+        public static bool IsLivingNPC(Character _character)
+        {
+            return _character!=null&&_character.Alive&&!_character.IsHero;
+        }
+        
         public static bool CharacterHasPerkForSet(string perkName, bool flag, AtOManager __instance,Character _characterTarget){
             return flag && _characterTarget != null && __instance.CharacterHavePerk(_characterTarget.SubclassName,perkBase+perkName);
         }

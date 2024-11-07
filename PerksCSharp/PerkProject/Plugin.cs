@@ -233,7 +233,7 @@ namespace PerkManager{
             medsTexts[perkStem + "weak1d"] = "This hero is immune to Weak.";
             
             // Custom Text for Healing
-            medsTexts[perkStem + "heal5b"] = "When this hero heals a character at Max HP, apply 1 Powerful.";
+            medsTexts[perkStem + "heal5b"] = "When this hero heals a character at Max HP, apply 2 Powerful. [Powerful application cannot be increased by modifiers]";
             medsTexts[perkStem + "heal5c"] = "+35% Heal received.";
 
             // Custom Text for Insane
