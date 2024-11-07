@@ -102,6 +102,9 @@ namespace PerkManager{
             // Custom Text for Mark
             medsTexts[perkStem + "mark1d"] = "Once per combat, when an enemy reaches 10 Mark, apply 2 Taunt.";
 
+            // Custom Text for Energy
+            medsTexts[perkStem + "energy2d"] = "Significantly increases the damage dealt by some high cost cards. Reduces damage dealt by some low cost cards.";
+
             // Custom Text for Shackle
             medsTexts[perkStem + "shackle1a"] = "+1 Charge applied";
             medsTexts[perkStem + "shackle1b"] = "This hero is immune to Shackle.";
@@ -141,7 +144,7 @@ namespace PerkManager{
             // Custom Text for Block
             medsTexts[perkStem + "block5b"] = "If Restricted Power is enabled, increases Max Charges to 600.";
             medsTexts[perkStem + "block5c"] = "At start of combat, apply 2 Block to all heroes.";
-            medsTexts[perkStem + "block5d"] = "When this hero gains Block, they deal 1 Blunt to themselves and a random monster. [BROKEN]   ";
+            medsTexts[perkStem + "block5d"] = "When this hero gains Block, they deal 1 Blunt to themselves and a random monster.";
             //medsTexts[perkStem + "block5e"] = "Block only functions if you are above 50% Max Health [Currently not working].";
 
             // Custom Text for Taunt
@@ -263,7 +266,7 @@ namespace PerkManager{
             medsTexts[perkStem + "stanza0e"] = "On their first turn, this hero gains Stanza II. This hero cannot gain Stanza I or Stanza III";
 
             // Custom Text for Regeneration
-            medsTexts[perkStem + "regneration1d"] = "Regeneration on heroes prevents 1 Vulnerable per charge";
+            medsTexts[perkStem + "regeneration1d"] = "Regeneration on heroes prevents 1 Vulnerable per charge";
 
             // apply patches
             harmony.PatchAll();

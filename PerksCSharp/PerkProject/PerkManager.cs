@@ -16,6 +16,7 @@ using System.ComponentModel;
 using UnityEngine;
 using System.Diagnostics.Tracing;
 using System.Dynamic;
+using UnityEngine.UIElements;
 
 
 namespace PerkManager
@@ -484,6 +485,54 @@ namespace PerkManager
 
 
 
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Character), nameof(Character.DamageWithCharacterBonus))]
+        public static void DamageWithCharacterBonusPostfix(
+            ref Character __instance,
+            ref int __result,
+            int value,
+            Enums.DamageType DT,
+            Enums.CardClass CC,
+            int energyCost = 0)
+        {
+            if (CC==Enums.CardClass.None||__instance == null || value ==0 || __result==0 ||DT==Enums.DamageType.None)
+                return;
+            if (!CharacterObjectHavePerk(__instance,"energy2d"))
+                return;
+            
+            Plugin.Log.LogDebug(debugBase + "Testing Energy Perk");
+
+            float constantValue = 5.0f;
+            constantValue+=__instance.GetAuraCharges("bless") * 0.2f;
+            if (DT == Enums.DamageType.Slashing ||DT==Enums.DamageType.Piercing||DT==Enums.DamageType.Shadow||DT==Enums.DamageType.Mind)
+                constantValue+=__instance.GetAuraCharges("sharp") * 0.15f;
+            if (DT == Enums.DamageType.Fire ||DT==Enums.DamageType.Blunt)
+                constantValue+=__instance.GetAuraCharges("fortify") * 0.15f;
+
+            Dictionary<int,float> multiplierDictionary = new()
+            {
+                {0, 0.4f},
+                {1, 0.7f},
+                {2, 1.0f},
+                {3, 1.4f},
+                {4, 1.8f},
+                {5, 2.2f},
+                {6, 2.5f},
+                {7, 2.7f},
+                {8, 3.2f},
+                {9, 3.7f},
+                {10, 4.0f},
+            };
+            int oldValue = __result;
+            int newValue = RoundToInt((__result-constantValue*energyCost)*multiplierDictionary[energyCost]+constantValue);
+            if (energyCost<2)
+                __result = Math.Min(newValue,oldValue);
+            else
+                __result=Math.Max(newValue,oldValue);
+
+            if (__result<0)
+                __result=0;
+        }
         
 
 
