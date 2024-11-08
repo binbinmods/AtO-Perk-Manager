@@ -33,6 +33,10 @@ namespace PerkManager
         public static bool bleed2gFlag = true;
         public static bool thorns1eFlag = true;
 
+        public static bool isDamagePreviewActive = false;
+
+        public static int infiniteProctection = 0;
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.BeginAdventure))]
         public static void BeginAdventurePostfix(ref AtOManager __instance)
@@ -264,11 +268,15 @@ namespace PerkManager
             Hero[] teamHero = MatchManager.Instance.GetTeamHero();
             NPC[] teamNpc = MatchManager.Instance.GetTeamNPC();
 
-            Plugin.Log.LogDebug(debugBase + "SETEVENTPREFIX");
+            // Plugin.Log.LogDebug(debugBase + "SETEVENTPREFIX");
 
             if (theEvent == Enums.EventActivation.BeginCombat)
+            {
+                infiniteProctection = 0;
                 paralyzeCounters = [0, 0, 0, 0];
-            mark1dFlag = true;
+                mark1dFlag = true;
+            }
+               
 
 
             if (theEvent == Enums.EventActivation.Killed && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance, "zeal1f") && __instance.HasEffect("zeal"))
@@ -295,7 +303,7 @@ namespace PerkManager
             {
                 // If this hero gains Powerful when it is at max charges, gain 1 Vitality.
 
-                Plugin.Log.LogDebug(debugBase + "powerful1d");
+                PLog("powerful1d");
                 AuraCurseData powerful = GetAuraCurseData("powerful");
                 if (__instance.GetAuraCharges("powerful") == powerful.MaxCharges || __instance.GetAuraCharges("powerful") == powerful.MaxCharges + 7)
                 {
@@ -599,6 +607,7 @@ namespace PerkManager
             poison2gFlag = true;
             bleed2gFlag = true;
             thorns1eFlag = true;
+            infiniteProctection=0;
 
             if (!__instance.Alive || __instance == null || MatchManager.Instance == null)
                 return;
@@ -684,12 +693,12 @@ namespace PerkManager
             {
                 __instance.SetAura(__instance, GetAuraCurseData("stealth"), 1, useCharacterMods: false);
             }
-            if (CharacterObjectHavePerk(__instance, "stanza0d") && __instance.IsHero)
+            if (CharacterObjectHavePerk(__instance, "stanza0d") && __instance.IsHero&&MatchManager.Instance.GetCurrentRound()==1)
             {
                 __instance.SetAura(__instance, GetAuraCurseData("stanzai"), 1, useCharacterMods: false);
             }
 
-            if (CharacterObjectHavePerk(__instance, "stanza0e") && __instance.IsHero)
+            if (CharacterObjectHavePerk(__instance, "stanza0e") && IsLivingHero(__instance)&&MatchManager.Instance.GetCurrentRound()==1)
             {
                 __instance.SetAura(__instance, GetAuraCurseData("stanzaii"), 1, useCharacterMods: false);
             }
@@ -731,22 +740,60 @@ namespace PerkManager
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(Character), nameof(Character.ModifyHp))]
-        public static void ModifyHpPrefix(Character __instance, int _hp, bool _includeInStats = true, bool _refreshHP = true)
+        [HarmonyPatch(typeof(MatchManager), nameof(MatchManager.SetDamagePreview))]
+        public static void SetDamagePreviewPrefix()
         {
+            isDamagePreviewActive=true;
+        }
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(MatchManager), nameof(MatchManager.SetDamagePreview))]
+        public static void SetDamagePreviewPostfix()
+        {
+            isDamagePreviewActive=false;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(Character), nameof(Character.HealReceivedFinal))]
+        public static void HealReceivedFinalPostfix(Character __instance, int __result, int heal, bool isIndirect = false)
+        {
+            if (infiniteProctection>100)
+                return;
+            if (isDamagePreviewActive)
+                return;
             if (MatchManager.Instance==null)
                 return;
             if (!IsLivingHero(__instance)||MatchManager.Instance.GetHeroHeroActive()==null)
                 return;
             
+            infiniteProctection++;
+
+            // MatchManager.Instance.cast
             Hero activeHero = MatchManager.Instance.GetHeroHeroActive();            
+            PLog( "Inf " + infiniteProctection);
             PLog("Active Hero: " + activeHero.SubclassName);
-            PLog("Instance Hero: " + __instance.SubclassName);
-            if (_hp >= 0 &&__instance.GetHpLeftForMax()>=0 &&CharacterObjectHavePerk(activeHero,"heal5b")&&IsLivingHero(__instance)&&IsLivingHero(activeHero))
+            PLog("Targeted/Instanced Hero: " + __instance.SubclassName);
+            if (__result >= 0 && __instance.GetHpLeftForMax()>=0 && CharacterObjectHavePerk(activeHero,"heal5b") && IsLivingHero(__instance) && IsLivingHero(activeHero) && heal>0 && !isIndirect)
             {
                 __instance.SetAura(__instance,GetAuraCurseData("powerful"),2,useCharacterMods:false);
             }
         }
+
+        // public static void ModifyHpPrefix(Character __instance, int _hp, bool _includeInStats = true, bool _refreshHP = true)
+        // {
+        //     if (MatchManager.Instance==null)
+        //         return;
+        //     if (!IsLivingHero(__instance)||MatchManager.Instance.GetHeroHeroActive()==null)
+        //         return;
+            
+        //     // MatchManager.Instance.cast
+        //     Hero activeHero = MatchManager.Instance.GetHeroHeroActive();            
+        //     PLog("Active Hero: " + activeHero.SubclassName);
+        //     PLog("Instance Hero: " + __instance.SubclassName);
+        //     if (_hp >= 0 &&__instance.GetHpLeftForMax()>=0 &&CharacterObjectHavePerk(activeHero,"heal5b")&&IsLivingHero(__instance)&&IsLivingHero(activeHero))
+        //     {
+        //         __instance.SetAura(__instance,GetAuraCurseData("powerful"),2,useCharacterMods:false);
+        //     }
+        // }
 
        
         [HarmonyPrefix]
@@ -816,7 +863,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixGeneral(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            Plugin.Log.LogDebug(debugBase + "Executing AC Modifications - General");
+            // Plugin.Log.LogDebug(debugBase + "Executing AC Modifications - General");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
@@ -1120,7 +1167,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixPhysical(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            Plugin.Log.LogDebug(debugBase + "Executing AC Modifications - Physical");
+            // Plugin.Log.LogDebug(debugBase + "Executing AC Modifications - Physical");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
@@ -1559,7 +1606,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixElemental(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            Plugin.Log.LogDebug(debugBase + "Executing AC Modifications - Elemental");
+            // Plugin.Log.LogDebug(debugBase + "Executing AC Modifications - Elemental");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
@@ -1862,7 +1909,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixMystical(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            Plugin.Log.LogDebug(debugBase + "Executing AC Modifications - Mystical");
+            // Plugin.Log.LogDebug(debugBase + "Executing AC Modifications - Mystical");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
