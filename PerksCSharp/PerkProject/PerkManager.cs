@@ -35,6 +35,7 @@ namespace PerkManager
 
         public static bool isDamagePreviewActive = false;
 
+        public static bool isCalculateDamageActive = false;
         public static int infiniteProctection = 0;
 
         [HarmonyPostfix]
@@ -753,12 +754,25 @@ namespace PerkManager
         }
 
         [HarmonyPrefix]
+        [HarmonyPatch(typeof(CharacterItem), nameof(CharacterItem.CalculateDamagePrePostForThisCharacter))]
+        public static void CalculateDamagePrePostForThisCharacterPrefix()
+        {
+            isCalculateDamageActive=true;
+        }
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(CharacterItem), nameof(CharacterItem.CalculateDamagePrePostForThisCharacter))]
+        public static void CalculateDamagePrePostForThisCharacterPostfix()
+        {
+            isCalculateDamageActive=false;
+        }
+
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.HealReceivedFinal))]
         public static void HealReceivedFinalPostfix(Character __instance, int __result, int heal, bool isIndirect = false)
         {
             if (infiniteProctection>100)
                 return;
-            if (isDamagePreviewActive)
+            if (isDamagePreviewActive||isCalculateDamageActive)
                 return;
             if (MatchManager.Instance==null)
                 return;
@@ -772,7 +786,7 @@ namespace PerkManager
             PLog( "Inf " + infiniteProctection);
             PLog("Active Hero: " + activeHero.SubclassName);
             PLog("Targeted/Instanced Hero: " + __instance.SubclassName);
-            if (__result >= 0 && __instance.GetHpLeftForMax()>=0 && CharacterObjectHavePerk(activeHero,"heal5b") && IsLivingHero(__instance) && IsLivingHero(activeHero) && heal>0 && !isIndirect)
+            if (__result >= 0 && __instance.GetHpLeftForMax()<=0 && CharacterObjectHavePerk(activeHero,"heal5b") && IsLivingHero(__instance) && IsLivingHero(activeHero) && heal>0 && !isIndirect)
             {
                 __instance.SetAura(__instance,GetAuraCurseData("powerful"),2,useCharacterMods:false);
             }
