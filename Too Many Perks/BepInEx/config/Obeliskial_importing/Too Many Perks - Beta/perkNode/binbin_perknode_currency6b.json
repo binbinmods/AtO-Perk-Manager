@@ -1,0 +1,13 @@
+{
+    "Column": 2,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_currency6b",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_currency6b",
+    "PerkRequired": "nodeperkCurrency5",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "currency",
+    "Type": 0
+}

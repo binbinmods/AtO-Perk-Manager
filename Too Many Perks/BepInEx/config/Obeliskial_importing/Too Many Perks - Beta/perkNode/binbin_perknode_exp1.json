@@ -1,0 +1,13 @@
+{
+    "Column": 4,
+    "Cost": "PerkCostBase",
+    "ID": "binbin_perknode_exp1",
+    "LockedInTown": true,
+    "NotStack": false,
+    "Perk": "binbin_mainperk_exp1",
+    "PerkRequired": "binbin_perknode_exp0",
+    "PerksConnected": [],
+    "Row": 1,
+    "Sprite": "exp",
+    "Type": 0
+}

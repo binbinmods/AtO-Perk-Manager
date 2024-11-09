@@ -1,0 +1,18 @@
+{
+    "Column": 1,
+    "Cost": "PerkCostAdvanced",
+    "ID": "nodeperkResistance5",
+    "LockedInTown": false,
+    "NotStack": false,
+    "Perk": "",
+    "PerkRequired": "nodeperkResistance4",
+    "PerksConnected": [
+        "nodeperkResistance5a",
+        "binbin_perknode_resistance5b",
+        "binbin_perknode_resistance5c",
+        "binbin_perknode_resistance5d"
+    ],
+    "Row": 5,
+    "Sprite": "ui_resistance",
+    "Type": 0
+}

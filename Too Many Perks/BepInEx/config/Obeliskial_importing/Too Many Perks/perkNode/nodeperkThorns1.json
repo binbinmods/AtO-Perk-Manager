@@ -1,0 +1,19 @@
+{
+    "Column": 6,
+    "Cost": "PerkCostAdvanced",
+    "ID": "nodeperkThorns1",
+    "LockedInTown": false,
+    "NotStack": false,
+    "Perk": "",
+    "PerkRequired": "nodeperkThorns0",
+    "PerksConnected": [
+        "nodeperkThorns1a",
+        "nodeperkThorns1b",
+        "nodeperkThorns1c",
+        "binbin_perknode_thorns1d",
+        "binbin_perknode_thorns1e"
+    ],
+    "Row": 6,
+    "Sprite": "perk",
+    "Type": 1
+}

@@ -1,0 +1,13 @@
+{
+    "Column": 2,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_zeal1a",
+    "LockedInTown": false,
+    "NotStack": false,
+    "Perk": "binbin_mainperk_zeal1a",
+    "PerkRequired": "",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "zeal",
+    "Type": 3
+}

@@ -1,0 +1,13 @@
+{
+    "Column": 10,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_mitigate1e",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_mitigate1e",
+    "PerkRequired": "",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "mitigate",
+    "Type": 1
+}

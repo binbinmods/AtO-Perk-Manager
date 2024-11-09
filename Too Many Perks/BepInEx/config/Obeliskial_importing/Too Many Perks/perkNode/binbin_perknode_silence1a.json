@@ -1,0 +1,13 @@
+{
+    "Column": 6,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_silence1a",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_silence1a",
+    "PerkRequired": "",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "silence",
+    "Type": 0
+}

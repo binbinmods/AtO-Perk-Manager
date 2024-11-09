@@ -1,0 +1,13 @@
+{
+    "Column": 7,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_energy2d",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_energy2d",
+    "PerkRequired": "nodeperkEnergy1",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "energy",
+    "Type": 0
+}

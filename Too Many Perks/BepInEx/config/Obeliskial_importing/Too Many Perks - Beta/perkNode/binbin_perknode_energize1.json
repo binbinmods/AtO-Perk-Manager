@@ -1,0 +1,18 @@
+{
+    "Column": 8,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_energize1",
+    "LockedInTown": false,
+    "NotStack": false,
+    "Perk": "",
+    "PerkRequired": "",
+    "PerksConnected": [
+        "binbin_perknode_energize1a",
+        "binbin_perknode_energize1b",
+        "binbin_perknode_energize1c",
+        "binbin_perknode_energize1d"
+    ],
+    "Row": 6,
+    "Sprite": "perk",
+    "Type": 2
+}

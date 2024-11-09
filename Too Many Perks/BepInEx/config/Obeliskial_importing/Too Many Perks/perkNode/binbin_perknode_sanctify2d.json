@@ -1,0 +1,13 @@
+{
+    "Column": 1,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_sanctify2d",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_sanctify2d",
+    "PerkRequired": "nodeperkSanctify1",
+    "PerksConnected": [],
+    "Row": 5,
+    "Sprite": "sanctify",
+    "Type": 3
+}

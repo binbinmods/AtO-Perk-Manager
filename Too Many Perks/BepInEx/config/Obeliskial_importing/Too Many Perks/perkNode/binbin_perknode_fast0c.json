@@ -1,0 +1,13 @@
+{
+    "Column": 4,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_fast0c",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_fast0c",
+    "PerkRequired": "",
+    "PerksConnected": [],
+    "Row": 4,
+    "Sprite": "fast",
+    "Type": 0
+}

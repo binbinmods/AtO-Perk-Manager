@@ -1,0 +1,13 @@
+{
+    "Column": 5,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_paralyze1c",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_paralyze1c",
+    "PerkRequired": "",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "paralyze",
+    "Type": 2
+}

@@ -1,0 +1,13 @@
+{
+    "Column": 0,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_health6d",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_health6d",
+    "PerkRequired": "nodeperkHealth5",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "health",
+    "Type": 0
+}

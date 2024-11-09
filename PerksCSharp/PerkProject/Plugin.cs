@@ -136,6 +136,7 @@ namespace PerkManager{
             
             // Custom Text for Thorns
             medsTexts[perkStem + "thorns1d"] = "Cannot be purged unless specified.";
+            // medsTexts[perkStem + "thorns1d"] = "Thorns on heroes can stack, but loses all charges at the end of turn.";
             medsTexts[perkStem + "thorns1e"] = "When a monster with Thorns dies, transfer their Thorns charges to a random hero.";
 
             // Custom Text for Reinforce
