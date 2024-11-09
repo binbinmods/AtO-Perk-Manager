@@ -43,7 +43,7 @@ namespace PerkManager{
                 _version: PluginInfo.PLUGIN_VERSION,
                 _date: ModDate,
                 _link: @"https://github.com/binbinmods/Perks",
-                _contentFolder: "Too Many Perks - Beta",
+                _contentFolder: "Too Many Perks",
                 _type: ["content", "perk", "perkNode","sprite"]  
             );
             
@@ -62,8 +62,8 @@ namespace PerkManager{
 
             // Custom Text for Resistances
             // medsTexts[perkStem + "resistance5a"] = "+8% Resistances.";
-            medsTexts[perkStem + "resistance5b"] = "-4% Resistances. Gain 4% to all Resistances on level up";
-            medsTexts[perkStem + "resistance5c"] = "+12% Resistances. Lose 4% to all Resistances on level up";
+            medsTexts[perkStem + "resistance5b"] = "All Resistances -4%. Gain 4% to all Resistances on level up";
+            medsTexts[perkStem + "resistance5c"] = "All Resistances +12%. Lose 4% to all Resistances on level up";
             medsTexts[perkStem + "resistance5d"] = "Maximum resistances for heroes and monsters are now 97%.";
 
             // Custom Text for Gold
