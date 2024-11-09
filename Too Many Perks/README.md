@@ -25,14 +25,7 @@ Thank to Stonewall, sara, JackRenoson, Voodoo, GCHero, ga7021, Corydonn, and Cor
 2. Click **Install with Mod Manager** button on top of the page.
 3. Run the game via the mod manager.
 
-## Support
-
-I will keep watching for cards strength, try to make sure these cards display their strength that should be there.
-
-Evelyn's traits are prefer using three different curses to deal damage, not the direct damage, So I modify the fourth of burn perk to fit the mods.
-
-Hope you enjoy it and if have any idea or bug, just open a github issue or make a post in the **modding #support-and-requests** channel of the [official Across the Obelisk Discord](https://discord.gg/across-the-obelisk-679706811108163701).
 
 ## Donation
 
-I make mods just because I want, not making money. But if you want to donate to me, you can [Click it](https://ko-fi.com/shazixnar), and I thank you so much!
+Please do not donate to me
