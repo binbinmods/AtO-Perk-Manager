@@ -1,3 +1,7 @@
+# 1.0.4
+
+Fixes for index out of bounds errors, inspire0d, and some backend stuff.
+
 # 1.0.3
 
 Fixes for weak1b, shackle1e, and sight1f.

@@ -364,9 +364,17 @@ namespace PerkManager
                     validCharacters.Add(_character);
                 }
             }
+            if (validCharacters.Count==0)
+                return null;
             
             int i = MatchManager.Instance.GetRandomIntRange(0, validCharacters.Count);
-            return validCharacters[i];
+
+            if (i<validCharacters.Count)
+                return validCharacters[i];
+            if (validCharacters[i]==null)
+                return null;
+            else
+                return validCharacters[0];
         }
 
         public static bool IsLivingHero(Character _character)
