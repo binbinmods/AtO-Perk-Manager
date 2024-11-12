@@ -1,3 +1,7 @@
+# 1.0.5
+
+Null reference protections added in some places
+
 # 1.0.4
 
 Fixes for index out of bounds errors, inspire0d, and some backend stuff.

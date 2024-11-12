@@ -1,0 +1,13 @@
+{
+    "Column": 10,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_shield5b",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_shield5b",
+    "PerkRequired": "nodeperkShield4",
+    "PerksConnected": [],
+    "Row": 5,
+    "Sprite": "shield",
+    "Type": 2
+}
