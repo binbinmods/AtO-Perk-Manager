@@ -312,7 +312,7 @@ namespace PerkManager
                 }
 
             }
-            if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero && __instance != null && TeamHasPerk("weak1b") && __instance.HasEffect("shackle"))
+            if (theEvent == Enums.EventActivation.AuraCurseSet && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance,"shackle1e") && __instance.HasEffect("shackle"))
             {
                 // shackle1e: Shackle on this hero increases Dark charges you apply by 1 per charge of Shackle.";
 
@@ -588,10 +588,10 @@ namespace PerkManager
                                             bool useCharacterMods = true,
                                             bool canBePreventable = true)
         {
-            if (TeamHasPerk("weak1b"))
+            if (TeamHasPerk("weak1b")&&__instance!=null&&__instance.Alive&&IsLivingNPC(theCaster))
             {
-                Plugin.Log.LogDebug(debugBase + "weak1b");
-                if (!theCaster.IsHero && theCaster.HasEffect("weak"))
+                PLog(debugBase + "weak1b");
+                if (theCaster.HasEffect("weak"))
                     charges = Functions.FuncRoundToInt(0.8f * charges);
             }
         }
@@ -649,7 +649,16 @@ namespace PerkManager
             {//sight1d: At the start of your turn, gain 1 Evasion for every enemy with 100 or more Sight charges.
              // this is likely to break, but hopefully it works
 
-                int n_charges = teamNPC.Count(npc => npc.Alive && npc != null && npc.GetAuraCharges("sight") >= 100);
+                int n_charges = 0; //= teamNPC.Count(npc => npc.Alive && npc != null && npc.GetAuraCharges("sight") >= 100);
+                foreach (NPC npc in teamNPC)
+                {
+                    if (IsLivingNPC(npc))
+                    {
+                        if(npc.GetAuraCharges("sight")>=100)
+                            n_charges++;
+                    }
+
+                }
                 __instance.SetAuraTrait(__instance, "evasion", n_charges);
 
             }
@@ -666,12 +675,12 @@ namespace PerkManager
                 // spellsword1c: At the start of your turn, all heroes and monsters gain 1 Spellsword";
                 foreach (Hero hero in teamHero)
                 {
-                    if (hero.Alive && hero != null)
+                    if (IsLivingHero(hero))
                         hero.SetAuraTrait(__instance, "spellsword", 1);
                 }
                 foreach (NPC npc in teamNPC)
                 {
-                    if (npc.Alive && npc != null)
+                    if (IsLivingNPC(npc))
                         npc.SetAuraTrait(__instance, "spellsword", 1);
                 }
             }
@@ -684,7 +693,7 @@ namespace PerkManager
                 AuraCurseData zeal = GetAuraCurseData("zeal");
                 __instance.SetAura(__instance, zeal, n_zeal, useCharacterMods: false);
             }
-            if (TeamHasPerk("insane2f") && __instance != null && __instance.HasEffect("insane"))
+            if (TeamHasPerk("insane2f") && __instance.HasEffect("insane"))
             {
                 int n_charges = FloorToInt(__instance.GetAuraCharges("insane") / 30);
                 __instance.SetAuraTrait(__instance, "scourge", n_charges);
@@ -699,7 +708,7 @@ namespace PerkManager
                 __instance.SetAura(__instance, GetAuraCurseData("stanzai"), 1, useCharacterMods: false);
             }
 
-            if (CharacterObjectHavePerk(__instance, "stanza0e") && IsLivingHero(__instance)&&MatchManager.Instance.GetCurrentRound()==1)
+            if (CharacterObjectHavePerk(__instance, "stanza0e") && __instance.IsHero &&MatchManager.Instance.GetCurrentRound()==1)
             {
                 __instance.SetAura(__instance, GetAuraCurseData("stanzaii"), 1, useCharacterMods: false);
             }
@@ -1045,136 +1054,8 @@ namespace PerkManager
                     }
                     break;
             }
-
-
-
         }
-        /*
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(MatchManager), nameof(MatchManager.ConsumeAuraCurse))]
-
-        public static void ConsumeAuraCursePrefix(string whenToConsume, Character character, string auraToConsume = "")
-        {
-            if (!TeamHasPerk("fury1d"))
-                return;
-
-            AuraCurseData furyData = GetAuraCurseData("fury");
-            int count = character.AuraList.Count;
-            bool isAlive = true;
-            int totalconsumed = 0;
-            if (count > 0)
-            {
-                List<Aura> AuraToIncludeList = new List<Aura>();
-                bool consumeBlock = true;
-                for (int index = 0; index < count; ++index)
-                {
-                    if (index < character.AuraList.Count && character.AuraList[index] != null && (UnityEngine.Object)character.AuraList[index].ACData != (UnityEngine.Object)null && character.AuraList[index].ACData.NoRemoveBlockAtTurnEnd)
-                        consumeBlock = false;
-                }
-                List<string> auraConsumed = new List<string>();
-                int totalCharAura = character.AuraList.Count;
-                for (int i = 0; i < totalCharAura; ++i)
-                {
-                    if (i < character.AuraList.Count && character.AuraList[i] != null && !((UnityEngine.Object)character.AuraList[i].ACData == (UnityEngine.Object)null) && !auraConsumed.Contains(character.AuraList[i].ACData.Id) && character.AuraList[i].AuraCharges > 0)
-                    {
-                        auraConsumed.Add(character.AuraList[i].ACData.Id);
-                        if (!character.Alive)
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            bool flag = false;
-                            AuraCurseData AC = AtOManager.Instance.GlobalAuraCurseModificationByTraitsAndItems("consume", character.AuraList[i].ACData.Id, character, (Character)null);
-                            if ((UnityEngine.Object)AC == (UnityEngine.Object)null)
-                                AC = character.AuraList[i].ACData;
-                            
-                            switch (whenToConsume)
-                            {
-                                case "Now":
-                                    if (AC.Id == auraToConsume.ToLower())
-                                    {
-                                        flag = true;
-                                        break;
-                                    }
-                                    break;
-                                case "BeginRound":
-                                    if (AC.ConsumedAtRoundBegin)
-                                    {
-                                        flag = true;
-                                        break;
-                                    }
-                                    break;
-                                case "BeginTurn":
-                                    if (AC.ConsumedAtTurnBegin)
-                                    {
-                                        flag = true;
-                                        break;
-                                    }
-                                    break;
-                                case "EndTurn":
-                                    if (AC.ConsumedAtTurn)
-                                    {
-                                        flag = true;
-                                        break;
-                                    }
-                                    break;
-                                default:
-                                    if (whenToConsume == "EndRound" && AC.ConsumedAtRound)
-                                    {
-                                        flag = true;
-                                        if (AC.Id == "block" && !consumeBlock)
-                                        {
-                                            flag = false;
-                                            break;
-                                        }
-                                        break;
-                                    }
-                                    break;
-                            }
-                            if (flag)
-                            {
-                                ++totalconsumed;
-                                int actCharges = 0;
-                                if (character.AuraList[i] != null)
-                                    actCharges = character.AuraList[i].AuraCharges;
-                                if (AC.EffectTick != "" && (AC.ProduceDamageWhenConsumed || AC.ProduceHealWhenConsumed))
-                                {
-                                    if ((UnityEngine.Object)character.NPCItem != (UnityEngine.Object)null)
-                                        EffectsManager.Instance.PlayEffectAC(AC.EffectTick, false, character.NPCItem.CharImageT, false);
-                                    else if ((UnityEngine.Object)character.HeroItem != (UnityEngine.Object)null)
-                                        EffectsManager.Instance.PlayEffectAC(AC.EffectTick, true, character.HeroItem.CharImageT, false);
-                                }
-                                
-                                if (AC.Id == "fury" && character.GetAuraCharges("fury") > 0)
-                                {
-                                    float num = 0.5f;
-                                    if ((UnityEngine.Object)character.HeroItem != (UnityEngine.Object)null)
-                                    {
-                                        List<Hero> heroSides = this.GetHeroSides(character.Position);
-                                        for (int index = 0; index < heroSides.Count; ++index)
-                                            heroSides[index].SetAura((Character)null, Globals.Instance.GetAuraCurseData("dark"), Functions.FuncRoundToInt((float)character.GetAuraCharges("dark") * num));
-                                    }
-                                    else
-                                    {
-                                        if (AtOManager.Instance.TeamHaveTrait("unholyblight"))
-                                            num = 1f;
-                                        List<NPC> npcSides = this.GetNPCSides(character.Position);
-                                        for (int index = 0; index < npcSides.Count; ++index)
-                                            npcSides[index].SetAura((Character)null, Globals.Instance.GetAuraCurseData("dark"), Functions.FuncRoundToInt((float)character.GetAuraCharges("dark") * num));
-                                    }
-                                    if ((UnityEngine.Object)AC.Sound != (UnityEngine.Object)null)
-                                        GameManager.Instance.PlayAudio(AC.Sound, 0.5f);
-                                }
-                            }
-                            AC = (AuraCurseData)null;
-                        }
-                    }
-                }
-
-            }
-        }
-        */
+        
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.GlobalAuraCurseModificationByTraitsAndItems))]

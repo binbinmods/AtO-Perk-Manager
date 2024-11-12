@@ -1,3 +1,7 @@
+# 1.0.3
+
+Fixes for weak1b, shackle1e, and sight1f.
+
 # 1.0.2
 
 Small fix to the mod not loading properly sometimes. Minor updates to wording. 
