@@ -42,7 +42,7 @@ namespace PerkManager{
                 _description: "Custom Perks",
                 _version: PluginInfo.PLUGIN_VERSION,
                 _date: ModDate,
-                _link: @"https://github.com/binbinmods/Perks",
+                _link: @"https://github.com/binbinmods/AtO-Perk-Manager",
                 _contentFolder: "Too Many Perks",
                 _type: ["content", "perk", "perkNode","sprite"]  
             );
