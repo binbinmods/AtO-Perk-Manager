@@ -1,3 +1,7 @@
+# 1.0.7
+
+Added crack2e and insulate1e, updated README
+
 # 1.0.6
 
 Bugfixes for sight1e, reinforce1d, paralyze1c, courage1d

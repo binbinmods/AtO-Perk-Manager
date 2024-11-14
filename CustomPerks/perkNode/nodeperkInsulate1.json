@@ -10,7 +10,8 @@
         "nodeperkInsulate1a",
         "nodeperkInsulate1b",
         "nodeperkInsulate1c",
-        "binbin_perknode_insulate1d"
+        "binbin_perknode_insulate1d",
+        "binbin_perknode_insulate1e"
     ],
     "Row": 4,
     "Sprite": "insulate",

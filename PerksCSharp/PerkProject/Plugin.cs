@@ -162,6 +162,7 @@ namespace PerkManager{
             
             // Custom Text for Crack
             medsTexts[perkStem + "crack2d"] = "Crack on monsters reduces Speed by 1 for every 5 charges.";
+            medsTexts[perkStem + "crack2e"] = "Crack on monsters reduces Lightning resist by 0.3% per charge.";
 
             // Custom Text for Burn
             medsTexts[perkStem + "burn2e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
@@ -178,6 +179,7 @@ namespace PerkManager{
             
             // Custom Text for Insulate
             medsTexts[perkStem + "insulate1d"] = "Insulate on this hero prevents their Speed from being lowered by Chill.";
+            medsTexts[perkStem + "insulate1e"] = "Insulate on this hero increases Elemental damage by 10% per stack, but only increases Elemental resistances by 15%. Insulate on this hero stacks to 15";
 
             // Custom Text for Shield
             // medsTexts[perkStem + "shield5a"] = "+ Charges";

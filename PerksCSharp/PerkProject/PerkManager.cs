@@ -1086,7 +1086,7 @@ namespace PerkManager
             }
         }
 
-        
+
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.GlobalAuraCurseModificationByTraitsAndItems))]
@@ -1198,6 +1198,7 @@ namespace PerkManager
                 case "crack":
                     // insane2d: Crack on monsters increases Blunt damage by an addition 1 for every 40 charges of Insane on that monster.";
                     // crack2d: Crack on monsters reduces Speed by 1 for every 5 charges.";
+                    // crack2e: Crack on monsters reduces Lightning resistance by 0.3% per charge.
                     if (_type == "set")
                     {
                         if (TeamHasPerkForSet("insane2d", SetAppliesToMonsters, __instance, _characterTarget) && _characterTarget.HasEffect("insane"))
@@ -1210,6 +1211,12 @@ namespace PerkManager
                             __result.CharacterStatModified = Enums.CharacterStat.Speed;
                             __result.CharacterStatModifiedValue = -1;
                             __result.CharacterStatChargesMultiplierNeededForOne = 5;
+                        }
+                        if (TeamHasPerkForSet("crack2e", SetAppliesToMonsters, __instance, _characterTarget))
+                        {
+                            __result.ResistModified = Enums.DamageType.Lightning;
+                            __result.ResistModifiedPercentagePerStack = -0.3f;
+                            
                         }
                     }
                     if (_type == "consume")
@@ -1224,6 +1231,11 @@ namespace PerkManager
                             __result.CharacterStatModified = Enums.CharacterStat.Speed;
                             __result.CharacterStatModifiedValue = -1;
                             __result.CharacterStatChargesMultiplierNeededForOne = 5;
+                        }
+                        if (TeamHasPerkForConsume("crack2e", ConsumeAppliesToMonsters, __instance, _characterCaster))
+                        {
+                            __result.ResistModified = Enums.DamageType.Lightning;
+                            __result.ResistModifiedPercentagePerStack = -0.3f;
                         }
                     }
                     break;
@@ -1556,16 +1568,38 @@ namespace PerkManager
                 case "insulate":
                     if (_type == "set")
                     {
-                        if (TeamHasPerkForSet("", AppliesGlobally, __instance, _characterTarget))
+                        if (CharacterHasPerkForSet("insulate1e", AppliesGlobally, __instance, _characterTarget))
                         {
-
+                            __result.AuraDamageType = Enums.DamageType.Fire;
+                            __result.AuraDamageType = Enums.DamageType.Cold;
+                            __result.AuraDamageType = Enums.DamageType.Lightning;
+                            __result.AuraDamageIncreasedPercentPerStack = 10.0f;
+                            __result.AuraDamageIncreasedPercentPerStack2 = 10.0f;
+                            __result.AuraDamageIncreasedPercentPerStack3 = 10.0f;
+                            __result.ResistModifiedValue = 15;
+                            __result.ResistModifiedValue2 = 15;
+                            __result.ResistModifiedValue3 = 15;
+                            __result.GainCharges=true;
+                            __result.MaxCharges=15;
+                            __result.MaxMadnessCharges=15;
                         }
                     }
                     if (_type == "consume")
                     {
-                        if (TeamHasPerkForConsume("", AppliesGlobally, __instance, _characterCaster))
+                        if (CharacterHasPerkForConsume("insulate1e", AppliesGlobally, __instance, _characterCaster))
                         {
-
+                            __result.AuraDamageType = Enums.DamageType.Fire;
+                            __result.AuraDamageType = Enums.DamageType.Cold;
+                            __result.AuraDamageType = Enums.DamageType.Lightning;
+                            __result.AuraDamageIncreasedPercentPerStack = 10.0f;
+                            __result.AuraDamageIncreasedPercentPerStack2 = 10.0f;
+                            __result.AuraDamageIncreasedPercentPerStack3 = 10.0f;
+                            __result.ResistModifiedValue = 15;
+                            __result.ResistModifiedValue2 = 15;
+                            __result.ResistModifiedValue3 = 15;
+                            __result.GainCharges=true;
+                            __result.MaxCharges=15;
+                            __result.MaxMadnessCharges=15;
                         }
                     }
                     break;
