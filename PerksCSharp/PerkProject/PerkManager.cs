@@ -1086,6 +1086,7 @@ namespace PerkManager
             }
         }
 
+        
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.GlobalAuraCurseModificationByTraitsAndItems))]
@@ -1141,8 +1142,8 @@ namespace PerkManager
                                 for (int index = 0; index < heroSides.Count; ++index)
                                     heroSides[index].SetAura((Character)null, Globals.Instance.GetAuraCurseData("fury"), Functions.FuncRoundToInt((float)_characterCaster.GetAuraCharges("fury") * fractionSpread));
                             }
+                            __result.ConsumeAll = true;
                         }
-                        __result.ConsumeAll = true;
                     }
                     break;
 

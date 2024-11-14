@@ -1,3 +1,7 @@
+# 1.0.6
+
+Bugfixes for sight1e, reinforce1d, paralyze1c, courage1d
+
 # 1.0.5
 
 Null reference protections added in some places
