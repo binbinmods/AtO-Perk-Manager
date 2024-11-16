@@ -1822,7 +1822,10 @@ namespace PerkManager
                             __result.ResistModified2 = Enums.DamageType.Fire;
                             __result.ResistModifiedPercentagePerStack = -0.5f;
                             __result.ResistModifiedPercentagePerStack2 = -0.5f;
-
+                        }
+                        if (CharacterHasPerkForSet("spark2g", SetAppliesToHeroes, __instance, _characterTarget) && IsLivingHero(_characterCaster)&&IsLivingNPC(_characterTarget))
+                        {
+                            _characterTarget.SetAura(_characterCaster,GetAuraCurseData("crack"),1);
                         }
                     }
                     if (_type == "consume")

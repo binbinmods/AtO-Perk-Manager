@@ -1,3 +1,7 @@
+# 1.0.8
+
+Added spark2g
+
 # 1.0.7
 
 Added crack2e and insulate1e, updated README

@@ -176,6 +176,7 @@ namespace PerkManager{
             medsTexts[perkStem + "spark2d"] = "Spark on this hero increases Lighting damage by 0.2 per charge.";
             medsTexts[perkStem + "spark2e"] = "Spark deal Fire damage. Spark decreases Fire resistance by 0.5% per charge and Lightning resistance by 0.5% per charge.";
             medsTexts[perkStem + "spark2f"] = "When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
+            medsTexts[perkStem + "spark2g"] = "When this hero applies Spark, apply 1 Crack.";
             
             // Custom Text for Insulate
             medsTexts[perkStem + "insulate1d"] = "Insulate on this hero prevents their Speed from being lowered by Chill.";
