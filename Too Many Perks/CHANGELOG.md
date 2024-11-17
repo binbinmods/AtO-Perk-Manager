@@ -1,4 +1,8 @@
-# 1.0.8
+# 1.1.0
+
+Updated energy2d and fixed some bugs with it. Fixed a bug with Amelia and spellsword1c.
+
+# 1.0.8 and 1.0.9
 
 Added spark2g
 

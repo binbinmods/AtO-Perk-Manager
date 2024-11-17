@@ -103,7 +103,7 @@ namespace PerkManager{
             medsTexts[perkStem + "mark1d"] = "Once per combat, when an enemy reaches 10 Mark, apply 2 Taunt.";
 
             // Custom Text for Energy
-            medsTexts[perkStem + "energy2d"] = "Significantly increases the damage dealt by some high cost cards. Reduces damage dealt by some low cost cards.";
+            medsTexts[perkStem + "energy2d"] = "Significantly increases the damage dealt by some high cost cards. Reduces damage dealt by some low cost cards. Works best with single damage instances. (Damage shown in preview might not be accurate)";
 
             // Custom Text for Shackle
             medsTexts[perkStem + "shackle1a"] = "+1 Charge applied";

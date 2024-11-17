@@ -561,19 +561,19 @@ namespace PerkManager
             Enums.CardClass CC,
             int energyCost = 0)
         {
-            if (CC == Enums.CardClass.None || __instance == null || value == 0 || __result == 0 || DT == Enums.DamageType.None)
+            if (CC == Enums.CardClass.None || !IsLivingHero(__instance) || value == 0 || __result == 0 || DT == Enums.DamageType.None||AtOManager.Instance==null||MatchManager.Instance==null)
                 return;
             if (!CharacterObjectHavePerk(__instance, "energy2d"))
                 return;
 
             PLog(debugBase + "Testing Energy Perk");
 
-            float constantValue = 5.0f;
-            constantValue += __instance.GetAuraCharges("bless") * 0.2f;
-            if (DT == Enums.DamageType.Slashing || DT == Enums.DamageType.Piercing || DT == Enums.DamageType.Shadow || DT == Enums.DamageType.Mind)
-                constantValue += __instance.GetAuraCharges("sharp") * 0.15f;
-            if (DT == Enums.DamageType.Fire || DT == Enums.DamageType.Blunt)
-                constantValue += __instance.GetAuraCharges("fortify") * 0.15f;
+            float constantValue = 4.0f;
+            constantValue += __instance.GetAuraCharges("bless") * 0.25f;
+            if (DT == Enums.DamageType.Slashing || DT == Enums.DamageType.Piercing || (DT == Enums.DamageType.Shadow&&AtOManager.Instance.CharacterHavePerk(__instance.SubclassName,"mainperkSharp1d")) || (DT == Enums.DamageType.Mind&&AtOManager.Instance.TeamHaveTrait("shrilltone")))
+                constantValue += __instance.GetAuraCharges("sharp") * 0.20f;
+            if ((DT == Enums.DamageType.Fire || DT == Enums.DamageType.Blunt)&&AtOManager.Instance.CharacterHavePerk(__instance.SubclassName,"mainperkfortify1a"))
+                constantValue += __instance.GetAuraCharges("fortify") * 0.20f;
 
             Dictionary<int, float> multiplierDictionary = new()
             {
@@ -583,16 +583,19 @@ namespace PerkManager
                 {3, 1.4f},
                 {4, 1.8f},
                 {5, 2.2f},
-                {6, 2.5f},
-                {7, 2.7f},
-                {8, 3.2f},
-                {9, 3.7f},
-                {10, 4.0f},
+                {6, 2.7f},
+                {7, 3.2f},
+                {8, 3.9f},
+                {9, 4.8f},
+                {10, 6.0f},
             };
             int oldValue = __result;
-            int newValue = RoundToInt((__result - constantValue * energyCost) * multiplierDictionary[energyCost] + constantValue);
+            if (!multiplierDictionary.ContainsKey(energyCost))
+                return;
+            int newValue = RoundToInt((__result - constantValue * MathF.Sqrt(energyCost)) * multiplierDictionary[energyCost] + constantValue);
+
             if (energyCost < 2)
-                __result = Math.Min(newValue, oldValue);
+                __result = Math.Min(newValue, RoundToInt(oldValue*multiplierDictionary[energyCost]));
             else
                 __result = Math.Max(newValue, oldValue);
 
@@ -702,7 +705,17 @@ namespace PerkManager
                 foreach (Hero hero in teamHero)
                 {
                     if (IsLivingHero(hero))
-                        hero.SetAuraTrait(__instance, "spellsword", 1);
+                    {
+                        if (hero.SubclassName=="queen"&&hero.GetAuraCharges("spellsword")==4)
+                        {
+
+                        }
+                        else{
+                            hero.SetAuraTrait(__instance, "spellsword", 1);
+                        }
+                        
+
+                    }                        
                 }
                 foreach (NPC npc in teamNPC)
                 {

@@ -12,7 +12,8 @@
         "nodeperkSpark2c",
         "binbin_perknode_spark2d",
         "binbin_perknode_spark2e",
-        "binbin_perknode_spark2f"
+        "binbin_perknode_spark2f",
+        "binbin_perknode_spark2g"
     ],
     "Row": 5,
     "Sprite": "perk",

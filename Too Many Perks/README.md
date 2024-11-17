@@ -66,7 +66,7 @@ slow0c: Slow on heroes can stack up to 10, but only reduces Speed by 1 per charg
 mark1d: Once per combat, when an enemy reaches 10 Mark, apply 2 Taunt.
 
 ### Perks for Energy
-energy2d: Significantly increases the damage dealt by some high cost cards. Reduces damage dealt by some low cost cards.
+energy2d: Significantly increases the damage dealt by some high cost cards. Reduces damage dealt by some low cost cards. Works best for single damage instances.
 
 ## Physical
 
