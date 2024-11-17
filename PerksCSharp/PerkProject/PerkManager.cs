@@ -254,12 +254,14 @@ namespace PerkManager
                                             Character target = null,
                                             string auxString = "")
         {
+            // Not sure why I made this a prefix
+            
             // Not sure on this, but: Killed is "this character was killed" --> triggers things like resurrect
             // CharacterKilled is "a character was killed" --> triggers things like Yogger's Innate -- target is the character that was killed -- __instance might be the killer
             // For some reason CharacterKilled events trigger twice, no clue why
 
-            // __instance is the "source" character, target is the target
-
+            // __instance is the "source" character, target is the target for AuraCurseSet
+            
             // .Hitted has the __instance as the character that was hit and target as the caster
 
             // TODO:
@@ -305,6 +307,12 @@ namespace PerkManager
                     mark1dFlag = false;
                 }
             }
+            
+            if (theEvent == Enums.EventActivation.AuraCurseSet && IsLivingNPC(target) && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance,"spark2g") && auxString == "spark")
+            {      
+                target.SetAura(__instance,GetAuraCurseData("crack"),1);
+            }
+
             if (theEvent == Enums.EventActivation.AuraCurseSet && auxString == "powerful" && IsLivingHero(__instance) && TeamHasPerk("powerful1d") && __instance.HasEffect("powerful"))
             {
                 // If this hero gains Powerful when it is at max charges, gain 1 Vitality.
@@ -1836,10 +1844,7 @@ namespace PerkManager
                             __result.ResistModifiedPercentagePerStack = -0.5f;
                             __result.ResistModifiedPercentagePerStack2 = -0.5f;
                         }
-                        if (CharacterHasPerkForSet("spark2g", SetAppliesToHeroes, __instance, _characterTarget) && IsLivingHero(_characterCaster)&&IsLivingNPC(_characterTarget))
-                        {
-                            _characterTarget.SetAura(_characterCaster,GetAuraCurseData("crack"),1);
-                        }
+                        
                     }
                     if (_type == "consume")
                     {

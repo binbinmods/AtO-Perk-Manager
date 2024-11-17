@@ -1,3 +1,7 @@
+# 1.1.1
+
+Updated spark2g to work multiple times per turn
+
 # 1.1.0
 
 Updated energy2d and fixed some bugs with it. Fixed a bug with Amelia and spellsword1c.
