@@ -1,3 +1,7 @@
+# 1.1.2
+
+Fixed fury1d and insulate1e
+
 # 1.1.1
 
 Updated spark2g to work multiple times per turn

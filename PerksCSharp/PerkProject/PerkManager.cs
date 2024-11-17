@@ -17,6 +17,7 @@ using UnityEngine;
 using System.Diagnostics.Tracing;
 using System.Dynamic;
 using UnityEngine.UIElements;
+using UnityEngine.TextCore.Text;
 
 
 namespace PerkManager
@@ -246,6 +247,7 @@ namespace PerkManager
             }
         }
 
+        
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.SetEvent))]
         public static void SetEventPrefix(ref Character __instance,
@@ -307,7 +309,7 @@ namespace PerkManager
                     mark1dFlag = false;
                 }
             }
-            
+                
             if (theEvent == Enums.EventActivation.AuraCurseSet && IsLivingNPC(target) && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance,"spark2g") && auxString == "spark")
             {      
                 target.SetAura(__instance,GetAuraCurseData("crack"),1);
@@ -670,7 +672,8 @@ namespace PerkManager
             }
             if (CharacterObjectHavePerk(__instance, "health6c"))
             {
-                if (__instance.GetMaxHP() <= __instance.HpCurrent)
+                PLog("Health6c current: " + __instance.HpCurrent + " Max: " + __instance.GetMaxHP());
+                if (__instance.GetMaxHP() <= __instance.HpCurrent || __instance.GetHpLeftForMax()<=0)
                 {
                     int n_charges = 2;
                     __instance.SetAuraTrait(__instance, "vitality", n_charges);
@@ -797,6 +800,19 @@ namespace PerkManager
                 {
                     character.SetAuraTrait(character, "inspire", 1);
                 }
+            }
+
+            if (TeamHasPerk("fury1d") && character.HasEffect("fury"))
+            {
+                PLog("fury1d");
+                float fractionSpread = 0.7f;
+                if ((UnityEngine.Object)character.HeroItem != (UnityEngine.Object)null)
+                {
+                    List<Hero> heroSides = MatchManager.Instance.GetHeroSides(character.Position);
+                    for (int index = 0; index < heroSides.Count; ++index)
+                        heroSides[index].SetAura((Character)null, Globals.Instance.GetAuraCurseData("fury"), Functions.FuncRoundToInt((float)character.GetAuraCharges("fury") * fractionSpread));
+                }
+                // __result.ConsumeAll = true;
             }
         }
 
@@ -1152,17 +1168,26 @@ namespace PerkManager
                     }
                     break;
                 case "fury":
+                    if (_type == "set")
+                    {
+                        // if (TeamHasPerkForSet("fury1d", SetAppliesToHeroes, __instance, _characterTarget))
+                        // {
+                        //     __result.ConsumeAll = true;
+                        // }
+
+                    }
                     if (_type == "consume")
                     {
-                        if (CharacterHasPerkForConsume("fury1d", ConsumeAppliesToHeroes, __instance, _characterCaster) && _characterCaster.HasEffect("fury"))
+                        if (TeamHasPerkForConsume("fury1d", ConsumeAppliesToHeroes, __instance, _characterCaster))
                         {
-                            float fractionSpread = 0.7f;
-                            if ((UnityEngine.Object)_characterCaster.HeroItem != (UnityEngine.Object)null)
-                            {
-                                List<Hero> heroSides = MatchManager.Instance.GetHeroSides(_characterCaster.Position);
-                                for (int index = 0; index < heroSides.Count; ++index)
-                                    heroSides[index].SetAura((Character)null, Globals.Instance.GetAuraCurseData("fury"), Functions.FuncRoundToInt((float)_characterCaster.GetAuraCharges("fury") * fractionSpread));
-                            }
+                            PLog("fury1d Consume");
+                            // float fractionSpread = 0.7f;
+                            // if ((UnityEngine.Object)_characterCaster.HeroItem != (UnityEngine.Object)null)
+                            // {
+                            //     List<Hero> heroSides = MatchManager.Instance.GetHeroSides(_characterCaster.Position);
+                            //     for (int index = 0; index < heroSides.Count; ++index)
+                            //         heroSides[index].SetAura((Character)null, Globals.Instance.GetAuraCurseData("fury"), Functions.FuncRoundToInt((float)_characterCaster.GetAuraCharges("fury") * fractionSpread));
+                            // }
                             __result.ConsumeAll = true;
                         }
                     }
@@ -1591,9 +1616,10 @@ namespace PerkManager
                     {
                         if (CharacterHasPerkForSet("insulate1e", AppliesGlobally, __instance, _characterTarget))
                         {
+                            PLog("Insulate1e");
                             __result.AuraDamageType = Enums.DamageType.Fire;
-                            __result.AuraDamageType = Enums.DamageType.Cold;
-                            __result.AuraDamageType = Enums.DamageType.Lightning;
+                            __result.AuraDamageType2 = Enums.DamageType.Cold;
+                            __result.AuraDamageType3 = Enums.DamageType.Lightning;
                             __result.AuraDamageIncreasedPercentPerStack = 10.0f;
                             __result.AuraDamageIncreasedPercentPerStack2 = 10.0f;
                             __result.AuraDamageIncreasedPercentPerStack3 = 10.0f;
@@ -1609,9 +1635,10 @@ namespace PerkManager
                     {
                         if (CharacterHasPerkForConsume("insulate1e", AppliesGlobally, __instance, _characterCaster))
                         {
+                            PLog("Insulate1e consume");
                             __result.AuraDamageType = Enums.DamageType.Fire;
-                            __result.AuraDamageType = Enums.DamageType.Cold;
-                            __result.AuraDamageType = Enums.DamageType.Lightning;
+                            __result.AuraDamageType2 = Enums.DamageType.Cold;
+                            __result.AuraDamageType3 = Enums.DamageType.Lightning;
                             __result.AuraDamageIncreasedPercentPerStack = 10.0f;
                             __result.AuraDamageIncreasedPercentPerStack2 = 10.0f;
                             __result.AuraDamageIncreasedPercentPerStack3 = 10.0f;
