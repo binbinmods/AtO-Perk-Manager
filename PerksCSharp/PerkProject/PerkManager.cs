@@ -1609,6 +1609,9 @@ namespace PerkManager
                 SetAppliesToMonsters = !_characterTarget.IsHero;
             }
 
+            if (__result==null || (_characterCaster==null&&_type=="consume")||(_characterTarget==null&&_type=="set"))
+                return;
+
             switch (_acId)
             {
                 case "insulate":
@@ -1765,7 +1768,7 @@ namespace PerkManager
                         {
                             __result.CharacterStatChargesMultiplierNeededForOne = 10;
                         }
-                        if (CharacterHasPerkForSet("insulate1d", SetAppliesToHeroes, __instance, _characterTarget) && _characterCaster.HasEffect("insulate"))
+                        if (CharacterHasPerkForSet("insulate1d", SetAppliesToHeroes, __instance, _characterTarget) && _characterTarget.HasEffect("insulate"))
                         {
                             __result.CharacterStatModified = Enums.CharacterStat.None;
                             __result.CharacterStatAbsoluteValuePerStack = 0;

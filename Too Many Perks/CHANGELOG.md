@@ -1,3 +1,7 @@
+# 1.1.3
+
+Fixed insulate1d
+
 # 1.1.2
 
 Fixed fury1d and insulate1e
