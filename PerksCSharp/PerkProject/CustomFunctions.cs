@@ -423,5 +423,80 @@ namespace PerkManager
 
             //MatchManager.Instance.CastCard(_card: card);
         }
+
+        public enum AppliesTo
+        {
+            None,
+            Global,
+            Monsters,
+            Heroes,
+            ThisHero
+        }
+
+        /// <summary>
+        /// Defines the modification type. Used for GlobalAuraCurseModification mostly.
+        /// </summary>
+        public enum CharacterHas
+        {
+            Perk,
+            Item,
+            Trait
+        }
+
+         /// <summary>
+        /// Checks to see if your team has an item/trait/perk in the global aura curse modification function.
+        /// </summary>
+        /// <param name="characterOfInterest">Character we are checking</param>
+        /// <param name="characterHas">Whether we are looking for a perk, item, or trait</param>
+        /// <param name="id">Trait/Item/Perk to check</param>
+        /// <param name="appliesTo">Who the Perk applies to. If unspecifid, returns Global</param>
+        /// <param name="_type">Optional: the value of if the AC is being set or consumed</param>
+        /// <param name="onlyThisType">Optional: Only potentially true if _type equals this type</param>
+        /// <returns>true if the team has the item/trait/perk</returns>
+        public static bool IfCharacterHas(Character characterOfInterest, CharacterHas characterHas, string id, AppliesTo appliesTo = AppliesTo.Global, string _type = "", string onlyThisType = "")
+        {
+
+            if (appliesTo == AppliesTo.None || characterOfInterest == null || AtOManager.Instance == null)
+                return false;
+
+            if (_type != "" && onlyThisType != _type)
+                return false;
+
+            bool correctCharacterType = (characterOfInterest.IsHero && appliesTo == AppliesTo.Heroes) || (!characterOfInterest.IsHero && appliesTo == AppliesTo.Monsters) || (appliesTo == AppliesTo.Global) || (appliesTo == AppliesTo.ThisHero && characterOfInterest.IsHero);
+
+            bool hasX = false;
+            if (appliesTo == AppliesTo.ThisHero)
+            {
+                switch (characterHas)
+                {
+                    case CharacterHas.Item:
+                        hasX = AtOManager.Instance.CharacterHaveItem(characterOfInterest.SubclassName, perkBase + id) || AtOManager.Instance.CharacterHaveItem(characterOfInterest.SubclassName, id);
+                        break;
+                    case CharacterHas.Perk:
+                        hasX = AtOManager.Instance.CharacterHavePerk(characterOfInterest.SubclassName, perkBase + id) || AtOManager.Instance.CharacterHavePerk(characterOfInterest.SubclassName, id);
+                        break;
+                    case CharacterHas.Trait:
+                        hasX = AtOManager.Instance.CharacterHaveTrait(characterOfInterest.SubclassName, perkBase + id) || AtOManager.Instance.CharacterHaveTrait(characterOfInterest.SubclassName, id);
+                        break;
+                }
+            }
+            else
+            {
+                switch (characterHas)
+                {
+                    case CharacterHas.Item:
+                        hasX = AtOManager.Instance.TeamHaveItem(perkBase + id) || AtOManager.Instance.TeamHaveItem(id);
+                        break;
+                    case CharacterHas.Perk:
+                        hasX = AtOManager.Instance.TeamHavePerk(perkBase + id) || AtOManager.Instance.TeamHavePerk(id);
+                        break;
+                    case CharacterHas.Trait:
+                        hasX = AtOManager.Instance.TeamHaveTrait(perkBase + id) || AtOManager.Instance.TeamHaveTrait(id);
+                        break;
+                }
+            }
+
+            return hasX && correctCharacterType;
+        }
     }
 }

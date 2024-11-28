@@ -971,9 +971,19 @@ namespace PerkManager
                 SetAppliesToHeroes = _characterTarget.IsHero;
                 SetAppliesToMonsters = !_characterTarget.IsHero;
             }
+            Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
 
             switch (_acId)
             {
+                case "mark":
+                    if (IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mark1e",AppliesTo.Monsters))
+                    {
+                        // Every 2 mark charges increases piercing damage by 3.
+                        __result.IncreasedDamageReceivedType=Enums.DamageType.Piercing;
+                        __result.IncreasedDirectDamageChargesMultiplierNeededForOne = 2;
+                        __result.IncreasedDirectDamageReceivedPerStack = 3;
+                    }
+                    break;
                 case "disarm":
                     if (_type == "set")
                     { //disarm1b - cannot be dispelled unless specified, increases resists by 10%
