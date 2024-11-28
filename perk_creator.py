@@ -524,7 +524,7 @@ def handle_adding_perks_to_vanilla_nodes():
         ("bless1",1),
         ("powerful1",1),
         ("fury1",1),
-        ("mark1",1),
+        ("mark1",2),
         ("fortify1",1),
         ("sharp1",1),
         ("energy2",1),

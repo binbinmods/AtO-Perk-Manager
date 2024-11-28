@@ -1,5 +1,7 @@
 # 1.1.4
 
+Added Mark1e
+
 # 1.1.3
 
 Fixed insulate1d

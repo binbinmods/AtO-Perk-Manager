@@ -978,7 +978,7 @@ namespace PerkManager
                 case "mark":
                     if (IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mark1e",AppliesTo.Monsters))
                     {
-                        // Every 2 mark charges increases piercing damage by 3.
+                        // mark1e: Every 2 mark charges increases piercing damage by 3.
                         __result.IncreasedDamageReceivedType=Enums.DamageType.Piercing;
                         __result.IncreasedDirectDamageChargesMultiplierNeededForOne = 2;
                         __result.IncreasedDirectDamageReceivedPerStack = 3;
