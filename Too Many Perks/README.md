@@ -64,6 +64,7 @@ slow0c: Slow on heroes can stack up to 10, but only reduces Speed by 1 per charg
 
 ### Perks for Mark
 mark1d: Once per combat, when an enemy reaches 10 Mark, apply 2 Taunt.
+mark1e: Every 2 Mark charges on enemies increases Piercing Damage by 3. Mark does not increase any other damage type.
 
 ### Perks for Energy
 energy2d: Significantly increases the damage dealt by some high cost cards. Reduces damage dealt by some low cost cards. Works best for single damage instances.
