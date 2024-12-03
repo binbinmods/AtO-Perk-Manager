@@ -164,6 +164,7 @@ namespace PerkManager{
             // Custom Text for Crack
             medsTexts[perkStem + "crack2d"] = "Crack on monsters reduces Speed by 1 for every 5 charges.";
             medsTexts[perkStem + "crack2e"] = "Crack on monsters reduces Lightning resist by 0.3% per charge.";
+            medsTexts[perkStem + "crack2f"] = "Crack on monsters increases Fire damage received by 1 per charge in addition to Blunt damage.";
 
             // Custom Text for Burn
             medsTexts[perkStem + "burn2e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
