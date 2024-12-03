@@ -1,3 +1,7 @@
+# 1.1.6
+
+Fixed descriptions for crack2f and mark1e
+
 # 1.1.5
 
 Added Crack2f
