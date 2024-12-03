@@ -1,3 +1,7 @@
+# 1.1.7
+
+Nerfed zeal1c
+
 # 1.1.6
 
 Fixed descriptions for crack2f and mark1e

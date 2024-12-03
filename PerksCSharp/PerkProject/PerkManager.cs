@@ -2069,9 +2069,12 @@ namespace PerkManager
                         {
                             PLog(debugBase + "zeal1c");
                             __result.GainCharges = true;
+                            __result.MaxCharges = ZealCap.Value;
+                            __result.MaxMadnessCharges = ZealCap.Value;
                             __result.CharacterStatModified = Enums.CharacterStat.Speed;
                             __result.CharacterStatModifiedValuePerStack = -2;
-
+                            __result.AuraDamageType = Enums.DamageType.All;
+                            __result.AuraDamageIncreasedPerStack = -2;
                         }
 
                     }
@@ -2088,9 +2091,12 @@ namespace PerkManager
                         {
                             PLog(debugBase + "zeal1c");
                             __result.GainCharges = true;
+                            __result.MaxCharges = ZealCap.Value;
+                            __result.MaxMadnessCharges = ZealCap.Value;
                             __result.CharacterStatModified = Enums.CharacterStat.Speed;
                             __result.CharacterStatModifiedValuePerStack = -2;
-
+                            __result.AuraDamageType = Enums.DamageType.All;
+                            __result.AuraDamageIncreasedPerStack = -2;
                         }
 
                     }

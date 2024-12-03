@@ -23,6 +23,8 @@ namespace PerkManager{
         internal static ManualLogSource Log;
         public static string debugBase = "Binbin - Testing Perks - ";
 
+        public static ConfigEntry<int> ZealCap { get; set; }
+
         public static string perkBase = "binbin_mainperk_";
 
         private void Awake()
@@ -32,7 +34,7 @@ namespace PerkManager{
 
             // EnableMultipleReroll = Config.Bind(new ConfigDefinition("Debug", "Enable Multiple Rerolls"), true, new ConfigDescription("Enables the Multiple Reroll Mod. By default, only works for M3+"));
             // LimitRerollsForLowMadness = Config.Bind(new ConfigDefinition("Debug", "Limit Rerolls for Low Madness"), true, new ConfigDescription("Limits the rolls for low Madness (Below Base Madness 3)"));
-            // NumberOfRerolls = Config.Bind(new ConfigDefinition("Debug", "Number of Rerolls"), 3, new ConfigDescription("Sets the number of rerolls. This will increase the number of rerolls for high madness and decrease it for low madnesss (if enabled)."));
+            ZealCap = Config.Bind(new ConfigDefinition("Customization", "Cap on Zeal stacks"), 10, new ConfigDescription("Sets a Cap on the number of Zeal Stacks that heroes can have for the zeal1c perk. -1 should remove the cap."));
             string perkStem = "custom_binbin_mainperk_";
 
             // register with Obeliskial Essentials
@@ -219,7 +221,7 @@ namespace PerkManager{
             // Custom text for Zeal        
             medsTexts[perkStem + "zeal1a"] = "Zeal +1.";
             medsTexts[perkStem + "zeal1b"] = "Zeal on this hero loses 3 charges per turn rather than all charges.";
-            medsTexts[perkStem + "zeal1c"] = "Zeal on all heroes can stack, but reduces Speed by 2 per charge.";
+            medsTexts[perkStem + "zeal1c"] = "Zeal on all heroes can stack up to " + ZealCap + ", but reduces Speed and all Damage by 2 per charge.";
             medsTexts[perkStem + "zeal1d"] = "Zeal on heroes and monsters increases all resistances by 0.5% per Wet charge.";
             medsTexts[perkStem + "zeal1e"] = "When this hero loses Zeal at end of turn, deal indirect Holy and Fire damage to all monsters equal to 4x the number of charges lost.";
             // medsTexts[perkStem + "zeal1f"] = "If this hero dies with Zeal, deal indirect Fire damage equal to 5x their insane to every monster.";
