@@ -2087,8 +2087,8 @@ namespace PerkManager
                             __result.MaxMadnessCharges = ZealCap.Value;
                             __result.CharacterStatModified = Enums.CharacterStat.Speed;
                             __result.CharacterStatModifiedValuePerStack = -2;
-                            __result.AuraDamageType = Enums.DamageType.All;
-                            __result.AuraDamageIncreasedPerStack = -2;
+                            // __result.AuraDamageType = Enums.DamageType.All;
+                            // __result.AuraDamageIncreasedPerStack = -2;
                         }
 
                     }
@@ -2109,8 +2109,8 @@ namespace PerkManager
                             __result.MaxMadnessCharges = ZealCap.Value;
                             __result.CharacterStatModified = Enums.CharacterStat.Speed;
                             __result.CharacterStatModifiedValuePerStack = -2;
-                            __result.AuraDamageType = Enums.DamageType.All;
-                            __result.AuraDamageIncreasedPerStack = -2;
+                            // __result.AuraDamageType = Enums.DamageType.All;
+                            // __result.AuraDamageIncreasedPerStack = -2;
                         }
 
                     }

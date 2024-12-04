@@ -120,13 +120,13 @@ def create_new_perk(id:str,
     return perk
     
     
-
 def get_next_letter(base:PerkNode):
     if base == None:
         return "a"
     ascii_a = ord("a")
     next_letter = chr(ascii_a + len(base.PerksConnected))
     return next_letter
+
 
 def create_new_perk_node(perk:Perk,
                          col:int,
@@ -167,6 +167,7 @@ def create_new_perk_node(perk:Perk,
 
     return perkNode
 
+
 def create_new_perk_node_improved(perk:Perk,
                          perk_node_name:str,                         
                          col:int,
@@ -195,7 +196,6 @@ def create_new_perk_node_improved(perk:Perk,
     return perkNode
 
 
-
 def save_object_to_json(obj,file_to_create):
     if not file_to_create.endswith(".json"):
         file_to_create+=".json"
@@ -207,6 +207,7 @@ def save_object_to_json(obj,file_to_create):
 def create_new_perk_split():
     base = PerkNode()
     return base
+
 
 def test1():
     id = "zeal0"
@@ -280,6 +281,7 @@ def create_perk_from_id(short_ID):
     save_object_to_json(p,PERK_DIR+file_name)
     #print(p.CustomDescription)
 
+
 def get_perk_inputs_from_id(full_id:str):
     match_list = re.split(r'(\d+)', full_id)
     id = full_id.split("_")[-1]
@@ -317,6 +319,7 @@ def create_perk_nodes_from_base(base:str):
         save_object_to_json(p,NODE_DIR+p.ID)
         save_object_to_json(perk,PERK_DIR+perk.ID)
 
+
 def create_new_perk_base(id,row,col,n:int=0,category:str="General"):
         p = PerkNode()
         p.ID=NODE_ID_STEM+id
@@ -328,7 +331,8 @@ def create_new_perk_base(id,row,col,n:int=0,category:str="General"):
         p.Sprite="perk"
         p.Cost = "PerkCostAdvanced"
         return p
-        
+
+
 def create_all_perk_jsons(tuple_array):
     for tuple in tuple_array:
         id,r,c,n,category = tuple
@@ -337,6 +341,7 @@ def create_all_perk_jsons(tuple_array):
         save_object_to_json(p,f"{NODE_DIR}{p.ID}")
         #print(p.PerksConnected)
         create_perk_nodes_from_base(id)
+
 
 def add_perks_to_existing_node(node:PerkNode, n_perks_to_add,is_vanilla):
     connected_nodes:list[str] = node.PerksConnected
@@ -424,7 +429,6 @@ def create_new_split_node(node_id:str,n_to_add:int):
     save_object_to_json(orig_node,NODE_DIR+orig_node.ID)
 
 
-
 def handle_new_nodes():
     #name, row, col, number, sheet
     tuples = [
@@ -502,6 +506,7 @@ def handle_new_nodes():
     ]
     create_all_perk_jsons(tuples)
 
+
 def handle_adding_perks_to_vanilla_nodes():
     tuples = [
         ("poison2",5),
@@ -539,6 +544,7 @@ def handle_adding_perks_to_vanilla_nodes():
         node:PerkNode = get_perk_node_from_name(f"{VANILLA_NODE_STEM}{node_name.capitalize()}",["VanillaPerkData"])
         add_perks_to_existing_node(node,n,True)
 
+
 def handle_creating_new_split_nodes():
     tuples = [
         ("health6",3),
@@ -556,8 +562,6 @@ def handle_creating_new_split_nodes():
         n_to_add = tuple[1]
         create_new_split_node(node_id,n_to_add)
         
-
-
 
 if __name__=="__main__":
     

@@ -179,7 +179,7 @@ paralyze1c: Once per enemy per combat, when an enemy reaches 100 Spark, apply 1 
 ### Perks for Zeal        
 zeal1a: Zeal +1.  
 zeal1b: Zeal on this hero loses 3 charges per turn rather than all charges.  
-zeal1c: Zeal on this hero can stack up to 10, but reduces Speed and Damage by 2 per charge.  
+zeal1c: Zeal on this hero can stack up to 10, but reduces Speed by 2 per charge.  
 zeal1d: Zeal on heroes and monsters increases all resistances by 0.5% per Wet charge.  
 zeal1e: When this hero loses Zeal at end of turn, deal indirect Holy and Fire damage to all monsters equal to 4x the number of charges lost.
 
