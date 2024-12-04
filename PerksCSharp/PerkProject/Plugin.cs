@@ -224,6 +224,7 @@ namespace PerkManager{
             medsTexts[perkStem + "zeal1c"] = "Zeal on all heroes can stack up to " + ZealCap.Value + ", but reduces Speed and all Damage by 2 per charge.";
             medsTexts[perkStem + "zeal1d"] = "Zeal on heroes and monsters increases all resistances by 0.5% per Wet charge.";
             medsTexts[perkStem + "zeal1e"] = "When this hero loses Zeal at end of turn, deal indirect Holy and Fire damage to all monsters equal to 4x the number of charges lost.";
+            medsTexts[perkStem + "zeal1f"] = "Zeal on this hero can stack, but only increases Fire resistance by 2.5% per charge. At the end of turn, suffer 5 Burn per charge.";
             // medsTexts[perkStem + "zeal1f"] = "If this hero dies with Zeal, deal indirect Fire damage equal to 5x their insane to every monster.";
 
             // Custom text for Scourge

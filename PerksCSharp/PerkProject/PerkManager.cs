@@ -1630,6 +1630,9 @@ namespace PerkManager
                 SetAppliesToMonsters = !_characterTarget.IsHero;
             }
 
+            Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
+
+
             if (__result==null || (_characterCaster==null&&_type=="consume")||(_characterTarget==null&&_type=="set"))
                 return;
 
@@ -1959,6 +1962,7 @@ namespace PerkManager
                 SetAppliesToHeroes = _characterTarget.IsHero;
                 SetAppliesToMonsters = !_characterTarget.IsHero;
             }
+            Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
 
             switch (_acId)
             {
@@ -2054,9 +2058,19 @@ namespace PerkManager
                     // zealc: Zeal on all heroes can stack, but reduces Speed by 2 per charge
                     // zeald: Zeal on heroes and enemies increases all resistances by 0.5% per Wet charge
                     // zeale: When this hero loses Zeal, deal indirect Holy and Fire damage equal to 4x the number of stacks lost to all monsters.
-                    // zealf: If this hero dies with Zeal, deal indirect Mind damage to all enemies equal to 5x their Burn/Insane stacks.
+                    // zealg: If this hero dies with Zeal, deal indirect Mind damage to all enemies equal to 5x their Burn/Insane stacks.
+                    // zeal1f: Zeal on this hero can stack, but only increases Fire resistance by 2.5% per charge. At the end of turn, suffer 5 Burn per charge.
+                    if (IfCharacterHas(characterOfInterest,CharacterHas.Perk,"zeal1f",AppliesTo.ThisHero))
+                    {
+                        __result.GainCharges = true;
+                        __result.ResistModified = Enums.DamageType.Fire;
+                        __result.ResistModifiedPercentagePerStack = 2.5f;
+                        __result.GainAuraCurseConsumption = GetAuraCurseData("burn");
+                        __result.GainAuraCurseConsumptionPerCharge = 5;
+                    }
                     if (_type == "set")
                     {
+                                                
                         if (CharacterHasPerkForSet("zeal1b", SetAppliesToHeroes, __instance, _characterTarget))
                         {
                             PLog(debugBase + "zeal1b");
