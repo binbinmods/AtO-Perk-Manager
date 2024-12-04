@@ -1,0 +1,11 @@
+# Perk Mod
+
+This simply adds a bunch of perks. 
+
+The `.py` files (`perk_creator.py` is the main one) are used to create new perk jsons and save them to the relevant location.
+
+The `Too Many Perks` directory can be compressed to be uploaded to Thunderstore as a mod
+
+`PerksCSharp` contains everything needed to compile the `.dll`.
+
+Raise an issue, make a PR, or DM me on Discord if you have anything you would like to change.
