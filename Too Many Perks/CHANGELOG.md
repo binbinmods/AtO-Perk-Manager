@@ -1,3 +1,7 @@
+# 1.2.0
+
+
+
 # 1.1.8 and 1.1.9
 
 Created zeal1f, minor description changes, removed damage reduction from zeal1c

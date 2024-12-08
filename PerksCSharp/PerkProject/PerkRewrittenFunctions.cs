@@ -37,8 +37,8 @@ namespace PerkManager
             else
                 num4 = AtOManager.Instance.GetObeliskMadness();
 
-            Plugin.Log.LogDebug(debugBase + "Testing Perk shards5c: Original Corruption odds" + num3);
-
+            // Plugin.Log.LogDebug(debugBase + "Testing Perk shards5c: Original Corruption odds" + num3 +);
+            PLog("GetCardByRarityPrefix - CardDataId - " + _cardData.Id);
             if (AtOManager.Instance.TeamHavePerk(perkBase + "shards5c"))
             {
                 int amountModified = 2;
@@ -102,7 +102,7 @@ namespace PerkManager
                 }
             }
             __result = _cardData.Id.ToLower();
-
+            PLog("GetCardByRarityPrefix - END");
             return false;
         }
 

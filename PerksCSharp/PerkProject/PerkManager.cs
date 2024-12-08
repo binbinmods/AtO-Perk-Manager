@@ -118,7 +118,7 @@ namespace PerkManager
             if (CharacterObjectHavePerk(hero, "resistance5b"))
             {
                 // resistance5b: -4% Resistances. Gain 4% to all Resistances on level up";
-                PLog(debugBase + "Attempting to add resistances");
+                PLog("Attempting to add resistances");
                 int AmountToIncreasePerLevel = 4;
                 string perkName = perkBase + "resistance5b";
                 PerkData perk = Globals.Instance.GetPerkData(perkName);
@@ -128,7 +128,7 @@ namespace PerkManager
                 Dictionary<string, PerkData> perkDictionary = Traverse.Create(Globals.Instance).Field("_PerksSource").GetValue<Dictionary<string, PerkData>>();
                 if (perkDictionary.ContainsKey(perkName))
                 {
-                    PLog(debugBase + "Setting perk dictionary");
+                    PLog("Setting perk dictionary");
                     perkDictionary[perkName] = perk;
                 }
                 Traverse.Create(Globals.Instance).Field("_PerksSource").SetValue(perkDictionary);
@@ -137,7 +137,7 @@ namespace PerkManager
             if (CharacterObjectHavePerk(hero, "resistance5c"))
             {
                 // resistance5c: +12% Resistances. Lose 4% to all Resistances on level up";            
-                PLog(debugBase + "Attempting to add resistances");
+                PLog("Attempting to add resistances");
                 int AmountToIncreasePerLevel = -4;
                 string perkName = perkBase + "resistance5b";
                 PerkData perk = Globals.Instance.GetPerkData(perkName);
@@ -147,7 +147,7 @@ namespace PerkManager
                 Dictionary<string, PerkData> perkDictionary = Traverse.Create(Globals.Instance).Field("_PerksSource").GetValue<Dictionary<string, PerkData>>();
                 if (perkDictionary.ContainsKey(perkName))
                 {
-                    PLog(debugBase + "Setting perk dictionary");
+                    PLog("Setting perk dictionary");
                     perkDictionary[perkName] = perk;
                 }
                 Traverse.Create(Globals.Instance).Field("_PerksSource").SetValue(perkDictionary);
@@ -168,22 +168,22 @@ namespace PerkManager
                     continue;
 
                 Hero _hero = teamHero[index];
-                // PLog(debugBase + " PerkList for " + _hero.SubclassName + ": " + string.Join(",", _hero.PerkList.ToArray()));
+                // PLog(" PerkList for " + _hero.SubclassName + ": " + string.Join(",", _hero.PerkList.ToArray()));
                 if (CharacterObjectHavePerk(_hero, "mitigate1d"))
-                    PLog(debugBase + "Hero has mitigate1d");
+                    PLog("Hero has mitigate1d");
 
 
-                PLog(debugBase + "Adding Immunities weak1d and more");
+                PLog("Adding Immunities weak1d and more");
 
                 if (CharacterObjectHavePerk(_hero, "weak1d"))
                 {
-                    PLog(debugBase + "Adding Immunities, has weak1d");
+                    PLog("Adding Immunities, has weak1d");
                     AddImmunityToHero("weak", ref _hero);
 
                 }
                 if (CharacterObjectHavePerk(_hero, "disarm1a"))
                 {
-                    PLog(debugBase + "Adding Immunities, has disarm1a");
+                    PLog("Adding Immunities, has disarm1a");
                     AddImmunityToHero("disarm", ref _hero);
                 }
                 if (CharacterObjectHavePerk(_hero, "silence1a"))
@@ -247,7 +247,7 @@ namespace PerkManager
             }
         }
 
-        
+
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.SetEvent))]
         public static void SetEventPrefix(ref Character __instance,
@@ -257,27 +257,27 @@ namespace PerkManager
                                             string auxString = "")
         {
             // Not sure why I made this a prefix
-            
+
             // Not sure on this, but: Killed is "this character was killed" --> triggers things like resurrect
             // CharacterKilled is "a character was killed" --> triggers things like Yogger's Innate -- target is the character that was killed -- __instance might be the killer
             // For some reason CharacterKilled events trigger twice, no clue why
 
             // __instance is the "source" character, target is the target for AuraCurseSet
-            
+
             // .Hitted has the __instance as the character that was hit and target as the caster
 
             // TODO:
             // //block5d: Block only functions if you are above 50% Max Health [Currently not working].";
 
-            if (theEvent == Enums.EventActivation.CharacterAssign || theEvent == Enums.EventActivation.DestroyItem)
+            if (theEvent == Enums.EventActivation.CharacterAssign || theEvent == Enums.EventActivation.DestroyItem || __instance == null || theEvent == Enums.EventActivation.None)
             {
                 return;
             }
 
             Hero[] teamHero = MatchManager.Instance.GetTeamHero();
             NPC[] teamNpc = MatchManager.Instance.GetTeamNPC();
-
-            PLog(debugBase + "SETEVENTPREFIX");
+            string eventString = Enum.GetName(typeof(Enums.EventActivation), theEvent);//((Enums.EventActivation)theEvent).ToString();
+            PLog("SETEVENTPREFIX - START - " + eventString);
 
             if (theEvent == Enums.EventActivation.BeginCombat)
             {
@@ -292,10 +292,10 @@ namespace PerkManager
             {
                 // zeal1f: If this hero dies with Zeal, deal indirect Mind damage to all enemies equal to 5x their Burn/Insane stacks.
 
-                PLog(debugBase + "zeal1f");
-                PLog(debugBase + "Target Charges = " + target.GetAuraCharges("burn"));
+                PLog("zeal1f");
+                PLog("Target Charges = " + target.GetAuraCharges("burn"));
                 int n_stacks = __instance.GetAuraCharges("burn");
-                PLog(debugBase + "Instance Charges = " + n_stacks);
+                PLog("Instance Charges = " + n_stacks);
                 int damageToDeal = Functions.FuncRoundToInt(8 * n_stacks);
                 __instance.IndirectDamage(Enums.DamageType.Mind, damageToDeal);
             }
@@ -309,10 +309,11 @@ namespace PerkManager
                     mark1dFlag = false;
                 }
             }
-                
-            if (theEvent == Enums.EventActivation.AuraCurseSet && IsLivingNPC(target) && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance,"spark2g") && auxString == "spark")
-            {      
-                target.SetAura(__instance,GetAuraCurseData("crack"),1);
+
+            if (theEvent == Enums.EventActivation.AuraCurseSet && IsLivingNPC(target) && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "spark2g") && auxString == "spark")
+            {
+                PLog("spark2g");
+                target.SetAura(__instance, GetAuraCurseData("crack"), 1);
             }
 
             if (theEvent == Enums.EventActivation.AuraCurseSet && auxString == "powerful" && IsLivingHero(__instance) && TeamHasPerk("powerful1d") && __instance.HasEffect("powerful"))
@@ -328,11 +329,11 @@ namespace PerkManager
                 }
 
             }
-            if (theEvent == Enums.EventActivation.AuraCurseSet && auxString == "shackle" && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance, "shackle1e") && __instance.HasEffect("shackle"))
+            if (theEvent == Enums.EventActivation.AuraCurseSet && auxString == "shackle" && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "shackle1e") && __instance.HasEffect("shackle"))
             {
                 // shackle1e: Shackle on this hero increases Dark charges you apply by 1 per charge of Shackle.";
 
-                PLog(debugBase + "shackle1e");
+                PLog("shackle1e");
                 int n_shackle = __instance.GetAuraCharges("shackle");
                 __instance.ModifyAuraCurseQuantity("dark", n_shackle);
                 // if (auraCurseModifiers.ContainsKey(traitData.AuracurseBonus1.Id))
@@ -345,7 +346,7 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.AuraCurseSet && IsLivingHero(__instance) && IsLivingNPC(target) && CharacterObjectHavePerk(__instance, "poison2h") && auxString == "poison")
             {
                 // poison2h: -1 Poison. When this hero applies poison, deal Mind damage to the target equal to 30% of their Poison charges.";
-                PLog(debugBase + "poison2h");
+                PLog("poison2h");
 
                 int n = target.GetAuraCharges("poison");
                 int damageToDeal = RoundToInt(n * 0.3f);
@@ -356,17 +357,17 @@ namespace PerkManager
             {
                 // courage1d: Courage increases Shield gained by this hero by 1 per charge.";
                 int n = target.GetAuraCharges("courage");
-                // PLog(debugBase + "courage1d  AuxInt  before: " + auxInt);
-                // PLog(debugBase + "courage1d  n  before: " + n);
+                // PLog("courage1d");
+                // PLog("courage1d  n  before: " + n);
 
                 // needs to run every other time this is called
                 shieldCount++;
                 if (shieldCount % 2 == 1 && shieldCount < 100)
                 {
-                    PLog(debugBase + "courage1d");
+                    PLog("courage1d");
                     target.SetAura(__instance, GetAuraCurseData("shield"), n, useCharacterMods: false);
                 }
-                // PLog(debugBase + "courage1d  AuxInt  after: " + auxInt);
+                // PLog("courage1d  AuxInt  after: " + auxInt);
 
             }
             if (theEvent == Enums.EventActivation.AuraCurseSet && IsLivingHero(target) && target.HasEffect("reinforce") && CharacterObjectHavePerk(target, "reinforce1d") && auxString == "block")
@@ -379,7 +380,7 @@ namespace PerkManager
                     PLog("reinforce1d");
                     target.SetAura(__instance, GetAuraCurseData("block"), n, useCharacterMods: false);
                 }
-                // PLog(debugBase + "courage1d  AuxInt  after: " + auxInt);
+                // PLog("courage1d  AuxInt  after: " + auxInt);
 
             }
             if (theEvent == Enums.EventActivation.AuraCurseSet && IsLivingNPC(target) && TeamHasPerk("sight1e") && auxString == "sight")
@@ -409,7 +410,7 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.BeginCombat && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "block5c"))
             {
                 // block5c: At start of combat, apply 2 Block to all heroes.";
-                // PLog(debugBase + "block5c");
+                // PLog("block5c");
                 PLog("block5c");
                 bool allHeroes = true;
                 bool allNpcs = false;
@@ -418,7 +419,7 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.BeginCombat && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "shield5c"))
             {
                 // shield5c: At start of combat, apply 4 Shield to all heroes.";
-                // PLog(debugBase + "shield5c");
+                // PLog("shield5c");
                 PLog("shield5c");
                 bool allHeroes = true;
                 bool allNpcs = false;
@@ -428,15 +429,15 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.CharacterKilled && !target.IsHero && target != null && TeamHasPerk("poison2g") && target.HasEffect("poison"))
             {
                 // poison2g: When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
-                PLog(debugBase + "poison2g");
+                PLog("poison2g");
                 if (poison2gFlag)
                 {
                     poison2gFlag = false;
                     int n = target.GetAuraCharges("poison");
-                    PLog(debugBase + "poison2g - n charges: " + n);
+                    PLog("poison2g - n charges: " + n);
                     int toApply = RoundToInt(n * 0.5f);
                     Character randomNPC = GetRandomCharacter(teamNpc);
-                    // PLog(debugBase + "poison2g - random npc index: " + randomNPC.NPCIndex);
+                    // PLog("poison2g - random npc index: " + randomNPC.NPCIndex);
                     if (IsLivingNPC(randomNPC))
                         randomNPC.SetAura(__instance, GetAuraCurseData("poison"), toApply, useCharacterMods: false);
 
@@ -446,7 +447,7 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.CharacterKilled && !target.IsHero && target != null && TeamHasPerk("thorns1e") && target.HasEffect("thorns"))
             {
                 // thorns1e when a monster with Thorns dies, transfer their Thorns charges to a random hero.
-                PLog(debugBase + "thorns1e");
+                PLog("thorns1e");
                 if (thorns1eFlag)
                 {
                     thorns1eFlag = false;
@@ -463,9 +464,9 @@ namespace PerkManager
                 if (bleed2gFlag)
                 {
                     bleed2gFlag = false;
-                    PLog(debugBase + "bleed2g");
+                    PLog("bleed2g");
                     int n = target.GetAuraCharges("bleed");
-                    PLog(debugBase + "bleed2g Bleed charges: " + n);
+                    PLog("bleed2g Bleed charges: " + n);
                     int toDeal = RoundToInt(n * 0.25f);
                     DealIndirectDamageToAllMonsters(Enums.DamageType.None, toDeal);
 
@@ -486,7 +487,7 @@ namespace PerkManager
             {
                 // spark2f: When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
 
-                PLog(debugBase + "spark2f Hitted: " + target.SubclassName);
+                PLog("spark2f Hitted: " + target.SubclassName);
 
                 int n = __instance.GetAuraCharges("spark");
                 int toDeal = RoundToInt(n * 0.2f);
@@ -494,7 +495,7 @@ namespace PerkManager
                 List<NPC> npcSides = MatchManager.Instance.GetNPCSides(npcIndex);
                 foreach (NPC sideTarget in npcSides)
                 {
-                    if (sideTarget != null && sideTarget.Alive)
+                    if (IsLivingNPC(sideTarget))
                         sideTarget.IndirectDamage(Enums.DamageType.Lightning, toDeal);
                 }
                 // int[] sides = [npcIndex - 1, npcIndex + 1];
@@ -513,7 +514,7 @@ namespace PerkManager
                 // spellsword1d: When this hero cast a Spell or Attack that costs 4 or more, gain 1 Spellsword";
                 CardData _castedCard = Traverse.Create(__instance).Field("cardCasted").GetValue<CardData>();
 
-                PLog(debugBase + "spellsword1d Card Types: " + string.Join(",", _castedCard.GetCardTypes().ToArray()));
+                // PLog("spellsword1d Card Types: " + string.Join(",", _castedCard.GetCardTypes().ToArray()));
                 // PLog(debugBase+"spellsword1d IsSpell: "+_castedCard.HasCardType(Enums.CardType.Spell));
 
                 if (_castedCard != null && _castedCard.EnergyCost >= 4 && (_castedCard.HasCardType(Enums.CardType.Attack) || _castedCard.HasCardType(Enums.CardType.Spell)))
@@ -526,7 +527,7 @@ namespace PerkManager
             //     PLog(debugBase+"powerful heal - instance: " + __instance.SourceName);
             //     PLog(debugBase+"powerful heal - target: " + target.SourceName);
             //     CardData _castedCard = Traverse.Create(__instance).Field("cardCasted").GetValue<CardData>();
-            //     PLog(debugBase + " HP remaining: " + target.GetHpLeftForMax());
+            //     PLog(" HP remaining: " + target.GetHpLeftForMax());
             //     if (_castedCard == null)
             //     {
 
@@ -535,7 +536,7 @@ namespace PerkManager
             //     {
             //         if (_castedCard != null && _castedCard.Heal > 0 && target.GetHpLeftForMax() <= 0)
             //         {
-            //             PLog(debugBase + "heal5b");
+            //             PLog("heal5b");
             //             target.SetAuraTrait(__instance, "powerful", 1);
 
             //         }
@@ -545,7 +546,7 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.AuraCurseSet && auxString == "block" && IsLivingHero(target) && CharacterObjectHavePerk(target, "block5d"))
             {
                 // block5e: When this hero gains Block, they deal 1 Blunt to themselves and a random monster.";
-                PLog(debugBase + "block5d");
+                PLog("block5d");
                 int damageToDeal = 1;
                 Enums.DamageType damageType = Enums.DamageType.Blunt;
                 int modifiedDamage = target.DamageWithCharacterBonus(damageToDeal, damageType, Enums.CardClass.None);
@@ -554,7 +555,6 @@ namespace PerkManager
                 {
                     targetCharacter.IndirectDamage(damageType, modifiedDamage);
                     target.IndirectDamage(damageType, modifiedDamage);
-
                 }
             }
         }
@@ -571,18 +571,18 @@ namespace PerkManager
             Enums.CardClass CC,
             int energyCost = 0)
         {
-            if (CC == Enums.CardClass.None || !IsLivingHero(__instance) || value == 0 || __result == 0 || DT == Enums.DamageType.None||AtOManager.Instance==null||MatchManager.Instance==null)
+            if (CC == Enums.CardClass.None || !IsLivingHero(__instance) || value == 0 || __result == 0 || DT == Enums.DamageType.None || AtOManager.Instance == null || MatchManager.Instance == null)
                 return;
             if (!CharacterObjectHavePerk(__instance, "energy2d"))
                 return;
 
-            PLog(debugBase + "Testing Energy Perk");
+            PLog("Testing Energy Perk");
 
             float constantValue = 4.0f;
             constantValue += __instance.GetAuraCharges("bless") * 0.25f;
-            if (DT == Enums.DamageType.Slashing || DT == Enums.DamageType.Piercing || (DT == Enums.DamageType.Shadow&&AtOManager.Instance.CharacterHavePerk(__instance.SubclassName,"mainperkSharp1d")) || (DT == Enums.DamageType.Mind&&AtOManager.Instance.TeamHaveTrait("shrilltone")))
+            if (DT == Enums.DamageType.Slashing || DT == Enums.DamageType.Piercing || (DT == Enums.DamageType.Shadow && AtOManager.Instance.CharacterHavePerk(__instance.SubclassName, "mainperkSharp1d")) || (DT == Enums.DamageType.Mind && AtOManager.Instance.TeamHaveTrait("shrilltone")))
                 constantValue += __instance.GetAuraCharges("sharp") * 0.20f;
-            if ((DT == Enums.DamageType.Fire || DT == Enums.DamageType.Blunt)&&AtOManager.Instance.CharacterHavePerk(__instance.SubclassName,"mainperkfortify1a"))
+            if ((DT == Enums.DamageType.Fire || DT == Enums.DamageType.Blunt) && AtOManager.Instance.CharacterHavePerk(__instance.SubclassName, "mainperkfortify1a"))
                 constantValue += __instance.GetAuraCharges("fortify") * 0.20f;
 
             Dictionary<int, float> multiplierDictionary = new()
@@ -605,7 +605,7 @@ namespace PerkManager
             int newValue = RoundToInt((__result - constantValue * MathF.Sqrt(energyCost)) * multiplierDictionary[energyCost] + constantValue);
 
             if (energyCost < 2)
-                __result = Math.Min(newValue, RoundToInt(oldValue*multiplierDictionary[energyCost]));
+                __result = Math.Min(newValue, RoundToInt(oldValue * multiplierDictionary[energyCost]));
             else
                 __result = Math.Max(newValue, oldValue);
 
@@ -628,7 +628,7 @@ namespace PerkManager
         {
             if (TeamHasPerk("weak1b") && __instance != null && __instance.Alive && IsLivingNPC(theCaster))
             {
-                PLog(debugBase + "weak1b");
+                PLog("weak1b");
                 if (theCaster.HasEffect("weak"))
                     charges = Functions.FuncRoundToInt(0.8f * charges);
             }
@@ -673,7 +673,7 @@ namespace PerkManager
             if (CharacterObjectHavePerk(__instance, "health6c"))
             {
                 PLog("Health6c current: " + __instance.HpCurrent + " Max: " + __instance.GetMaxHP());
-                if (__instance.GetMaxHP() <= __instance.HpCurrent || __instance.GetHpLeftForMax()<=0)
+                if (__instance.GetMaxHP() <= __instance.HpCurrent || __instance.GetHpLeftForMax() <= 0)
                 {
                     int n_charges = 2;
                     __instance.SetAuraTrait(__instance, "vitality", n_charges);
@@ -717,16 +717,17 @@ namespace PerkManager
                 {
                     if (IsLivingHero(hero))
                     {
-                        if (hero.SubclassName=="queen"&&hero.GetAuraCharges("spellsword")==4)
+                        if (hero.SubclassName == "queen" && hero.GetAuraCharges("spellsword") == 4)
                         {
 
                         }
-                        else{
+                        else
+                        {
                             hero.SetAuraTrait(__instance, "spellsword", 1);
                         }
-                        
 
-                    }                        
+
+                    }
                 }
                 foreach (NPC npc in teamNPC)
                 {
@@ -795,7 +796,7 @@ namespace PerkManager
 
             if (CharacterObjectHavePerk(character, "inspire0d"))
             {
-                PLog(debugBase + "Handsize at End of Turn: " + __instance.CountHeroHand());
+                PLog("Handsize at End of Turn: " + __instance.CountHeroHand());
                 if (__instance.CountHeroHand() >= 4)
                 {
                     character.SetAuraTrait(character, "inspire", 1);
@@ -897,7 +898,7 @@ namespace PerkManager
             // zeal1e: When this hero loses Zeal, deal indirect Holy and Fire damage equal to 4x the number of stacks lost to all monsters.
             if (CharacterHasPerkForConsume("zeal1e", __instance.IsHero, AtOManager.Instance, __instance))
             {
-                PLog(debugBase + "zeal1e");
+                PLog("zeal1e");
                 int zealCharges = __instance.GetAuraCharges("zeal");
                 AuraCurseData zealData = GetAuraCurseData("zeal");
                 int chargesRemoved;
@@ -953,7 +954,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixGeneral(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            // PLog(debugBase + "Executing AC Modifications - General");
+            // PLog("Executing AC Modifications - General");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
@@ -976,10 +977,10 @@ namespace PerkManager
             switch (_acId)
             {
                 case "mark":
-                    if (IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mark1e",AppliesTo.Monsters))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mark1e", AppliesTo.Monsters))
                     {
                         // mark1e: Every 2 mark charges increases piercing damage by 3.
-                        __result.IncreasedDamageReceivedType=Enums.DamageType.Piercing;
+                        __result.IncreasedDamageReceivedType = Enums.DamageType.Piercing;
                         __result.IncreasedDirectDamageChargesMultiplierNeededForOne = 2;
                         __result.IncreasedDirectDamageReceivedPerStack = 3;
                     }
@@ -1140,7 +1141,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixPhysical(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            // PLog(debugBase + "Executing AC Modifications - Physical");
+            // PLog("Executing AC Modifications - Physical");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
@@ -1259,10 +1260,10 @@ namespace PerkManager
                     // crack2e: Crack on monsters reduces Lightning resistance by 0.3% per charge.
                     // crack2f: Crack increases fire damage too
 
-                    if (IfCharacterHas(characterOfInterest,CharacterHas.Perk,"crack2f",AppliesTo.Monsters))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2f", AppliesTo.Monsters))
                     {
                         // mark1e: Every 2 mark charges increases piercing damage by 3.
-                        __result.IncreasedDamageReceivedType2=Enums.DamageType.Fire;
+                        __result.IncreasedDamageReceivedType2 = Enums.DamageType.Fire;
                         __result.IncreasedDirectDamageReceivedPerStack2 = 1;
                     }
 
@@ -1283,7 +1284,7 @@ namespace PerkManager
                         {
                             __result.ResistModified = Enums.DamageType.Lightning;
                             __result.ResistModifiedPercentagePerStack = -0.3f;
-                            
+
                         }
                     }
                     if (_type == "consume")
@@ -1327,8 +1328,8 @@ namespace PerkManager
                         // }
                         if (TeamHasPerkForSet("shackle1f", SetAppliesToMonsters, __instance, _characterTarget))
                         {
-                            // PLog(debugBase + "shackle1f set - .Speed " + _characterTarget.Speed);
-                            // PLog(debugBase + "shackle1f set - GetSpeed[1] " + _characterTarget.GetSpeed()[1]);
+                            // PLog("shackle1f set - .Speed " + _characterTarget.Speed);
+                            // PLog("shackle1f set - GetSpeed[1] " + _characterTarget.GetSpeed()[1]);
                             int baseSpeed = _characterTarget.GetSpeed()[1];
                             // int n_charges = _characterTarget.GetAuraCharges("shackle");
                             __result.IncreasedDamageReceivedType = Enums.DamageType.All;
@@ -1350,8 +1351,8 @@ namespace PerkManager
 
                         if (TeamHasPerkForConsume("shackle1f", ConsumeAppliesToMonsters, __instance, _characterCaster))
                         {
-                            // PLog(debugBase + "shackle1f consume - .Speed " + _characterCaster.Speed);
-                            // PLog(debugBase + "shackle1f consume - GetSpeed[1] " + _characterCaster.GetSpeed()[1]);
+                            // PLog("shackle1f consume - .Speed " + _characterCaster.Speed);
+                            // PLog("shackle1f consume - GetSpeed[1] " + _characterCaster.GetSpeed()[1]);
 
                             int baseSpeed = _characterCaster.GetSpeed()[1];
                             int n_charges = _characterCaster.GetAuraCharges("shackle");
@@ -1385,7 +1386,7 @@ namespace PerkManager
                         {
                             __result.ConsumeAll = true;
                             __result.IncreasedDirectDamageReceivedPerStack = -2;
-                            PLog(debugBase + "Mitigate1d: set");
+                            PLog("Mitigate1d: set");
                             __result.ChargesMultiplierDescription = 2;
 
 
@@ -1416,7 +1417,7 @@ namespace PerkManager
                             __result.IncreasedDirectDamageReceivedPerStack = -2;
                             __result.ConsumeAll = true;
                             __result.ChargesMultiplierDescription = 2;
-                            // PLog(debugBase + "Mitigate1d: Consume");
+                            // PLog("Mitigate1d: Consume");
 
                         }
                         if (TeamHasPerkForConsume("mitigate1e", AppliesGlobally, __instance, _characterCaster))
@@ -1611,7 +1612,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixElemental(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            // PLog(debugBase + "Executing AC Modifications - Elemental");
+            // PLog("Executing AC Modifications - Elemental");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
@@ -1633,7 +1634,7 @@ namespace PerkManager
             Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
 
 
-            if (__result==null || (_characterCaster==null&&_type=="consume")||(_characterTarget==null&&_type=="set"))
+            if (__result == null || (_characterCaster == null && _type == "consume") || (_characterTarget == null && _type == "set"))
                 return;
 
             switch (_acId)
@@ -1653,9 +1654,9 @@ namespace PerkManager
                             __result.ResistModifiedValue = 15;
                             __result.ResistModifiedValue2 = 15;
                             __result.ResistModifiedValue3 = 15;
-                            __result.GainCharges=true;
-                            __result.MaxCharges=15;
-                            __result.MaxMadnessCharges=15;
+                            __result.GainCharges = true;
+                            __result.MaxCharges = 15;
+                            __result.MaxMadnessCharges = 15;
                         }
                     }
                     if (_type == "consume")
@@ -1672,9 +1673,9 @@ namespace PerkManager
                             __result.ResistModifiedValue = 15;
                             __result.ResistModifiedValue2 = 15;
                             __result.ResistModifiedValue3 = 15;
-                            __result.GainCharges=true;
-                            __result.MaxCharges=15;
-                            __result.MaxMadnessCharges=15;
+                            __result.GainCharges = true;
+                            __result.MaxCharges = 15;
+                            __result.MaxMadnessCharges = 15;
                         }
                     }
                     break;
@@ -1841,7 +1842,7 @@ namespace PerkManager
                     {
                         if (TeamHasPerkForSet("zeal1d", SetAppliesToHeroes, __instance, _characterTarget) && _characterTarget.HasEffect("zeal"))
                         {
-                            PLog(debugBase + "zeal1d");
+                            PLog("zeal1d");
                             __result.ResistModified3 = Enums.DamageType.All;
                             // __result.ResistModifiedPercentagePerStack3 = 0.5f;
                             __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.All, 0, 0.5f);
@@ -1851,16 +1852,16 @@ namespace PerkManager
                         {
                             // Not sure if this is working
                             AuraCurseData noneAC = GetAuraCurseData("None");
-                            __result.PreventedAuraCurse = (AuraCurseData)null;
+                            __result.PreventedAuraCurse = noneAC;
                             __result.PreventedAuraCurseStackPerStack = 0;
-                            __result.RemoveAuraCurse = (AuraCurseData)null;
+                            __result.RemoveAuraCurse = noneAC;
                         }
                     }
                     if (_type == "consume")
                     {
                         if (TeamHasPerkForConsume("zeal1d", ConsumeAppliesToHeroes, __instance, _characterCaster) && _characterCaster.HasEffect("zeal"))
                         {
-                            PLog(debugBase + "zeal1d");
+                            PLog("zeal1d");
                             __result.ResistModified3 = Enums.DamageType.All;
                             // __result.ResistModifiedPercentagePerStack3 = 0.5f;
                             __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.All, 0, 0.5f);
@@ -1898,7 +1899,7 @@ namespace PerkManager
                             __result.ResistModifiedPercentagePerStack = -0.5f;
                             __result.ResistModifiedPercentagePerStack2 = -0.5f;
                         }
-                        
+
                     }
                     if (_type == "consume")
                     {
@@ -1944,7 +1945,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixMystical(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            // PLog(debugBase + "Executing AC Modifications - Mystical");
+            // PLog("Executing AC Modifications - Mystical");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
@@ -2060,7 +2061,7 @@ namespace PerkManager
                     // zeale: When this hero loses Zeal, deal indirect Holy and Fire damage equal to 4x the number of stacks lost to all monsters.
                     // zealg: If this hero dies with Zeal, deal indirect Mind damage to all enemies equal to 5x their Burn/Insane stacks.
                     // zeal1f: Zeal on this hero can stack, but only increases Fire resistance by 2.5% per charge. At the end of turn, suffer 5 Burn per charge.
-                    if (IfCharacterHas(characterOfInterest,CharacterHas.Perk,"zeal1f",AppliesTo.ThisHero))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "zeal1f", AppliesTo.ThisHero))
                     {
                         __result.GainCharges = true;
                         __result.ResistModified = Enums.DamageType.Fire;
@@ -2070,10 +2071,10 @@ namespace PerkManager
                     }
                     if (_type == "set")
                     {
-                                                
+
                         if (CharacterHasPerkForSet("zeal1b", SetAppliesToHeroes, __instance, _characterTarget))
                         {
-                            PLog(debugBase + "zeal1b");
+                            PLog("zeal1b");
                             __result.ConsumeAll = false;
                             __result.AuraConsumed = 3;
 
@@ -2081,7 +2082,7 @@ namespace PerkManager
 
                         if (TeamHasPerkForSet("zeal1c", SetAppliesToHeroes, __instance, _characterTarget))
                         {
-                            PLog(debugBase + "zeal1c");
+                            PLog("zeal1c");
                             __result.GainCharges = true;
                             __result.MaxCharges = ZealCap.Value;
                             __result.MaxMadnessCharges = ZealCap.Value;
@@ -2096,14 +2097,14 @@ namespace PerkManager
                     {
                         if (CharacterHasPerkForConsume("zeal1b", ConsumeAppliesToHeroes, __instance, _characterCaster))
                         {
-                            PLog(debugBase + "zeal1b");
+                            PLog("zeal1b");
                             __result.ConsumeAll = false;
                             __result.AuraConsumed = 3;
 
                         }
                         if (TeamHasPerkForConsume("zeal1c", ConsumeAppliesToHeroes, __instance, _characterCaster))
                         {
-                            PLog(debugBase + "zeal1c");
+                            PLog("zeal1c");
                             __result.GainCharges = true;
                             __result.MaxCharges = ZealCap.Value;
                             __result.MaxMadnessCharges = ZealCap.Value;
