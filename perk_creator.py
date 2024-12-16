@@ -430,6 +430,7 @@ def create_new_split_node(node_id:str,n_to_add:int):
 
 
 def handle_new_nodes():
+    # Creates completely new nodes and associated perks
     #name, row, col, number, sheet
     tuples = [
         (
@@ -508,6 +509,7 @@ def handle_new_nodes():
 
 
 def handle_adding_perks_to_vanilla_nodes():
+    # Adds perks to currently existing node
     tuples = [
         ("poison2",5),
         ("bleed2",4),
@@ -546,6 +548,7 @@ def handle_adding_perks_to_vanilla_nodes():
 
 
 def handle_creating_new_split_nodes():
+    # Creates new split nodes from currently existing nodes
     tuples = [
         ("health6",3),
         ("resistance5",3),
@@ -556,6 +559,7 @@ def handle_creating_new_split_nodes():
         ("slow0",2),
         ("shield5",2),
         ("heal5",2),
+        ("evasion0",1),
     ]
     for tuple in tuples:
         node_id = VANILLA_NODE_STEM+tuple[0].capitalize()

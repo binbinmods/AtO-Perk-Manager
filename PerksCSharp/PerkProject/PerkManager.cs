@@ -976,6 +976,14 @@ namespace PerkManager
 
             switch (_acId)
             {
+                case "evasion":
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "evasion0b", AppliesTo.Heroes))
+                    {
+                        __result.ConsumeAll=true;
+                        __result.GainCharges=true;
+                        __result.ConsumedAtTurnBegin=true;
+                    }
+                    break;
                 case "mark":
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mark1e", AppliesTo.Monsters))
                     {

@@ -22,7 +22,7 @@ namespace PerkManager
             int num1 = 78;
             int num2 = 88;
             int num3 = 98;
-            int num4;
+            int num4 = 0;
             if (!GameManager.Instance.IsObeliskChallenge())
             {
                 num4 = AtOManager.Instance.GetMadnessDifficulty();
@@ -35,7 +35,9 @@ namespace PerkManager
                 }
             }
             else
+            {
                 num4 = AtOManager.Instance.GetObeliskMadness();
+            }
 
             // Plugin.Log.LogDebug(debugBase + "Testing Perk shards5c: Original Corruption odds" + num3 +);
             PLog("GetCardByRarityPrefix - CardDataId - " + _cardData.Id);
@@ -55,6 +57,8 @@ namespace PerkManager
             if (rarity < num1)
             {
                 __result = _cardData.CardUpgraded == Enums.CardUpgraded.No || !(_cardData.UpgradedFrom != "") ? _cardData.Id.ToLower() : _cardData.UpgradedFrom.ToLower();
+                                    PLog("GetCardByRarityPrefix Exit 1");
+
                 return false;
             }
             if (rarity >= num1 && rarity < num2)
@@ -62,18 +66,21 @@ namespace PerkManager
                 if (_cardData.CardUpgraded == Enums.CardUpgraded.A)
                 {
                     __result = _cardData.Id.ToLower();
+                    PLog("GetCardByRarityPrefix Exit 2");
                     return false;
 
                 }
                 if (_cardData.CardUpgraded == Enums.CardUpgraded.No)
                 {
                     __result = _cardData.UpgradesTo1.ToLower();
+                    PLog("GetCardByRarityPrefix Exit 3");
                     return false;
 
                 }
                 if (_cardData.CardUpgraded == Enums.CardUpgraded.B)
                 {
                     __result = (_cardData.UpgradedFrom + "A").ToLower();
+                    PLog("GetCardByRarityPrefix Exit 4");
                     return false;
                 }
             }
@@ -84,20 +91,24 @@ namespace PerkManager
                     if (_cardData.CardUpgraded == Enums.CardUpgraded.B)
                     {
                         __result = _cardData.Id.ToLower();
+                        PLog("GetCardByRarityPrefix Exit 5");
                         return false;
                     }
                     __result = _cardData.CardUpgraded == Enums.CardUpgraded.No ? _cardData.UpgradesTo2.ToLower() : (_cardData.UpgradedFrom + "B").ToLower();
+                    PLog("GetCardByRarityPrefix Exit 6");
                     return false;
                 }
                 if (_cardData.CardUpgraded == Enums.CardUpgraded.No)
                 {
                     __result = (UnityEngine.Object)_cardData.UpgradesToRare != (UnityEngine.Object)null ? _cardData.UpgradesToRare.Id.ToLower() : _cardData.Id.ToLower();
+                    PLog("GetCardByRarityPrefix Exit 7");
                     return false;
                 }
                 CardData cardData = Globals.Instance.GetCardData(_cardData.UpgradedFrom, false);
                 if ((UnityEngine.Object)cardData != (UnityEngine.Object)null && (UnityEngine.Object)cardData.UpgradesToRare != (UnityEngine.Object)null)
                 {
                     __result = cardData.UpgradesToRare.Id.ToLower();
+                    PLog("GetCardByRarityPrefix Exit 8");
                     return false;
                 }
             }

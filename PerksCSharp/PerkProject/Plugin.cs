@@ -105,6 +105,9 @@ namespace PerkManager{
             medsTexts[perkStem + "mark1d"] = "Once per combat, when an enemy reaches 10 Mark, apply 2 Taunt.";
             medsTexts[perkStem + "mark1e"] = "Every 2 Mark charges on enemies increases Piercing Damage by 3. Mark does not increase any other damage type.";
 
+            // Custom Text for Evasion
+            medsTexts[perkStem + "evasion0b"] = "Evasion on all heroes can stack but loses all charges at the start of turn.";
+
             // Custom Text for Energy
             medsTexts[perkStem + "energy2d"] = "Significantly increases the damage dealt by some high cost cards. Reduces damage dealt by some low cost cards. Works best with single damage instances. (Damage shown in preview might not be accurate)";
 

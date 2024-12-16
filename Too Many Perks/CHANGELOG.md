@@ -1,6 +1,6 @@
 # 1.2.0
 
-
+Added evasion0b perk
 
 # 1.1.8 and 1.1.9
 
