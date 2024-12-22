@@ -169,7 +169,8 @@ namespace PerkManager{
             // Custom Text for Crack
             medsTexts[perkStem + "crack2d"] = "Crack on monsters reduces Speed by 1 for every 5 charges.";
             medsTexts[perkStem + "crack2e"] = "Crack on monsters reduces Lightning resist by 0.3% per charge.";
-            medsTexts[perkStem + "crack2f"] = "Crack on monsters increases Fire damage received by 1 per charge in addition to Blunt damage.";
+            medsTexts[perkStem + "crack2f"] = "Crack on monsters increases Fire damage received by 1 per charge in addition to Blunt damage.[Not compatible with the Mind version.]";
+            medsTexts[perkStem + "crack2g"] = "Crack on monsters increases Mind damage received by 1 per charge in addition to Blunt damage. [Overrides the Burn version.]";
 
             // Custom Text for Burn
             medsTexts[perkStem + "burn2e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
@@ -250,7 +251,7 @@ namespace PerkManager{
 
             // Custom Text for Insane
             medsTexts[perkStem + "insane2d"] = "Crack on monsters increases Blunt damage by an additional 1 for every 40 charges of Insane on that monster.";
-            medsTexts[perkStem + "insane2e"] = "Insane on this hero increases the effectiveness of sharp by 1% per charge.";
+            medsTexts[perkStem + "insane2e"] = "Insane on this hero increases the effectiveness of Sharp by 1% per charge.";
             medsTexts[perkStem + "insane2f"] = "At the start of their turn, heroes and monsters gain 1 Scourge for every 30 Insane charges on them.";
             
             // Custom Text for Dark

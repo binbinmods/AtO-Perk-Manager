@@ -130,6 +130,8 @@ fury1d: For all heroes, at the end of turn, spread 70% of Fury to adjacent heroe
 ### Perks for Crack
 crack2d: Crack on monsters reduces Speed by 1 for every 5 charges.  
 crack2e: Crack on monsters reduces Lightning resistance by 0.3% per charge.
+crack2f: Crack on monsters increases Fire damage by 1/charge.
+crack2g: Crack on monsters increases Mind damage by 1/charge.
 
 ### Perks for Burn
 burn2e: Burn increases the damage dealt by Dark explosions by 0.5% per charge.

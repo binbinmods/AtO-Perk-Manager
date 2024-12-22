@@ -538,7 +538,7 @@ def handle_adding_perks_to_vanilla_nodes():
         ("insulate1",2),
         ("regeneration1",1),
         ("stanza0",2),
-        ("crack2",3),
+        ("crack2",4),
     ]
     for tuple in tuples:
         node_name,n = tuple

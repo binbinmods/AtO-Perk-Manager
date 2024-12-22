@@ -1267,6 +1267,7 @@ namespace PerkManager
                     // crack2d: Crack on monsters reduces Speed by 1 for every 5 charges.";
                     // crack2e: Crack on monsters reduces Lightning resistance by 0.3% per charge.
                     // crack2f: Crack increases fire damage too
+                    // crack2f: Crack increases mind damage too
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2f", AppliesTo.Monsters))
                     {
@@ -1274,7 +1275,12 @@ namespace PerkManager
                         __result.IncreasedDamageReceivedType2 = Enums.DamageType.Fire;
                         __result.IncreasedDirectDamageReceivedPerStack2 = 1;
                     }
-
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2g", AppliesTo.Monsters))
+                    {
+                        // mark1e: Every 2 mark charges increases piercing damage by 3.
+                        __result.IncreasedDamageReceivedType2 = Enums.DamageType.Mind;
+                        __result.IncreasedDirectDamageReceivedPerStack2 = 1;
+                    }
                     if (_type == "set")
                     {
                         if (TeamHasPerkForSet("insane2d", SetAppliesToMonsters, __instance, _characterTarget) && _characterTarget.HasEffect("insane"))

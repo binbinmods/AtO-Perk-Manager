@@ -1,3 +1,7 @@
+# 1.2.1
+
+Added crack2g
+
 # 1.2.0
 
 Added evasion0b perk
