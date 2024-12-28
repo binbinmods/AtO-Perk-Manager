@@ -1,6 +1,6 @@
 # 1.2.2
 
-Added Chill2 and thorns1f
+Added thorns1f - UNTESTED
 
 # 1.2.1
 

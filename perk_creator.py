@@ -518,7 +518,7 @@ def handle_adding_perks_to_vanilla_nodes():
         ("taunt1",1),
         ("sight1",2),
         ("burn2",1),
-        ("chill2",4),
+        ("chill2",3),
         ("spark2",4),
         ("wet1",1),
         ("inspire0",1),

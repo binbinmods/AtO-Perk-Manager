@@ -106,6 +106,7 @@ bleed2g: When a monster dies with Bleed, all monsters lose HP equal to 25% of th
 ### Perks for Thorns
 thorns1d: Cannot be purged unless specified.  
 thorns1e: When a monster with Thorns dies, transfer their Thorns charges to a random hero.
+thorns1f: Bless on heroes increases Thorns damage by 5% per charge. (UNTESTED)
 
 ### Perks for Reinforce
 reinforce1d: Reinforce on this hero increases Block charges received by 1 per charge of Reinforce.

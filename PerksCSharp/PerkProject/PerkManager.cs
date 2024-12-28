@@ -856,7 +856,13 @@ namespace PerkManager
         {
             // Thorns1f: Bless increases thorns damage by 2% per charge.
             PLog("IndirectDamagePostfix");
+            if (MatchManager.Instance==null)
+            {
+                return;
+            }
+
             Character sourceCharacter = MatchManager.Instance.GetCharacterById(sourceCharacterId);
+            
             if(TeamHasPerk("thorns1f")&&IsLivingHero(sourceCharacter)&&sourceCharacter.HasEffect("bless"))
             {
                 int n_bless = sourceCharacter.GetAuraCharges("bless");
