@@ -844,6 +844,29 @@ namespace PerkManager
         }
 
         [HarmonyPrefix]
+        [HarmonyPatch(typeof(Character), nameof(Character.IndirectDamage))]
+        public static void IndirectDamagePostfix(
+            ref Character __instance,            
+            Enums.DamageType damageType,
+            ref int damage,
+            AudioClip sound = null,
+            string effect = "",
+            string sourceCharacterName = "",
+            string sourceCharacterId = "")
+        {
+            // Thorns1f: Bless increases thorns damage by 2% per charge.
+            PLog("IndirectDamagePostfix");
+            Character sourceCharacter = MatchManager.Instance.GetCharacterById(sourceCharacterId);
+            if(TeamHasPerk("thorns1f")&&IsLivingHero(sourceCharacter)&&sourceCharacter.HasEffect("bless"))
+            {
+                int n_bless = sourceCharacter.GetAuraCharges("bless");
+                float multiplier = 1+0.05f*n_bless;
+                damage += RoundToInt(damage*multiplier);
+            }
+        }
+
+
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.HealReceivedFinal))]
         public static void HealReceivedFinalPostfix(Character __instance, int __result, int heal, bool isIndirect = false)
         {
@@ -979,9 +1002,9 @@ namespace PerkManager
                 case "evasion":
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "evasion0b", AppliesTo.Heroes))
                     {
-                        __result.ConsumeAll=true;
-                        __result.GainCharges=true;
-                        __result.ConsumedAtTurnBegin=true;
+                        __result.ConsumeAll = true;
+                        __result.GainCharges = true;
+                        __result.ConsumedAtTurnBegin = true;
                     }
                     break;
                 case "mark":

@@ -1,3 +1,7 @@
+# 1.2.2
+
+Added Chill2 and thorns1f
+
 # 1.2.1
 
 Added crack2g
