@@ -863,7 +863,7 @@ namespace PerkManager
 
             Character sourceCharacter = MatchManager.Instance.GetCharacterById(sourceCharacterId);
             
-            if(TeamHasPerk("thorns1f")&&IsLivingHero(sourceCharacter)&&sourceCharacter.HasEffect("bless"))
+            if(TeamHasPerk("thorns1f")&&IsLivingHero(sourceCharacter)&&sourceCharacter.HasEffect("bless")&&effect=="thorns")
             {
                 int n_bless = sourceCharacter.GetAuraCharges("bless");
                 float multiplier = 1+0.05f*n_bless;

@@ -1,3 +1,7 @@
+# 1.2.3
+
+Bug fix for thorns1f
+
 # 1.2.2
 
 Added thorns1f - UNTESTED
