@@ -1,6 +1,6 @@
 # 1.2.3
 
-Bug fix for thorns1f
+Bug fix for thorns1f and fixed chill2 perk node
 
 # 1.2.2
 
