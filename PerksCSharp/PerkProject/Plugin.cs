@@ -177,7 +177,7 @@ namespace PerkManager{
             medsTexts[perkStem + "crack2e"] = "Crack on monsters reduces Lightning resist by 0.3% per charge.";
             medsTexts[perkStem + "crack2f"] = "Crack on monsters increases Fire damage received by 1 per charge in addition to Blunt damage.[Not compatible with the Mind version.]";
             medsTexts[perkStem + "crack2g"] = "Crack on monsters increases Mind damage received by 1 per charge in addition to Blunt damage. [Overrides the Burn version.]";
-            // medsTexts[perkStem + "crack2h"] = "Crack on monsters reduces Lightning resist by 0.3% per charge.";
+            medsTexts[perkStem + "crack2h"] = "Crack on monsters reduces Lightning resist by 0.3% per charge.";
 
             // Custom Text for Burn
             medsTexts[perkStem + "burn2e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";

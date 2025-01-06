@@ -1318,7 +1318,6 @@ namespace PerkManager
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2f", AppliesTo.Monsters))
                     {
-                        // mark1e: Every 2 mark charges increases piercing damage by 3.
                         __result.IncreasedDamageReceivedType2 = Enums.DamageType.Fire;
                         __result.IncreasedDirectDamageReceivedPerStack2 = 1;
                     }
@@ -1328,6 +1327,12 @@ namespace PerkManager
                         __result.IncreasedDamageReceivedType2 = Enums.DamageType.Mind;
                         __result.IncreasedDirectDamageReceivedPerStack2 = 1;
                     }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2h", AppliesTo.Monsters))
+                    {
+                            __result.ResistModified2 = Enums.DamageType.Slashing;
+                            __result.ResistModifiedPercentagePerStack2 = -0.3f;
+                    }
+
                     if (_type == "set")
                     {
                         if (TeamHasPerkForSet("insane2d", SetAppliesToMonsters, __instance, _characterTarget) && _characterTarget.HasEffect("insane"))
