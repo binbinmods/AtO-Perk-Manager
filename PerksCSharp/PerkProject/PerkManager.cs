@@ -559,6 +559,23 @@ namespace PerkManager
             }
         }
 
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Character), nameof(Character.EndRound))]
+        public static void EndRoundPostfix(ref Character __instance)
+        {
+            PLog("EndRoundPostfix");
+            if (__instance==null)
+            {
+                return;
+            }
+
+            int auraCharges2 = __instance.GetAuraCharges("spark");
+            if (AtOManager.Instance!=null && AtOManager.Instance.TeamHavePerk("mainperkspark2c"))
+            {
+                __instance.SetAuraTrait((Character) null, "slow", Mathf.FloorToInt(0.0714285746f * (float) auraCharges2));
+            }
+
+        }
 
 
         [HarmonyPostfix]

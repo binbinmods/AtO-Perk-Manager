@@ -196,6 +196,8 @@ namespace PerkManager{
             medsTexts[perkStem + "spark2e"] = "Spark deal Fire damage. Spark decreases Fire resistance by 0.5% per charge and Lightning resistance by 0.5% per charge.";
             medsTexts[perkStem + "spark2f"] = "When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
             medsTexts[perkStem + "spark2g"] = "When this hero applies Spark, apply 1 Crack.";
+            medsTexts["customMainperkSpark2c"] = "Spark also applies 1 Slow per 14 charges of Spark at end of each round and turn.";
+
             
             // Custom Text for Insulate
             medsTexts[perkStem + "insulate1d"] = "Insulate on this hero prevents their Speed from being lowered by Chill.";
