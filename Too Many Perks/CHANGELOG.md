@@ -1,6 +1,6 @@
 # 1.3.0
 
-Updated: Energy2c, Bleed2b, Bleed2c, Sharp1d,
+Updated: Energy2c, Bleed2b, Bleed2c, Sharp1d, Burn2d,
 
 Added: Mark1f, Crack2h
 

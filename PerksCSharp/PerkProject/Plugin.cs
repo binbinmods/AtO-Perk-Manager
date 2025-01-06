@@ -165,6 +165,7 @@ namespace PerkManager{
             
             // Custom Text for Fortify
             medsTexts[perkStem + "fortify1d"] = "At the end of this hero's turn, gain 1 Reinforce for every 2 Fortify charges.";
+            medsTexts[perkStem + "fortify1e"] = "Fortify on all heroes is capped at 5, but reduces damage taken by 1 per charge.";
 
             // Custom Text for Sharp
             medsTexts[perkStem + "sharp1e"] = "If Sharp on a hero would increase a damage type, it increases it by 1.5 damage per charge. Sharp on heroes only stacks to 25.";
@@ -181,6 +182,8 @@ namespace PerkManager{
 
             // Custom Text for Burn
             medsTexts[perkStem + "burn2e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
+            medsTexts["customMainperkBurn2d"] = "Burn deals double damage on enemies with 3 or less curses (burn included).";
+
             
             // Custom Text for Chill
             medsTexts[perkStem + "chill2e"] = "Chill on monsters reduces Cold and Mind resistance by 0.5% per charge.";

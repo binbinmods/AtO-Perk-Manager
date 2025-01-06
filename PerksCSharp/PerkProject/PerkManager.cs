@@ -1230,6 +1230,14 @@ namespace PerkManager
                         }
                     }
                     break;
+                case "fortify":
+                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"fortify1e",AppliesTo.Monsters))
+                    {
+                        __result.ConsumedAtTurnBegin=true;
+                        __result.ConsumedAtTurn=false;
+                    }            
+
+                    break;
                 case "fury":
                     if (_type == "set")
                     {
@@ -1837,6 +1845,10 @@ namespace PerkManager
                     break;
                 case "burn":
                     // scourge1e: Scourge on monsters increases burn damage by 15%/stack";
+                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkburn2d",AppliesTo.Monsters))
+                    {
+                        __result.DoubleDamageIfCursesLessThan=4;
+                    }            
 
                     if (_type == "set")
                     {

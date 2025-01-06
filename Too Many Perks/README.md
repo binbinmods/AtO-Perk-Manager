@@ -122,6 +122,7 @@ taunt1e: Taunt on this hero can stack and increases damage by 1 per charge.
 
 ### Perks for Fortify
 fortify1d: At the end of this hero's turn, gain 1 Reinforce for every 2 Fortify charges.  
+fortify1e: Fortify on all heroes is capped at 5 but reduces damage by 1 per charge.  
 
 ### Perks for Sharp
 sharp1e: If Sharp on a hero would increase a damage type, it increases it by 1.5 damage per charge. Sharp on heroes only stacks to 25.  
