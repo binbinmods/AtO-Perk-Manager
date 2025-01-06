@@ -1,8 +1,8 @@
 {
     "AdditionalCurrency": 0,
     "AdditionalShards": 0,
-    "AuraCurseBonus": "None",
-    "AuraCurseBonusValue": 0,
+    "AuraCurseBonus": "mark",
+    "AuraCurseBonusValue": 1,
     "CardClass": "None",
     "CustomDescription": "custom_binbin_mainperk_mark1f",
     "DamageFlatBonus": "None",

@@ -104,7 +104,7 @@ namespace PerkManager{
             // Custom Text for Mark
             medsTexts[perkStem + "mark1d"] = "Once per combat, when an enemy reaches 10 Mark, apply 2 Taunt.";
             medsTexts[perkStem + "mark1e"] = "Every 2 Mark charges on enemies increases Piercing Damage by 3. Mark does not increase any other damage type.";
-            medsTexts[perkStem + "mark1f"] = "+1 Mark Charge on Turn 2 and later.";
+            medsTexts[perkStem + "mark1f"] = "+1 Mark Charge applied.";
 
             // Custom Text for Evasion
             medsTexts[perkStem + "evasion0b"] = "Evasion on all heroes can stack but loses all charges at the start of turn.";

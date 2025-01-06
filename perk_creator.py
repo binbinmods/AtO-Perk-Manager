@@ -115,6 +115,9 @@ def create_new_perk(id:str,
     if id=="poison2h":
         perk.AuraCurseBonus="poison"
         perk.AuraCurseBonusValue = -1
+    if id =="mark1f":
+        perk.AuraCurseBonus="mark"
+        perk.AuraCurseBonusValue=1
 
 
     return perk
