@@ -18,6 +18,7 @@ using System.Diagnostics.Tracing;
 using System.Dynamic;
 using UnityEngine.UIElements;
 using UnityEngine.TextCore.Text;
+using System.Data;
 
 
 namespace PerkManager
@@ -1654,20 +1655,13 @@ namespace PerkManager
 
                 case "reinforce":
                     // reinforce1d: Reinforce increases Block charges by 2 per charge of Reinforce.";
-                    if (_type == "set")
+                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkreinforce1b",AppliesTo.Heroes))
                     {
-                        if (CharacterHasPerkForSet("", AppliesGlobally, __instance, _characterTarget))
-                        {
+                        __result.ResistModifiedValue=40;
+                        __result.ResistModifiedValue2=40;
+                        __result.ResistModifiedValue3=40;
+                    }            
 
-                        }
-                    }
-                    if (_type == "consume")
-                    {
-                        if (CharacterHasPerkForConsume("", AppliesGlobally, __instance, _characterCaster))
-                        {
-
-                        }
-                    }
                     break;
 
                 case "block":
@@ -1748,6 +1742,12 @@ namespace PerkManager
             switch (_acId)
             {
                 case "insulate":
+                     if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkinsulate1b",AppliesTo.Heroes))
+                    {
+                        __result.ResistModifiedValue=40;
+                        __result.ResistModifiedValue2=40;
+                        __result.ResistModifiedValue3=40;
+                    }
                     if (_type == "set")
                     {
                         if (CharacterHasPerkForSet("insulate1e", AppliesGlobally, __instance, _characterTarget))
@@ -2164,7 +2164,14 @@ namespace PerkManager
                     }
                     break;
 
-
+                case "courage":
+                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkcourage1b",AppliesTo.Heroes))
+                    {
+                        __result.ResistModifiedValue=40;
+                        __result.ResistModifiedValue2=40;
+                        __result.ResistModifiedValue3=40;
+                    }
+                    break;
 
                 case "zeal":
                     // zealb: Zeal on this hero loses 3 charges per turn rather than all charges
