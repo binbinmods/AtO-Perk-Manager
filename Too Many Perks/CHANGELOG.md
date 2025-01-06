@@ -1,6 +1,12 @@
+# 1.3.0
+
+Updated: Energy2c, Bleed2b, Bleed2c, Sharp1d,
+
+Added: Mark1f, 
+
 # 1.2.3
 
-Bug fix for thorns1f and fixed chill2 perk node
+Bug fix for thorns1f and fixed chill2, crack2, and thorns1 perk nodes
 
 # 1.2.2
 

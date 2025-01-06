@@ -763,6 +763,10 @@ namespace PerkManager
             {
                 __instance.SetAura(__instance, GetAuraCurseData("stanzaii"), 1, useCharacterMods: false);
             }
+            // if (CharacterObjectHavePerk(__instance, "mark1f") && __instance.IsHero && MatchManager.Instance.GetCurrentRound() == 2)
+            // {
+            //     __instance.AuraCurseModification["mark"] += 1;
+            // }
 
         }
 
@@ -976,6 +980,15 @@ namespace PerkManager
 
         }
 
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Character), nameof(Character.GainEnergyTurn))]
+        public static void GainEnergyTurn(ref Character __instance)
+        {
+            if (MatchManager.Instance.GetCurrentRound() != 4 || !AtOManager.Instance.CharacterHavePerk(__instance.SubclassName, "mainperkenergy2c"))
+                return;
+            PLog("Updated Energy2c perk");
+            __instance.ModifyEnergy(1, true);
+        }
 
 
         [HarmonyPostfix]
@@ -1244,7 +1257,12 @@ namespace PerkManager
                     break;
 
                 case "sharp":
+                    // sharp1d: shadow damaage for all heroes
                     // insane2e: Insane on this hero increases the effectiveness of sharp by 1% per charge.";
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperksharp1d", AppliesTo.Heroes))
+                    {
+                        __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Shadow, 0, 1, 0);
+                    }
 
                     if (_type == "set")
                     {
@@ -1472,6 +1490,12 @@ namespace PerkManager
                     break;
 
                 case "poison":
+                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkpoison2c",AppliesTo.Monsters))
+                    {
+                        __result.ConsumedAtTurnBegin=true;
+                        __result.ConsumedAtTurn=false;
+                    }            
+
                     if (_type == "set")
                     {
                         // poison2d: If Restricted Power is enabled, increases Max Charges to 300.";
@@ -1534,11 +1558,22 @@ namespace PerkManager
                     break;
 
                 case "bleed":
+                    // bleed2b: If Restricted Power is enabled, increases Max Charges to 300.";
+                    // bleed2c: Can no longer be dispelled unless specified
                     // bleed2d: If Restricted Power is enabled, increases Max Charges to 300.";
                     // bleed2e: When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
                     // bleed2f: Bleed on monsters reduces Piercing resist by 0.25% per charge.";
                     // bleed2g: When this hero kills an enemy with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
+                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkbleed2b",AppliesTo.ThisHero))
+                    {
+                        __result.MaxCharges=50;
+                        __result.MaxMadnessCharges=50;
+                    }            
 
+                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkbleed2c",AppliesTo.Heroes))
+                    {
+                        __result.Removable=false;
+                    }            
                     if (_type == "set")
                     {
                         if (TeamHasPerkForSet("bleed2d", AppliesGlobally, __instance, _characterTarget))

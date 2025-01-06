@@ -104,12 +104,15 @@ namespace PerkManager{
             // Custom Text for Mark
             medsTexts[perkStem + "mark1d"] = "Once per combat, when an enemy reaches 10 Mark, apply 2 Taunt.";
             medsTexts[perkStem + "mark1e"] = "Every 2 Mark charges on enemies increases Piercing Damage by 3. Mark does not increase any other damage type.";
+            medsTexts[perkStem + "mark1f"] = "+1 Mark Charge on Turn 2 and later.";
 
             // Custom Text for Evasion
             medsTexts[perkStem + "evasion0b"] = "Evasion on all heroes can stack but loses all charges at the start of turn.";
 
             // Custom Text for Energy
             medsTexts[perkStem + "energy2d"] = "Significantly increases the damage dealt by some high cost cards. Reduces damage dealt by some low cost cards. Works best with single damage instances. (Damage shown in preview might not be accurate)";
+            // medsTexts[perkStem + "energy2e"] = "-1 Energy Regeneration. When this hero plays a card that costs 4 or more Energy, refund 1 Energy.";
+            medsTexts["customMainperkEnergy2c"] = "On round 4, this hero gains 3 Energy at the start of the turn.";
 
             // Custom Text for Shackle
             medsTexts[perkStem + "shackle1a"] = "+1 Charge applied";
@@ -132,13 +135,15 @@ namespace PerkManager{
             medsTexts[perkStem + "poison2f"] = "Poison on monsters reduces all resistances by 5% for every 100 charges.";
             medsTexts[perkStem + "poison2g"] = "Once per turn, when a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
             medsTexts[perkStem + "poison2h"] = "-1 Poison. When this hero applies Poison, deal indirect Mind damage to the target equal to 30% of their Poison charges.";
-
+            medsTexts["customMainperkPoison2c"] = "Poison deals 50% bonus damage and deals damage at the start of turn but loses all charges at the start of turn.";
 
             // Custom Text for Bleed
             medsTexts[perkStem + "bleed2d"] = "If Restricted Power is enabled, increases Max Charges to 300.";
             medsTexts[perkStem + "bleed2e"] = "When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
             medsTexts[perkStem + "bleed2f"] = "Bleed on monsters reduces Piercing resist by 0.25% per charge.";
             medsTexts[perkStem + "bleed2g"] = "When a monster dies with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
+            medsTexts["customMainperkBleed2b"] = "Bleed on this hero deals damage at the end of turn but cannot be dispelled unless specified. Fury on this hero is capped at 50 charges.";
+            medsTexts["customMainperkBleed2c"] = "Bleed Charges +2. Bleed on enemies deals damage at the end of turn but cannot be prevented or dispelled unless specified.";
             
             // Custom Text for Thorns
             medsTexts[perkStem + "thorns1d"] = "Cannot be purged unless specified.";
@@ -172,6 +177,7 @@ namespace PerkManager{
             medsTexts[perkStem + "crack2e"] = "Crack on monsters reduces Lightning resist by 0.3% per charge.";
             medsTexts[perkStem + "crack2f"] = "Crack on monsters increases Fire damage received by 1 per charge in addition to Blunt damage.[Not compatible with the Mind version.]";
             medsTexts[perkStem + "crack2g"] = "Crack on monsters increases Mind damage received by 1 per charge in addition to Blunt damage. [Overrides the Burn version.]";
+            // medsTexts[perkStem + "crack2h"] = "Crack on monsters reduces Lightning resist by 0.3% per charge.";
 
             // Custom Text for Burn
             medsTexts[perkStem + "burn2e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
