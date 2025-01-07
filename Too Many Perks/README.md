@@ -136,6 +136,7 @@ crack2e: Crack on monsters reduces Lightning resistance by 0.3% per charge.
 crack2f: Crack on monsters increases Fire damage by 1/charge.  
 crack2g: Crack on monsters increases Mind damage by 1/charge.  
 crack2h: Crack on monsters reduces Slashing resistance by 0.3% per charge.  
+crack2i: Crack on monsters increases max Vulnerable charges by 1 per 25 stacks of Crack.  
 
 ### Perks for Burn
 burn2e: Burn increases the damage dealt by Dark explosions by 0.5% per charge.  

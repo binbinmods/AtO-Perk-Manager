@@ -1,12 +1,12 @@
 # 1.3.1
 
-Added Mark1f
+Added Mark1f and Crack2i, updated Fotify1e
 
 # 1.3.0
 
-Updated: Energy2c, Bleed2b, Bleed2c, Sharp1d, Burn2d, Spark2c, Reinforce1b, Insulate1b, Courage1b
+Updated: Energy2c, Bleed2b, Bleed2c, Sharp1d, Burn2d, Spark2c, , Reinforce1b, Insulate1b, Courage1b
 
-Added: Crack2h  
+Added: Crack2h, Fortify1e
 
 These have been minimally tested, so please report bugs with them.
 

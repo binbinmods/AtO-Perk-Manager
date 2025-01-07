@@ -1251,6 +1251,7 @@ namespace PerkManager
                 case "fortify":
                     if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"fortify1e",AppliesTo.Monsters))
                     {
+                        __result.GainCharges=true;
                         __result.ConsumedAtTurnBegin=true;
                         __result.ConsumedAtTurn=false;
                     }            
@@ -1684,7 +1685,15 @@ namespace PerkManager
                         }
                     }
                     break;
+                case "vulnerabe":
+                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"crack2i",AppliesTo.Monsters))
+                    {
+                        int toIncrease = FloorToInt(0.04f * characterOfInterest.GetAuraCharges("crack"));
+                        __result.MaxCharges+=toIncrease;
+                        __result.MaxMadnessCharges+=toIncrease;
+                    }
 
+                    break;
                 case "taunt":
                     // taunt1e: Taunt on this hero can stack and increases damage by 1 per charge.";
                     if (_type == "set")
