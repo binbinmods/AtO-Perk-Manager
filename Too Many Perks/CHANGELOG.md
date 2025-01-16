@@ -1,3 +1,7 @@
+# 1.3.2
+
+Updated text displays for updated perks (added in v1.3.0). Updated Dark2b.
+
 # 1.3.1
 
 Added Mark1f and Crack2i, updated Fotify1e

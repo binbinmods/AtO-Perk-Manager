@@ -1,0 +1,13 @@
+{
+    "Column": 7,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_crack2i",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_crack2i",
+    "PerkRequired": "nodeperkCrack1",
+    "PerksConnected": [],
+    "Row": 5,
+    "Sprite": "crack",
+    "Type": 1
+}

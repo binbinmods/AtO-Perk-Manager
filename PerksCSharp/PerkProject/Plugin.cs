@@ -112,7 +112,7 @@ namespace PerkManager{
             // Custom Text for Energy
             medsTexts[perkStem + "energy2d"] = "Significantly increases the damage dealt by some high cost cards. Reduces damage dealt by some low cost cards. Works best with single damage instances. (Damage shown in preview might not be accurate)";
             // medsTexts[perkStem + "energy2e"] = "-1 Energy Regeneration. When this hero plays a card that costs 4 or more Energy, refund 1 Energy.";
-            medsTexts["customMainperkEnergy2c"] = "On round 4, this hero gains 3 Energy at the start of the turn.";
+            medsTexts["energy2c"] = "On round 4, this hero gains 3 Energy at the start of the turn.";
 
             // Custom Text for Shackle
             medsTexts[perkStem + "shackle1a"] = "+1 Charge applied";
@@ -135,15 +135,15 @@ namespace PerkManager{
             medsTexts[perkStem + "poison2f"] = "Poison on monsters reduces all resistances by 5% for every 100 charges.";
             medsTexts[perkStem + "poison2g"] = "Once per turn, when a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
             medsTexts[perkStem + "poison2h"] = "-1 Poison. When this hero applies Poison, deal indirect Mind damage to the target equal to 30% of their Poison charges.";
-            medsTexts["customMainperkPoison2c"] = "Poison deals 50% bonus damage and deals damage at the start of turn but loses all charges at the start of turn.";
+            medsTexts["poison2c"] = "Poison deals 50% bonus damage and deals damage at the start of turn but loses all charges at the start of turn.";
 
             // Custom Text for Bleed
             medsTexts[perkStem + "bleed2d"] = "If Restricted Power is enabled, increases Max Charges to 300.";
             medsTexts[perkStem + "bleed2e"] = "When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
             medsTexts[perkStem + "bleed2f"] = "Bleed on monsters reduces Piercing resist by 0.25% per charge.";
             medsTexts[perkStem + "bleed2g"] = "When a monster dies with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
-            medsTexts["customMainperkBleed2b"] = "Bleed on this hero deals damage at the end of turn but cannot be dispelled unless specified. Fury on this hero is capped at 50 charges.";
-            medsTexts["customMainperkBleed2c"] = "Bleed Charges +2. Bleed on enemies deals damage at the end of turn but cannot be prevented or dispelled unless specified.";
+            medsTexts["bleed2b"] = "Bleed on this hero deals damage at the end of turn but cannot be dispelled unless specified. Fury on this hero is capped at 50 charges.";
+            medsTexts["bleed2c"] = "Bleed Charges +2. Bleed on enemies deals damage at the end of turn but cannot be prevented or dispelled unless specified.";
             
             // Custom Text for Thorns
             medsTexts[perkStem + "thorns1d"] = "Cannot be purged unless specified.";
@@ -183,7 +183,7 @@ namespace PerkManager{
 
             // Custom Text for Burn
             medsTexts[perkStem + "burn2e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
-            medsTexts["customMainperkBurn2d"] = "Burn deals double damage on enemies with 3 or less curses (burn included).";
+            medsTexts["burn2d"] = "Burn deals double damage on enemies with 3 or less curses (burn included).";
 
             
             // Custom Text for Chill
@@ -197,7 +197,7 @@ namespace PerkManager{
             medsTexts[perkStem + "spark2e"] = "Spark deal Fire damage. Spark decreases Fire resistance by 0.5% per charge and Lightning resistance by 0.5% per charge.";
             medsTexts[perkStem + "spark2f"] = "When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
             medsTexts[perkStem + "spark2g"] = "When this hero applies Spark, apply 1 Crack.";
-            medsTexts["customMainperkSpark2c"] = "Spark also applies 1 Slow per 14 charges of Spark at end of each round and turn.";
+            medsTexts["spark2c"] = "Spark also applies 1 Slow per 14 charges of Spark at end of each round and turn.";
 
             
             // Custom Text for Insulate
@@ -269,7 +269,9 @@ namespace PerkManager{
             medsTexts[perkStem + "insane2f"] = "At the start of their turn, heroes and monsters gain 1 Scourge for every 30 Insane charges on them.";
             
             // Custom Text for Dark
-            medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.5% per charge in addition to reducing Shadow resistance..";
+            medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.5% per charge in addition to reducing Shadow resistance.";
+            medsTexts["dark2b"] = "Dark on this hero explodes at 38 charges and cannot be dispelled unless specified.";
+            
 
             // Custom Text for Sanctify
             medsTexts[perkStem + "sanctify2d"] = "Every 5 stacks of Sanctify increase the number of Dark charges needed for an explosion by 1.";
@@ -294,6 +296,8 @@ namespace PerkManager{
 
             // Custom Text for Regeneration
             medsTexts[perkStem + "regeneration1d"] = "Regeneration on heroes prevents 1 Vulnerable per charge";
+
+            medsTexts["binbintestasdf"] = "asdfqwerafsdb";
 
             // apply patches
             harmony.PatchAll();

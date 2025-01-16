@@ -2110,7 +2110,10 @@ namespace PerkManager
                     // dark2e: Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.25% per charge in addition to reducing Shadow resistance..";
                     // burn1e: Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
                     // sanctify2d: Every 5 stacks of Sanctify increase the number of Dark charges needed for an explosion by 1.";
-
+                    if(IfCharacterHas(characterOfInterest,CharacterHas.Trait,"mainperkdark2b",AppliesTo.ThisHero))
+                    {
+                        __result.Removable = false;
+                    }
                     if (_type == "set")
                     {
                         if (TeamHasPerkForSet("dark2e", AppliesGlobally, __instance, _characterTarget))
