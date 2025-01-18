@@ -1,3 +1,7 @@
+# 1.3.3
+
+Updated Thorns1f
+
 # 1.3.2
 
 Updated text displays for updated perks (added in v1.3.0). Updated Dark2b.

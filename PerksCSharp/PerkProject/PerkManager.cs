@@ -889,7 +889,7 @@ namespace PerkManager
             {
                 int n_bless = sourceCharacter.GetAuraCharges("bless");
                 float multiplier = 1+0.05f*n_bless;
-                damage += RoundToInt(damage*multiplier);
+                damage *= RoundToInt(damage*multiplier);
             }
         }
 
