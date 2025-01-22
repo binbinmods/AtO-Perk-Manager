@@ -1,3 +1,7 @@
+# 1.4.0
+
+Initial Update for v1.5. Does not include new perks.
+
 # 1.3.3
 
 Updated Thorns1f
