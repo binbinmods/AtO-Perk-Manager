@@ -565,15 +565,15 @@ namespace PerkManager
         public static void EndRoundPostfix(ref Character __instance)
         {
             PLog("EndRoundPostfix");
-            if (__instance==null)
+            if (__instance == null)
             {
                 return;
             }
 
             int auraCharges2 = __instance.GetAuraCharges("spark");
-            if (AtOManager.Instance!=null && AtOManager.Instance.TeamHavePerk("mainperkspark2c"))
+            if (AtOManager.Instance != null && AtOManager.Instance.TeamHavePerk("mainperkspark2c"))
             {
-                __instance.SetAuraTrait((Character) null, "slow", Mathf.FloorToInt(0.0714285746f * (float) auraCharges2));
+                __instance.SetAuraTrait((Character)null, "slow", Mathf.FloorToInt(0.0714285746f * (float)auraCharges2));
             }
 
         }
@@ -868,7 +868,7 @@ namespace PerkManager
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.IndirectDamage))]
         public static void IndirectDamagePostfix(
-            ref Character __instance,            
+            ref Character __instance,
             Enums.DamageType damageType,
             ref int damage,
             AudioClip sound = null,
@@ -878,18 +878,18 @@ namespace PerkManager
         {
             // Thorns1f: Bless increases thorns damage by 2% per charge.
             PLog("IndirectDamagePostfix");
-            if (MatchManager.Instance==null)
+            if (MatchManager.Instance == null)
             {
                 return;
             }
 
             Character sourceCharacter = MatchManager.Instance.GetCharacterById(sourceCharacterId);
-            
-            if(TeamHasPerk("thorns1f")&&IsLivingHero(sourceCharacter)&&sourceCharacter.HasEffect("bless")&&effect=="thorns")
+
+            if (TeamHasPerk("thorns1f") && IsLivingHero(sourceCharacter) && sourceCharacter.HasEffect("bless") && effect == "thorns")
             {
                 int n_bless = sourceCharacter.GetAuraCharges("bless");
-                float multiplier = 1+0.05f*n_bless;
-                damage *= RoundToInt(damage*multiplier);
+                float multiplier = 1 + 0.05f * n_bless;
+                damage *= RoundToInt(damage * multiplier);
             }
         }
 
@@ -1033,6 +1033,7 @@ namespace PerkManager
                 SetAppliesToMonsters = !_characterTarget.IsHero;
             }
             Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
+            bool hasRust = characterOfInterest.HasEffect("rust");
 
             switch (_acId)
             {
@@ -1111,77 +1112,44 @@ namespace PerkManager
                     break;
 
                 case "fast":
-                    if (_type == "set")
-                    {
-                        // fast0b: Fast on this hero can stack, but loses all charges at the start of turn.";
-                        // fast0c: Fast on this hero falls off at the end of turn.";
+                    // fast0b: Fast on this hero can stack, but loses all charges at the start of turn.";
+                    // fast0c: Fast on this hero falls off at the end of turn.";
 
-                        if (CharacterHasPerkForSet("fast0b", SetAppliesToHeroes, __instance, _characterTarget))
-                        {
-                            __result.GainCharges = true;
-                            __result.ConsumeAll = true;
-                        }
-                        if (CharacterHasPerkForSet("fast0c", SetAppliesToHeroes, __instance, _characterTarget))
-                        {
-                            __result.ConsumedAtTurn = true;
-                            __result.ConsumedAtTurnBegin = false;
-                        }
-                    }
-                    if (_type == "consume")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "fast0b", AppliesTo.Heroes))
                     {
-                        if (CharacterHasPerkForConsume("fast0b", ConsumeAppliesToHeroes, __instance, _characterCaster))
-                        {
-                            __result.GainCharges = true;
-                            __result.ConsumeAll = true;
-                        }
-                        if (CharacterHasPerkForConsume("fast0c", ConsumeAppliesToHeroes, __instance, _characterCaster))
-                        {
-                            __result.ConsumedAtTurn = true;
-                            __result.ConsumedAtTurnBegin = false;
-                        }
+                        __result.GainCharges = true;
+                        __result.ConsumeAll = true;
+
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "fast0c", AppliesTo.Heroes))
+                    {
+                        __result.ConsumedAtTurn = true;
+                        __result.ConsumedAtTurnBegin = false;
+
                     }
                     break;
 
                 case "slow":
-                    if (_type == "set")
+                    // slow0b: Slow on monsters can stack up to 10, but only reduces Speed by 1 per charge";
+                    // slow0c: Slow on heroes can stack up to 10, but only reduces Speed by 1 per charge";
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "slow0b", AppliesTo.Monsters))
                     {
-                        // slow0b: Slow on monsters can stack up to 10, but only reduces Speed by 1 per charge";
-                        // slow0c: Slow on heroes can stack up to 10, but only reduces Speed by 1 per charge";
-
-                        if (TeamHasPerkForSet("slow0b", SetAppliesToMonsters, __instance, _characterTarget))
-                        {
-                            __result.GainCharges = true;
-                            __result.MaxCharges = 10;
-                            __result.MaxMadnessCharges = 10;
-                            __result.CharacterStatModifiedValuePerStack = -1;
-                        }
-                        if (TeamHasPerkForSet("slow0c", SetAppliesToHeroes, __instance, _characterTarget))
-                        {
-                            __result.GainCharges = true;
-                            __result.MaxCharges = 10;
-                            __result.MaxMadnessCharges = 10;
-                            __result.CharacterStatModifiedValuePerStack = -1;
-                        }
+                        __result.GainCharges = true;
+                        __result.MaxCharges = 10;
+                        __result.MaxMadnessCharges = 10;
+                        __result.CharacterStatModifiedValuePerStack = -1;
+                        __result.ChargesAuxNeedForOne1 = hasRust ? 2 : 1;
+                        __result.CharacterStatChargesMultiplierNeededForOne = hasRust ? 2 : 1;
                     }
-                    if (_type == "consume")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "slow0c", AppliesTo.Monsters))
                     {
-                        if (TeamHasPerkForConsume("slow0b", ConsumeAppliesToMonsters, __instance, _characterCaster))
-                        {
-                            __result.GainCharges = true;
-                            __result.MaxCharges = 10;
-                            __result.MaxMadnessCharges = 10;
-                            __result.CharacterStatModifiedValuePerStack = -1;
-
-                        }
-                        if (TeamHasPerkForConsume("slow0b", ConsumeAppliesToHeroes, __instance, _characterCaster))
-                        {
-                            __result.GainCharges = true;
-                            __result.MaxCharges = 10;
-                            __result.MaxMadnessCharges = 10;
-                            __result.CharacterStatModifiedValuePerStack = -1;
-
-                        }
-                    }
+                        __result.GainCharges = true;
+                        __result.MaxCharges = 10;
+                        __result.MaxMadnessCharges = 10;
+                        __result.CharacterStatModifiedValuePerStack = -1;
+                        __result.ChargesAuxNeedForOne1 = hasRust ? 2 : 1;
+                        __result.CharacterStatChargesMultiplierNeededForOne = hasRust ? 2 : 1;
+                    }                    
                     break;
                 case "ac":
                     if (_type == "set")
@@ -1218,6 +1186,7 @@ namespace PerkManager
             bool AppliesGlobally = true;
 
             Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
+            bool hasRust = characterOfInterest.HasEffect("rust");
 
             if (_characterCaster != null)
             {
@@ -1231,30 +1200,14 @@ namespace PerkManager
             }
 
             switch (_acId)
-            {
-                case "ac":
-                    if (_type == "set")
-                    {
-                        if (CharacterHasPerkForSet("", AppliesGlobally, __instance, _characterTarget))
-                        {
-
-                        }
-                    }
-                    if (_type == "consume")
-                    {
-                        if (CharacterHasPerkForConsume("", AppliesGlobally, __instance, _characterCaster))
-                        {
-
-                        }
-                    }
-                    break;
+            {                
                 case "fortify":
-                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"fortify1e",AppliesTo.Monsters))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "fortify1e", AppliesTo.Monsters))
                     {
-                        __result.GainCharges=true;
-                        __result.ConsumedAtTurnBegin=true;
-                        __result.ConsumedAtTurn=false;
-                    }            
+                        __result.GainCharges = true;
+                        __result.ConsumedAtTurnBegin = true;
+                        __result.ConsumedAtTurn = false;
+                    }
 
                     break;
                 case "fury":
@@ -1285,54 +1238,31 @@ namespace PerkManager
 
                 case "sharp":
                     // sharp1d: shadow damaage for all heroes
+                    // sharp1e: If Sharp on a hero would increase a damage type, it increases it by 1.5 damage per charge. Sharp on heroes only stacks to 25.";
                     // insane2e: Insane on this hero increases the effectiveness of sharp by 1% per charge.";
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperksharp1d", AppliesTo.Heroes))
                     {
                         __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Shadow, 0, 1, 0);
                     }
-
-                    if (_type == "set")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "sharp1e", AppliesTo.Heroes))
                     {
-                        if (CharacterHasPerkForSet("sharp1e", SetAppliesToHeroes, __instance, _characterTarget))
-                        {
+                        __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Shadow, 0, 1, 0);
                             __result.MaxCharges = 25;
                             __result.MaxMadnessCharges = 25;
-                            __result.AuraDamageIncreasedPerStack = 1.5f;
-                            __result.AuraDamageIncreasedPerStack2 = 1.5f;
-                            __result.AuraDamageIncreasedPerStack3 = 1.5f;
-                            __result.AuraDamageIncreasedPerStack4 = 1.5f;
-
-                        }
-
-                        if (CharacterHasPerkForSet("insane2e", AppliesGlobally, __instance, _characterTarget) && _characterTarget.HasEffect("insane"))
-                        {
-                            int n = _characterTarget.GetAuraCharges("insane");
-                            __result.AuraDamageIncreasedPerStack *= 1 + 0.01f * n;
-                            __result.AuraDamageIncreasedPerStack2 *= 1 + 0.01f * n;
-                            __result.AuraDamageIncreasedPerStack3 *= 1 + 0.01f * n;
-                        }
-
+                            __result.AuraDamageIncreasedPerStack = hasRust? 0.75f: 1.5f;
+                            __result.AuraDamageIncreasedPerStack2 = hasRust? 0.75f: 1.5f;
+                            __result.AuraDamageIncreasedPerStack3 = hasRust? 0.75f: 1.5f;
+                            __result.AuraDamageIncreasedPerStack4 = hasRust? 0.75f: 1.5f;
                     }
-                    if (_type == "consume")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "insane2e", AppliesTo.ThisHero))
                     {
-                        if (CharacterHasPerkForSet("sharp1e", ConsumeAppliesToHeroes, __instance, _characterCaster))
-                        {
-                            __result.MaxCharges = 25;
-                            __result.MaxMadnessCharges = 25;
-                            __result.AuraDamageIncreasedPerStack = 1.5f;
-                            __result.AuraDamageIncreasedPerStack2 = 1.5f;
-                            __result.AuraDamageIncreasedPerStack3 = 1.5f;
-                            __result.AuraDamageIncreasedPerStack4 = 1.5f;
-
-                        }
-                        if (CharacterHasPerkForConsume("insane2e", AppliesGlobally, __instance, _characterCaster) && _characterCaster.HasEffect("insane"))
-                        {
-                            int n = _characterCaster.GetAuraCharges("insane");
-                            __result.AuraDamageIncreasedPerStack *= 1 + 0.01f * n;
-                            __result.AuraDamageIncreasedPerStack2 *= 1 + 0.01f * n;
-                            __result.AuraDamageIncreasedPerStack3 *= 1 + 0.01f * n;
-                        }
-
+                        // Doesn't need rust to be applied to it since it is a multiplier
+                        __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Shadow, 0, 1, 0);
+                        int n = _characterTarget.GetAuraCharges("insane");
+                        __result.AuraDamageIncreasedPerStack *= 1 + 0.01f * n;
+                        __result.AuraDamageIncreasedPerStack2 *= 1 + 0.01f * n;
+                        __result.AuraDamageIncreasedPerStack3 *= 1 + 0.01f * n;
+                        __result.AuraDamageIncreasedPerStack4 *= 1 + 0.01f * n;
                     }
                     break;
 
@@ -1341,63 +1271,41 @@ namespace PerkManager
                     // crack2d: Crack on monsters reduces Speed by 1 for every 5 charges.";
                     // crack2e: Crack on monsters reduces Lightning resistance by 0.3% per charge.
                     // crack2f: Crack increases fire damage too
-                    // crack2f: Crack increases mind damage too
+                    // crack2g: Crack increases mind damage too
+                    // crack2h: Crack on monsters reduces Slashing resistance by 0.3% per charge.
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "insane2d", AppliesTo.Monsters))
+                    {
+                            int n = _characterTarget.GetAuraCharges("insane");
+                            __result.IncreasedDirectDamageReceivedPerStack += hasRust ? FloorToInt(0.0125f * n): FloorToInt(0.025f * n);
+                    }
+
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2d", AppliesTo.Monsters))
+                    {
+                            __result.CharacterStatModified = Enums.CharacterStat.Speed;
+                            __result.CharacterStatModifiedValue = -1;
+                            __result.CharacterStatChargesMultiplierNeededForOne = hasRust ? 10 : 5;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2e", AppliesTo.Monsters))
+                    {
+                            __result.ResistModified = Enums.DamageType.Lightning;
+                            __result.ResistModifiedPercentagePerStack = hasRust ? -0.45f : -0.3f;
+                    }
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2f", AppliesTo.Monsters))
                     {
                         __result.IncreasedDamageReceivedType2 = Enums.DamageType.Fire;
-                        __result.IncreasedDirectDamageReceivedPerStack2 = 1;
+                        __result.IncreasedDirectDamageReceivedPerStack2 = hasRust ? 1.5f : 1;
                     }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2g", AppliesTo.Monsters))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2g", AppliesTo.Global))
                     {
                         // mark1e: Every 2 mark charges increases piercing damage by 3.
                         __result.IncreasedDamageReceivedType2 = Enums.DamageType.Mind;
-                        __result.IncreasedDirectDamageReceivedPerStack2 = 1;
+                        __result.IncreasedDirectDamageReceivedPerStack2 = hasRust ? 1.5f : 1;
                     }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2h", AppliesTo.Monsters))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2h", AppliesTo.Global))
                     {
-                            __result.ResistModified2 = Enums.DamageType.Slashing;
-                            __result.ResistModifiedPercentagePerStack2 = -0.3f;
-                    }
-
-                    if (_type == "set")
-                    {
-                        if (TeamHasPerkForSet("insane2d", SetAppliesToMonsters, __instance, _characterTarget) && _characterTarget.HasEffect("insane"))
-                        {
-                            int n = _characterTarget.GetAuraCharges("insane");
-                            __result.IncreasedDirectDamageReceivedPerStack += FloorToInt(0.025f * n);
-                        }
-                        if (TeamHasPerkForSet("crack2d", SetAppliesToMonsters, __instance, _characterTarget))
-                        {
-                            __result.CharacterStatModified = Enums.CharacterStat.Speed;
-                            __result.CharacterStatModifiedValue = -1;
-                            __result.CharacterStatChargesMultiplierNeededForOne = 5;
-                        }
-                        if (TeamHasPerkForSet("crack2e", SetAppliesToMonsters, __instance, _characterTarget))
-                        {
-                            __result.ResistModified = Enums.DamageType.Lightning;
-                            __result.ResistModifiedPercentagePerStack = -0.3f;
-
-                        }
-                    }
-                    if (_type == "consume")
-                    {
-                        if (TeamHasPerkForConsume("insane2d", ConsumeAppliesToMonsters, __instance, _characterCaster) && _characterCaster.HasEffect("insane"))
-                        {
-                            int n = _characterCaster.GetAuraCharges("insane");
-                            __result.IncreasedDirectDamageReceivedPerStack += FloorToInt(0.025f * n);
-                        }
-                        if (TeamHasPerkForConsume("crack2d", ConsumeAppliesToMonsters, __instance, _characterCaster))
-                        {
-                            __result.CharacterStatModified = Enums.CharacterStat.Speed;
-                            __result.CharacterStatModifiedValue = -1;
-                            __result.CharacterStatChargesMultiplierNeededForOne = 5;
-                        }
-                        if (TeamHasPerkForConsume("crack2e", ConsumeAppliesToMonsters, __instance, _characterCaster))
-                        {
-                            __result.ResistModified = Enums.DamageType.Lightning;
-                            __result.ResistModifiedPercentagePerStack = -0.3f;
-                        }
+                        __result.ResistModified2 = Enums.DamageType.Slashing;
+                        __result.ResistModifiedPercentagePerStack2 = hasRust ? -0.45f : -0.3f;
                     }
                     break;
 
@@ -1522,70 +1430,39 @@ namespace PerkManager
                     break;
 
                 case "poison":
-                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkpoison2c",AppliesTo.Monsters))
+                    // poison2d: If Restricted Power is enabled, increases Max Charges to 300.";
+                    // poison2e: Poison on heroes and monsters reduces Slashing resistance by 0.25% per charge.";
+                    // poison2f: Poison on monsters reduces all resistances by 5% for every 100 charges.";
+                    // poison2g: When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
+                    // poison2h: -1 Poison. When this hero applies poison, deal Mind damage to the target equal to 30% of their Poison charges.";
+                    // decay1e: Every stack of decay increases the damage dealt by poison by 20%.";
+
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkpoison2c", AppliesTo.Monsters))
                     {
-                        __result.ConsumedAtTurnBegin=true;
-                        __result.ConsumedAtTurn=false;
-                    }            
-
-                    if (_type == "set")
-                    {
-                        // poison2d: If Restricted Power is enabled, increases Max Charges to 300.";
-                        // poison2e: Poison on heroes and monsters reduces Slashing resistance by 0.25% per charge.";
-                        // poison2f: Poison on monsters reduces all resistances by 5% for every 100 charges.";
-                        // poison2g: When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
-                        // poison2h: -1 Poison. When this hero applies poison, deal Mind damage to the target equal to 30% of their Poison charges.";
-                        // decay1e: Every stack of decay increases the damage dealt by poison by 20%.";
-
-                        if (TeamHasPerkForSet("poison2d", AppliesGlobally, __instance, _characterTarget))
-                        {
-                            __result.MaxMadnessCharges = 300;
-                        }
-                        if (TeamHasPerkForSet("poison2e", AppliesGlobally, __instance, _characterTarget))
-                        {
-                            __result.ResistModified3 = Enums.DamageType.Slashing;
-                            __result.ResistModifiedPercentagePerStack3 = -0.25f;
-                        }
-                        if (TeamHasPerkForSet("poison2f", SetAppliesToMonsters, __instance, _characterTarget))
-                        {
-                            __result.ResistModified2 = Enums.DamageType.All;
-                            int n_poison = _characterTarget.GetAuraCharges("poison");
-                            __result.ResistModifiedValue2 = FloorToInt(0.01f * n_poison);
-                        }
-                        if (TeamHasPerkForSet("decay1e", AppliesGlobally, __instance, _characterTarget) && _characterTarget.HasEffect("decay"))
-                        {
-                            int n_decay = _characterTarget.GetAuraCharges("decay");
-                            float multiplier = 1 + 0.2f * n_decay;
-                            __result.DamageWhenConsumedPerCharge *= multiplier;
-                        }
-
-
+                        __result.ConsumedAtTurnBegin = true;
+                        __result.ConsumedAtTurn = false;
                     }
-                    if (_type == "consume")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "poison2d", AppliesTo.Global))
                     {
-                        if (TeamHasPerkForConsume("poison2d", AppliesGlobally, __instance, _characterCaster))
-                        {
-                            __result.MaxMadnessCharges = 300;
-                        }
-                        if (TeamHasPerkForConsume("poison2e", AppliesGlobally, __instance, _characterCaster))
-                        {
-                            __result.ResistModified3 = Enums.DamageType.Slashing;
-                            __result.ResistModifiedPercentagePerStack3 = -0.25f;
-                        }
-                        if (TeamHasPerkForConsume("poison2f", ConsumeAppliesToMonsters, __instance, _characterCaster))
-                        {
-                            __result.ResistModified2 = Enums.DamageType.All;
-                            int n_poison = _characterCaster.GetAuraCharges("poison");
-                            __result.ResistModifiedValue2 = FloorToInt(0.01f * n_poison);
-                        }
-                        if (TeamHasPerkForConsume("decay1e", AppliesGlobally, __instance, _characterCaster) && _characterCaster.HasEffect("decay"))
-                        {
-                            int n_decay = _characterCaster.GetAuraCharges("decay");
-                            float multiplier = 1 + 0.2f * n_decay;
-                            __result.DamageWhenConsumedPerCharge *= multiplier;
-                        }
-
-
+                        __result.MaxMadnessCharges = hasRust?450:300;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "poison2e", AppliesTo.Global))
+                    {
+                        __result.ResistModified3 = Enums.DamageType.Slashing;
+                        __result.ResistModifiedPercentagePerStack3 = hasRust?-0.3f:-0.2f;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "poison2f", AppliesTo.Monsters))
+                    {
+                        __result.ResistModified2 = Enums.DamageType.All;
+                        int n_poison = _characterTarget.GetAuraCharges("poison");
+                        __result.ResistModifiedValue2 = hasRust? FloorToInt(-0.075f * n_poison):FloorToInt(-0.05f * n_poison);
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "decay1e", AppliesTo.Global))
+                    {
+                        // multiplier so no need for rust
+                        int n_decay = _characterTarget.GetAuraCharges("decay");
+                        float multiplier = 1 + 0.2f * n_decay;
+                        __result.DamageWhenConsumedPerCharge *= multiplier;
                     }
                     break;
 
@@ -1596,16 +1473,16 @@ namespace PerkManager
                     // bleed2e: When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
                     // bleed2f: Bleed on monsters reduces Piercing resist by 0.25% per charge.";
                     // bleed2g: When this hero kills an enemy with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
-                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkbleed2b",AppliesTo.ThisHero))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkbleed2b", AppliesTo.ThisHero))
                     {
-                        __result.MaxCharges=50;
-                        __result.MaxMadnessCharges=50;
-                    }            
+                        __result.MaxCharges = 50;
+                        __result.MaxMadnessCharges = 50;
+                    }
 
-                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkbleed2c",AppliesTo.Heroes))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkbleed2c", AppliesTo.Heroes))
                     {
-                        __result.Removable=false;
-                    }            
+                        __result.Removable = false;
+                    }
                     if (_type == "set")
                     {
                         if (TeamHasPerkForSet("bleed2d", AppliesGlobally, __instance, _characterTarget))
@@ -1656,12 +1533,12 @@ namespace PerkManager
 
                 case "reinforce":
                     // reinforce1d: Reinforce increases Block charges by 2 per charge of Reinforce.";
-                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkreinforce1b",AppliesTo.Heroes))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkreinforce1b", AppliesTo.Heroes))
                     {
-                        __result.ResistModifiedValue=40;
-                        __result.ResistModifiedValue2=40;
-                        __result.ResistModifiedValue3=40;
-                    }            
+                        __result.ResistModifiedValue = 40;
+                        __result.ResistModifiedValue2 = 40;
+                        __result.ResistModifiedValue3 = 40;
+                    }
 
                     break;
 
@@ -1686,11 +1563,11 @@ namespace PerkManager
                     }
                     break;
                 case "vulnerabe":
-                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"crack2i",AppliesTo.Monsters))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2i", AppliesTo.Monsters))
                     {
                         int toIncrease = FloorToInt(0.04f * characterOfInterest.GetAuraCharges("crack"));
-                        __result.MaxCharges+=toIncrease;
-                        __result.MaxMadnessCharges+=toIncrease;
+                        __result.MaxCharges += toIncrease;
+                        __result.MaxMadnessCharges += toIncrease;
                     }
 
                     break;
@@ -1743,6 +1620,7 @@ namespace PerkManager
             }
 
             Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
+            bool hasRust = characterOfInterest.HasEffect("rust");
 
 
             if (__result == null || (_characterCaster == null && _type == "consume") || (_characterTarget == null && _type == "set"))
@@ -1751,11 +1629,11 @@ namespace PerkManager
             switch (_acId)
             {
                 case "insulate":
-                     if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkinsulate1b",AppliesTo.Heroes))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkinsulate1b", AppliesTo.Heroes))
                     {
-                        __result.ResistModifiedValue=40;
-                        __result.ResistModifiedValue2=40;
-                        __result.ResistModifiedValue3=40;
+                        __result.ResistModifiedValue = 40;
+                        __result.ResistModifiedValue2 = 40;
+                        __result.ResistModifiedValue3 = 40;
                     }
                     if (_type == "set")
                     {
@@ -1871,10 +1749,10 @@ namespace PerkManager
                     break;
                 case "burn":
                     // scourge1e: Scourge on monsters increases burn damage by 15%/stack";
-                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkburn2d",AppliesTo.Monsters))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkburn2d", AppliesTo.Monsters))
                     {
-                        __result.DoubleDamageIfCursesLessThan=4;
-                    }            
+                        __result.DoubleDamageIfCursesLessThan = 4;
+                    }
 
                     if (_type == "set")
                     {
@@ -1958,44 +1836,21 @@ namespace PerkManager
                 case "wet":
                     // zeald: Zeal on heroes and enemies increases all resistances by 0.5% per Wet charge
                     // wet1d: Wet does not Dispel or Prevent Burn.";
-
-                    if (_type == "set")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "zeal1d", AppliesTo.Global))
                     {
-                        if (TeamHasPerkForSet("zeal1d", SetAppliesToHeroes, __instance, _characterTarget) && _characterTarget.HasEffect("zeal"))
-                        {
-                            PLog("zeal1d");
-                            __result.ResistModified3 = Enums.DamageType.All;
-                            // __result.ResistModifiedPercentagePerStack3 = 0.5f;
-                            __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.All, 0, 0.5f);
-
-                        }
-                        if (TeamHasPerkForSet("wet1d", AppliesGlobally, __instance, _characterTarget))
-                        {
-                            // Not sure if this is working
-                            AuraCurseData noneAC = GetAuraCurseData("None");
-                            __result.PreventedAuraCurse = noneAC;
-                            __result.PreventedAuraCurseStackPerStack = 0;
-                            __result.RemoveAuraCurse = noneAC;
-                        }
+                        PLog("zeal1d");
+                        __result.ResistModified3 = Enums.DamageType.All;
+                        // __result.ResistModifiedPercentagePerStack3 = 0.5f;
+                        __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.All, 0, 0.5f);
                     }
-                    if (_type == "consume")
-                    {
-                        if (TeamHasPerkForConsume("zeal1d", ConsumeAppliesToHeroes, __instance, _characterCaster) && _characterCaster.HasEffect("zeal"))
-                        {
-                            PLog("zeal1d");
-                            __result.ResistModified3 = Enums.DamageType.All;
-                            // __result.ResistModifiedPercentagePerStack3 = 0.5f;
-                            __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.All, 0, 0.5f);
-                        }
-                        if (TeamHasPerkForConsume("wet1d", AppliesGlobally, __instance, _characterCaster))
-                        {
-                            // Not sure if this is working
-                            AuraCurseData noneAC = GetAuraCurseData("None");
-                            __result.PreventedAuraCurse = noneAC;
-                            __result.PreventedAuraCurseStackPerStack = 0;
-                            __result.RemoveAuraCurse = noneAC;
-                        }
 
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "wet1d", AppliesTo.Global))
+                    {
+                        // Not sure if this is working
+                        AuraCurseData noneAC = GetAuraCurseData("None");
+                        __result.PreventedAuraCurse = noneAC;
+                        __result.PreventedAuraCurseStackPerStack = 0;
+                        __result.RemoveAuraCurse = noneAC;
                     }
                     break;
 
@@ -2085,6 +1940,7 @@ namespace PerkManager
                 SetAppliesToMonsters = !_characterTarget.IsHero;
             }
             Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
+            bool hasRust = characterOfInterest.HasEffect("rust");
 
             switch (_acId)
             {
@@ -2110,7 +1966,7 @@ namespace PerkManager
                     // dark2e: Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.25% per charge in addition to reducing Shadow resistance..";
                     // burn1e: Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
                     // sanctify2d: Every 5 stacks of Sanctify increase the number of Dark charges needed for an explosion by 1.";
-                    if(IfCharacterHas(characterOfInterest,CharacterHas.Trait,"mainperkdark2b",AppliesTo.ThisHero))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, "mainperkdark2b", AppliesTo.ThisHero))
                     {
                         __result.Removable = false;
                     }
@@ -2177,11 +2033,11 @@ namespace PerkManager
                     break;
 
                 case "courage":
-                    if(IfCharacterHas(characterOfInterest,CharacterHas.Perk,"mainperkcourage1b",AppliesTo.Heroes))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkcourage1b", AppliesTo.Heroes))
                     {
-                        __result.ResistModifiedValue=40;
-                        __result.ResistModifiedValue2=40;
-                        __result.ResistModifiedValue3=40;
+                        __result.ResistModifiedValue = 40;
+                        __result.ResistModifiedValue2 = 40;
+                        __result.ResistModifiedValue3 = 40;
                     }
                     break;
 

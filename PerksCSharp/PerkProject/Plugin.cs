@@ -131,7 +131,7 @@ namespace PerkManager{
 
             // Custom Text for Poison
             medsTexts[perkStem + "poison2d"] = "If Restricted Power is enabled, increases Max Charges to 300.";
-            medsTexts[perkStem + "poison2e"] = "Poison on heroes and monsters reduces Slashing resistance by 0.25% per charge.";
+            medsTexts[perkStem + "poison2e"] = "Poison on heroes and monsters reduces Slashing resistance by 0.20% per charge.";
             medsTexts[perkStem + "poison2f"] = "Poison on monsters reduces all resistances by 5% for every 100 charges.";
             medsTexts[perkStem + "poison2g"] = "Once per turn, when a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
             medsTexts[perkStem + "poison2h"] = "-1 Poison. When this hero applies Poison, deal indirect Mind damage to the target equal to 30% of their Poison charges.";
@@ -236,6 +236,13 @@ namespace PerkManager{
             medsTexts[perkStem + "paralyze1b"] = "At the end of your turn, dispel Paralyze from all heroes.";
             medsTexts[perkStem + "paralyze1c"] = "Once per enemy per combat, when an enemy reaches 100 Spark, apply 1 Paralyze.";
             
+
+            // Custom Text for Rust
+            // medsTexts[perkStem + "rust1a"] = "+1 Charge.";
+            medsTexts[perkStem + "rust1b"] = "Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.";
+            medsTexts[perkStem + "rust1c"] = "Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.";
+
+
             // Custom text for Zeal        
             medsTexts[perkStem + "zeal1a"] = "Zeal +1.";
             medsTexts[perkStem + "zeal1b"] = "Zeal on this hero loses 3 charges per turn rather than all charges.";
