@@ -186,6 +186,13 @@ paralyze1a: +1 Charge.
 paralyze1b: At the end of your turn, dispel Paralyze from all heroes.  
 paralyze1c: Once per enemy per combat, when an enemy reaches 100 Spark, apply 1 Paralyze.  
 
+### Perks for Rust
+rust1a: +1 Charge.  
+rust1b: Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.  
+rust1c: Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.
+rust1d: Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.
+
+
 ### Perks for Zeal        
 zeal1a: Zeal +1.  
 zeal1b: Zeal on this hero loses 3 charges per turn rather than all charges.  

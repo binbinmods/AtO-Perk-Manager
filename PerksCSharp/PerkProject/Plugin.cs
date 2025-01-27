@@ -241,6 +241,7 @@ namespace PerkManager{
             // medsTexts[perkStem + "rust1a"] = "+1 Charge.";
             medsTexts[perkStem + "rust1b"] = "Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.";
             medsTexts[perkStem + "rust1c"] = "Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.";
+            medsTexts[perkStem + "rust1c"] = "Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.";
 
 
             // Custom text for Zeal        

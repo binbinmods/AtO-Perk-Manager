@@ -1,3 +1,11 @@
+# 1.4.1
+
+Added Rust Perks, updated existing perks to be compatible with Rust.
+
+These perks have not been tested so are likely to have some issues.
+
+Refactored all auracurses related to Rust. 
+
 # 1.4.0
 
 Initial Update for v1.5. Does not include new perks.

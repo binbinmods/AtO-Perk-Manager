@@ -673,6 +673,12 @@ namespace PerkManager
             Hero[] teamHero = MatchManager.Instance.GetTeamHero();
             NPC[] teamNPC = MatchManager.Instance.GetTeamNPC();
 
+            if (CharacterObjectHavePerk(__instance, "rust1d"))
+            {
+                int n_charges = 2;
+                __instance.SetAuraTrait(__instance, "rust", n_charges);
+            }
+
             if (CharacterObjectHavePerk(__instance, "shackle1d"))
             {
                 int n_charges = __instance.GetAuraCharges("shackle");
@@ -1149,7 +1155,7 @@ namespace PerkManager
                         __result.CharacterStatModifiedValuePerStack = -1;
                         __result.ChargesAuxNeedForOne1 = hasRust ? 2 : 1;
                         __result.CharacterStatChargesMultiplierNeededForOne = hasRust ? 2 : 1;
-                    }                    
+                    }
                     break;
                 case "ac":
                     if (_type == "set")
@@ -1200,7 +1206,7 @@ namespace PerkManager
             }
 
             switch (_acId)
-            {                
+            {
                 case "fortify":
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "fortify1e", AppliesTo.Monsters))
                     {
@@ -1247,12 +1253,12 @@ namespace PerkManager
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "sharp1e", AppliesTo.Heroes))
                     {
                         __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Shadow, 0, 1, 0);
-                            __result.MaxCharges = 25;
-                            __result.MaxMadnessCharges = 25;
-                            __result.AuraDamageIncreasedPerStack = hasRust? 0.75f: 1.5f;
-                            __result.AuraDamageIncreasedPerStack2 = hasRust? 0.75f: 1.5f;
-                            __result.AuraDamageIncreasedPerStack3 = hasRust? 0.75f: 1.5f;
-                            __result.AuraDamageIncreasedPerStack4 = hasRust? 0.75f: 1.5f;
+                        __result.MaxCharges = 25;
+                        __result.MaxMadnessCharges = 25;
+                        __result.AuraDamageIncreasedPerStack = hasRust ? 0.75f : 1.5f;
+                        __result.AuraDamageIncreasedPerStack2 = hasRust ? 0.75f : 1.5f;
+                        __result.AuraDamageIncreasedPerStack3 = hasRust ? 0.75f : 1.5f;
+                        __result.AuraDamageIncreasedPerStack4 = hasRust ? 0.75f : 1.5f;
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "insane2e", AppliesTo.ThisHero))
                     {
@@ -1275,20 +1281,20 @@ namespace PerkManager
                     // crack2h: Crack on monsters reduces Slashing resistance by 0.3% per charge.
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "insane2d", AppliesTo.Monsters))
                     {
-                            int n = _characterTarget.GetAuraCharges("insane");
-                            __result.IncreasedDirectDamageReceivedPerStack += hasRust ? FloorToInt(0.0125f * n): FloorToInt(0.025f * n);
+                        int n = _characterTarget.GetAuraCharges("insane");
+                        __result.IncreasedDirectDamageReceivedPerStack += hasRust ? FloorToInt(0.0125f * n) : FloorToInt(0.025f * n);
                     }
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2d", AppliesTo.Monsters))
                     {
-                            __result.CharacterStatModified = Enums.CharacterStat.Speed;
-                            __result.CharacterStatModifiedValue = -1;
-                            __result.CharacterStatChargesMultiplierNeededForOne = hasRust ? 10 : 5;
+                        __result.CharacterStatModified = Enums.CharacterStat.Speed;
+                        __result.CharacterStatModifiedValue = -1;
+                        __result.CharacterStatChargesMultiplierNeededForOne = hasRust ? 10 : 5;
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2e", AppliesTo.Monsters))
                     {
-                            __result.ResistModified = Enums.DamageType.Lightning;
-                            __result.ResistModifiedPercentagePerStack = hasRust ? -0.45f : -0.3f;
+                        __result.ResistModified = Enums.DamageType.Lightning;
+                        __result.ResistModifiedPercentagePerStack = hasRust ? -0.45f : -0.3f;
                     }
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2f", AppliesTo.Monsters))
@@ -1436,6 +1442,8 @@ namespace PerkManager
                     // poison2g: When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
                     // poison2h: -1 Poison. When this hero applies poison, deal Mind damage to the target equal to 30% of their Poison charges.";
                     // decay1e: Every stack of decay increases the damage dealt by poison by 20%.";
+                    // rust1c: "Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.";
+                    // bool hasRust1c = 
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkpoison2c", AppliesTo.Monsters))
                     {
@@ -1444,18 +1452,18 @@ namespace PerkManager
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "poison2d", AppliesTo.Global))
                     {
-                        __result.MaxMadnessCharges = hasRust?450:300;
+                        __result.MaxMadnessCharges = hasRust ? 450 : 300;
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "poison2e", AppliesTo.Global))
                     {
                         __result.ResistModified3 = Enums.DamageType.Slashing;
-                        __result.ResistModifiedPercentagePerStack3 = hasRust?-0.3f:-0.2f;
+                        __result.ResistModifiedPercentagePerStack3 = hasRust ? -0.3f : -0.2f;
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "poison2f", AppliesTo.Monsters))
                     {
                         __result.ResistModified2 = Enums.DamageType.All;
                         int n_poison = _characterTarget.GetAuraCharges("poison");
-                        __result.ResistModifiedValue2 = hasRust? FloorToInt(-0.075f * n_poison):FloorToInt(-0.05f * n_poison);
+                        __result.ResistModifiedValue2 = hasRust ? FloorToInt(-0.075f * n_poison) : FloorToInt(-0.05f * n_poison);
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "decay1e", AppliesTo.Global))
                     {
@@ -1464,6 +1472,16 @@ namespace PerkManager
                         float multiplier = 1 + 0.2f * n_decay;
                         __result.DamageWhenConsumedPerCharge *= multiplier;
                     }
+
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust1c", AppliesTo.Global))
+                    {
+                        float undoRust = 1.0f / 1.5f;
+                        __result.DamageWhenConsumedPerCharge *= undoRust;
+                        int nRust = _characterTarget.GetAuraCharges("decay");
+                        float newRustMultiplier = Min(1 + 0.1f * nRust, 3.0f); // caps at +200%
+                        __result.DamageWhenConsumedPerCharge *= newRustMultiplier;
+                    }
+
                     break;
 
                 case "bleed":
@@ -1628,6 +1646,15 @@ namespace PerkManager
 
             switch (_acId)
             {
+                case "rust":
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust1d", AppliesTo.ThisHero))
+                    {
+                        AuraCurseData noneAC = GetAuraCurseData("None");
+                        __result.PreventedAuraCurse = noneAC;
+                        __result.PreventedAuraCurseStackPerStack = 0;
+                        __result.RemoveAuraCurse = noneAC;
+                    }
+                    break;
                 case "insulate":
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkinsulate1b", AppliesTo.Heroes))
                     {
@@ -1851,6 +1878,21 @@ namespace PerkManager
                         __result.PreventedAuraCurse = noneAC;
                         __result.PreventedAuraCurseStackPerStack = 0;
                         __result.RemoveAuraCurse = noneAC;
+                    }
+                    bool hasRust1b = IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust1b", AppliesTo.Monsters);
+                    if (hasRust1b)
+                    {
+                        __result.IncreasedDirectDamageReceivedPerStack = 1.5f;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkwet1a", AppliesTo.Monsters) && hasRust1b)
+                    {
+                        __result.IncreasedDamageReceivedType2 = Enums.DamageType.Cold;
+                        __result.IncreasedDirectDamageReceivedPerStack2 = 1.5f;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkwet1b", AppliesTo.Monsters) && hasRust1b)
+                    {
+                        __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Lightning, 0, -1.5f);
+                        __result.AuraConsumed = 0;
                     }
                     break;
 

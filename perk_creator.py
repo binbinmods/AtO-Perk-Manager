@@ -51,6 +51,7 @@ aura_curse_string = '''bless
     insane
     mark
     poison
+    rust
     sanctify
     scourge
     shackle
@@ -118,6 +119,11 @@ def create_new_perk(id:str,
     if id =="mark1f":
         perk.AuraCurseBonus="mark"
         perk.AuraCurseBonusValue=1
+    if id=="rust1a":
+        perk.AuraCurseBonus="rust"
+        perk.AuraCurseBonusValue = 1
+        perk.CustomDescription=""
+
 
 
     return perk
@@ -483,6 +489,13 @@ def handle_new_nodes():
             6,
             5,
             3,
+            "Elemental"
+        ),
+        (
+            "rust1",
+            6,
+            3,
+            4,
             "Elemental"
         ),
         # (
