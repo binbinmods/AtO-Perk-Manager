@@ -1,3 +1,7 @@
+# 1.4.2
+
+Fixed Rust related crashes
+
 # 1.4.1
 
 Added Rust Perks, updated existing perks to be compatible with Rust.

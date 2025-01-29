@@ -1020,7 +1020,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixGeneral(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            // PLog("Executing AC Modifications - General");
+            PLog("Executing AC Modifications - General");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
@@ -1039,7 +1039,12 @@ namespace PerkManager
                 SetAppliesToMonsters = !_characterTarget.IsHero;
             }
             Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
-            bool hasRust = characterOfInterest.HasEffect("rust");
+            Character notCharacterOfInterest = _type == "set" ? _characterCaster : _characterTarget;
+
+            bool hasRust = false;
+            if (characterOfInterest!=null){
+                hasRust=characterOfInterest.HasEffect("rust");
+            }
 
             switch (_acId)
             {
@@ -1183,7 +1188,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixPhysical(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            // PLog("Executing AC Modifications - Physical");
+            PLog("Executing AC Modifications - Physical");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
@@ -1192,7 +1197,11 @@ namespace PerkManager
             bool AppliesGlobally = true;
 
             Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
-            bool hasRust = characterOfInterest.HasEffect("rust");
+            Character notCharacterOfInterest = _type == "set" ? _characterCaster : _characterTarget;
+            bool hasRust = false;
+            if (characterOfInterest!=null){
+                hasRust=characterOfInterest.HasEffect("rust");
+            }
 
             if (_characterCaster != null)
             {
@@ -1264,7 +1273,7 @@ namespace PerkManager
                     {
                         // Doesn't need rust to be applied to it since it is a multiplier
                         __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Shadow, 0, 1, 0);
-                        int n = _characterTarget.GetAuraCharges("insane");
+                        int n = notCharacterOfInterest.GetAuraCharges("insane");
                         __result.AuraDamageIncreasedPerStack *= 1 + 0.01f * n;
                         __result.AuraDamageIncreasedPerStack2 *= 1 + 0.01f * n;
                         __result.AuraDamageIncreasedPerStack3 *= 1 + 0.01f * n;
@@ -1281,7 +1290,7 @@ namespace PerkManager
                     // crack2h: Crack on monsters reduces Slashing resistance by 0.3% per charge.
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "insane2d", AppliesTo.Monsters))
                     {
-                        int n = _characterTarget.GetAuraCharges("insane");
+                        int n = notCharacterOfInterest.GetAuraCharges("insane");
                         __result.IncreasedDirectDamageReceivedPerStack += hasRust ? FloorToInt(0.0125f * n) : FloorToInt(0.025f * n);
                     }
 
@@ -1462,13 +1471,13 @@ namespace PerkManager
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "poison2f", AppliesTo.Monsters))
                     {
                         __result.ResistModified2 = Enums.DamageType.All;
-                        int n_poison = _characterTarget.GetAuraCharges("poison");
+                        int n_poison = notCharacterOfInterest.GetAuraCharges("poison");
                         __result.ResistModifiedValue2 = hasRust ? FloorToInt(-0.075f * n_poison) : FloorToInt(-0.05f * n_poison);
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "decay1e", AppliesTo.Global))
                     {
                         // multiplier so no need for rust
-                        int n_decay = _characterTarget.GetAuraCharges("decay");
+                        int n_decay = notCharacterOfInterest.GetAuraCharges("decay");
                         float multiplier = 1 + 0.2f * n_decay;
                         __result.DamageWhenConsumedPerCharge *= multiplier;
                     }
@@ -1477,7 +1486,7 @@ namespace PerkManager
                     {
                         float undoRust = 1.0f / 1.5f;
                         __result.DamageWhenConsumedPerCharge *= undoRust;
-                        int nRust = _characterTarget.GetAuraCharges("decay");
+                        int nRust = notCharacterOfInterest.GetAuraCharges("decay");
                         float newRustMultiplier = Min(1 + 0.1f * nRust, 3.0f); // caps at +200%
                         __result.DamageWhenConsumedPerCharge *= newRustMultiplier;
                     }
@@ -1618,7 +1627,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixElemental(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            // PLog("Executing AC Modifications - Elemental");
+            PLog("Executing AC Modifications - Elemental");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
@@ -1638,7 +1647,12 @@ namespace PerkManager
             }
 
             Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
-            bool hasRust = characterOfInterest.HasEffect("rust");
+            Character notCharacterOfInterest = _type == "set" ? _characterCaster : _characterTarget;
+
+            bool hasRust = false;
+            if (characterOfInterest!=null){
+                hasRust=characterOfInterest.HasEffect("rust");
+            }
 
 
             if (__result == null || (_characterCaster == null && _type == "consume") || (_characterTarget == null && _type == "set"))
@@ -1963,7 +1977,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixMystical(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            // PLog("Executing AC Modifications - Mystical");
+            PLog("Executing AC Modifications - Mystical");
 
             bool ConsumeAppliesToHeroes = false; //flag1
             bool SetAppliesToHeroes = false; //flag2
@@ -1982,7 +1996,12 @@ namespace PerkManager
                 SetAppliesToMonsters = !_characterTarget.IsHero;
             }
             Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
-            bool hasRust = characterOfInterest.HasEffect("rust");
+            Character notCharacterOfInterest = _type == "set" ? _characterCaster : _characterTarget;
+
+            bool hasRust = false;
+            if (characterOfInterest!=null){
+                hasRust=characterOfInterest.HasEffect("rust");
+            }
 
             switch (_acId)
             {
