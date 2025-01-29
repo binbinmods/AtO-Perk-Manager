@@ -1061,8 +1061,15 @@ namespace PerkManager
                     {
                         // mark1e: Every 2 mark charges increases piercing damage by 3.
                         __result.IncreasedDamageReceivedType = Enums.DamageType.Piercing;
-                        __result.IncreasedDirectDamageChargesMultiplierNeededForOne = 2;
-                        __result.IncreasedDirectDamageReceivedPerStack = 3;
+                        // __result.IncreasedDirectDamageChargesMultiplierNeededForOne = 2;
+                        __result.IncreasedDirectDamageReceivedPerStack = 1.5f;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mark1g", AppliesTo.Global))
+                    {
+                        // mark1g: Halfs the bonus damage from Mark. Mark decreases speed by 1 per charge.
+                        __result.IncreasedDirectDamageReceivedPerStack *= 0.5f;
+                        __result.CharacterStatModified = Enums.CharacterStat.Speed;
+                        __result.CharacterStatModifiedValuePerStack = -1;
                     }
                     break;
                 case "disarm":
@@ -1273,7 +1280,7 @@ namespace PerkManager
                     {
                         // Doesn't need rust to be applied to it since it is a multiplier
                         __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Shadow, 0, 1, 0);
-                        int n = notCharacterOfInterest.GetAuraCharges("insane");
+                        int n = characterOfInterest.GetAuraCharges("insane");
                         __result.AuraDamageIncreasedPerStack *= 1 + 0.01f * n;
                         __result.AuraDamageIncreasedPerStack2 *= 1 + 0.01f * n;
                         __result.AuraDamageIncreasedPerStack3 *= 1 + 0.01f * n;
@@ -1290,7 +1297,7 @@ namespace PerkManager
                     // crack2h: Crack on monsters reduces Slashing resistance by 0.3% per charge.
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "insane2d", AppliesTo.Monsters))
                     {
-                        int n = notCharacterOfInterest.GetAuraCharges("insane");
+                        int n = characterOfInterest.GetAuraCharges("insane");
                         __result.IncreasedDirectDamageReceivedPerStack += hasRust ? FloorToInt(0.0125f * n) : FloorToInt(0.025f * n);
                     }
 
@@ -1471,13 +1478,13 @@ namespace PerkManager
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "poison2f", AppliesTo.Monsters))
                     {
                         __result.ResistModified2 = Enums.DamageType.All;
-                        int n_poison = notCharacterOfInterest.GetAuraCharges("poison");
+                        int n_poison = characterOfInterest.GetAuraCharges("poison");
                         __result.ResistModifiedValue2 = hasRust ? FloorToInt(-0.075f * n_poison) : FloorToInt(-0.05f * n_poison);
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "decay1e", AppliesTo.Global))
                     {
                         // multiplier so no need for rust
-                        int n_decay = notCharacterOfInterest.GetAuraCharges("decay");
+                        int n_decay = characterOfInterest.GetAuraCharges("decay");
                         float multiplier = 1 + 0.2f * n_decay;
                         __result.DamageWhenConsumedPerCharge *= multiplier;
                     }
@@ -1486,7 +1493,7 @@ namespace PerkManager
                     {
                         float undoRust = 1.0f / 1.5f;
                         __result.DamageWhenConsumedPerCharge *= undoRust;
-                        int nRust = notCharacterOfInterest.GetAuraCharges("decay");
+                        int nRust = characterOfInterest.GetAuraCharges("decay");
                         float newRustMultiplier = Min(1 + 0.1f * nRust, 3.0f); // caps at +200%
                         __result.DamageWhenConsumedPerCharge *= newRustMultiplier;
                     }
