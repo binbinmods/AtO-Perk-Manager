@@ -1,3 +1,7 @@
+# 1.4.4
+
+Added improved Debug Logging
+
 # 1.4.3
 
 Added Mark1g

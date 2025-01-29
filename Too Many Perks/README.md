@@ -65,7 +65,8 @@ slow0c: Slow on heroes can stack up to 10, but only reduces Speed by 1 per charg
 ### Perks for Mark
 mark1d: Once per combat, when an enemy reaches 10 Mark, apply 2 Taunt.  
 mark1e: Every 2 Mark charges on enemies increases Piercing Damage by 3. Mark does not increase any other damage type.  
-mark1f: +1 Mark Charge applied.
+mark1f: +1 Mark Charge applied.  
+mark1g: Mark on heroes and enemies decreases Speed by 1 per charge, but it increases damage by 50% of what it normally would.  
 
 ### Perks for Evasion
 evasion: Evasion on all heroes can stack but loses all charges at the start of turn.  

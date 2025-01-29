@@ -5,7 +5,8 @@ using HarmonyLib;
 using Obeliskial_Essentials;
 using static Obeliskial_Essentials.Essentials;
 
-namespace PerkManager{
+namespace PerkManager
+{
 
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     [BepInDependency("com.stiffmeds.obeliskialessentials")]
@@ -24,6 +25,7 @@ namespace PerkManager{
         public static string debugBase = "Binbin - Testing Perks - ";
 
         public static ConfigEntry<int> ZealCap { get; set; }
+        public static ConfigEntry<bool> EnableDebugging { get; set; }
 
         public static string perkBase = "binbin_mainperk_";
 
@@ -34,7 +36,8 @@ namespace PerkManager{
 
             // EnableMultipleReroll = Config.Bind(new ConfigDefinition("Debug", "Enable Multiple Rerolls"), true, new ConfigDescription("Enables the Multiple Reroll Mod. By default, only works for M3+"));
             // LimitRerollsForLowMadness = Config.Bind(new ConfigDefinition("Debug", "Limit Rerolls for Low Madness"), true, new ConfigDescription("Limits the rolls for low Madness (Below Base Madness 3)"));
-            ZealCap = Config.Bind(new ConfigDefinition("Customization", "Cap on Zeal stacks"), 10, new ConfigDescription("Sets a Cap on the number of Zeal Stacks that heroes can have for the zeal1c perk. -1 should remove the cap."));
+            EnableDebugging = Config.Bind(new ConfigDefinition("TooManyPerks", "Enable Debugging"), true, new ConfigDescription("Enables debugging logs."));
+            ZealCap = Config.Bind(new ConfigDefinition("TooManyPerks", "Cap on Zeal stacks"), 10, new ConfigDescription("Sets a Cap on the number of Zeal Stacks that heroes can have for the zeal1c perk. -1 should remove the cap."));
             string perkStem = "custom_binbin_mainperk_";
 
             // register with Obeliskial Essentials
@@ -46,16 +49,16 @@ namespace PerkManager{
                 _date: ModDate,
                 _link: @"https://github.com/binbinmods/AtO-Perk-Manager",
                 _contentFolder: "Too Many Perks",
-                _type: ["content", "perk", "perkNode","sprite"]  
+                _type: ["content", "perk", "perkNode", "sprite"]
             );
-            
-            
+
+
             // Custom Text for Experience
             medsTexts[perkStem + "exp0"] = "Start with 10 Experience. Gain 10 Experience on level up.";
             medsTexts[perkStem + "exp1"] = "Start with 10 Experience. Gain 10 Experience on level up.";
             medsTexts[perkStem + "exp2"] = "Start with 10 Experience. Gain 10 Experience on level up.";
             medsTexts[perkStem + "exp3"] = "Start with 40 Experience. Gain 40 Experience on level up.";
-            
+
             // Custom Text for Max HP
             // medsTexts[perkStem + "health6a"] = "+16 Max HP.";
             medsTexts[perkStem + "health6b"] = "Max HP -12. Gain 12 Max HP on level up.";
@@ -145,7 +148,7 @@ namespace PerkManager{
             medsTexts[perkStem + "bleed2g"] = "When a monster dies with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
             medsTexts["bleed2b"] = "Bleed on this hero deals damage at the end of turn but cannot be dispelled unless specified. Fury on this hero is capped at 50 charges.";
             medsTexts["bleed2c"] = "Bleed Charges +2. Bleed on enemies deals damage at the end of turn but cannot be prevented or dispelled unless specified.";
-            
+
             // Custom Text for Thorns
             medsTexts[perkStem + "thorns1d"] = "Cannot be purged unless specified.";
             // medsTexts[perkStem + "thorns1d"] = "Thorns on heroes can stack, but loses all charges at the end of turn.";
@@ -163,7 +166,7 @@ namespace PerkManager{
 
             // Custom Text for Taunt
             medsTexts[perkStem + "taunt1e"] = "Taunt on this hero can stack and increases damage by 1 per charge.";
-            
+
             // Custom Text for Fortify
             medsTexts[perkStem + "fortify1d"] = "At the end of this hero's turn, gain 1 Reinforce for every 2 Fortify charges.";
             medsTexts[perkStem + "fortify1e"] = "Fortify on all heroes can stack up to 5, but reduces damage taken by 1 per charge.";
@@ -173,7 +176,7 @@ namespace PerkManager{
 
             // Custom Text for Fury
             medsTexts[perkStem + "fury1d"] = "For all heroes, at the end of turn, spread 70% of Fury to adjacent heroes. Fury on heroes loses all charges at end of turn.";
-            
+
             // Custom Text for Crack
             medsTexts[perkStem + "crack2d"] = "Crack on monsters reduces Speed by 1 for every 5 charges.";
             medsTexts[perkStem + "crack2e"] = "Crack on monsters reduces Lightning resist by 0.3% per charge.";
@@ -186,13 +189,13 @@ namespace PerkManager{
             medsTexts[perkStem + "burn2e"] = "Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
             medsTexts["burn2d"] = "Burn deals double damage on enemies with 3 or less curses (burn included).";
 
-            
+
             // Custom Text for Chill
             medsTexts[perkStem + "chill2e"] = "Chill on monsters reduces Cold and Mind resistance by 0.5% per charge.";
             medsTexts[perkStem + "chill2f"] = "At the start of your turn, suffer 3 Chill. Chill on this hero reduces Speed by 1 for every 10 charges";
             medsTexts[perkStem + "chill2g"] = "Chill on this hero reduces Speed by 1 for every 3 charges but does not reduce Cold resistance.";
-            
-            
+
+
             // Custom Text for Sparks
             medsTexts[perkStem + "spark2d"] = "Spark on this hero increases Lighting damage by 0.2 per charge.";
             medsTexts[perkStem + "spark2e"] = "Spark deal Fire damage. Spark decreases Fire resistance by 0.5% per charge and Lightning resistance by 0.5% per charge.";
@@ -200,7 +203,7 @@ namespace PerkManager{
             medsTexts[perkStem + "spark2g"] = "When this hero applies Spark, apply 1 Crack.";
             medsTexts["spark2c"] = "Spark also applies 1 Slow per 14 charges of Spark at end of each round and turn.";
 
-            
+
             // Custom Text for Insulate
             medsTexts[perkStem + "insulate1d"] = "Insulate on this hero prevents their Speed from being lowered by Chill.";
             medsTexts[perkStem + "insulate1e"] = "Insulate on this hero increases Elemental damage by 10% per stack, but only increases Elemental resistances by 15%. Insulate on this hero stacks to 15";
@@ -209,34 +212,34 @@ namespace PerkManager{
             // medsTexts[perkStem + "shield5a"] = "+ Charges";
             medsTexts[perkStem + "shield5b"] = "If Restricted Power is enabled, increases Max Charges to 300.";
             medsTexts[perkStem + "shield5c"] = "At start of combat, apply 4 Shield to all heroes.";
-            
+
             // Custom Text for Wet
             medsTexts[perkStem + "wet1d"] = "Wet does not Dispel or Prevent Burn.";
-            
+
             // Custom Text for Inspire
             medsTexts[perkStem + "inspire0d"] = "If this hero ends their turn with 4 or more cards, gain 1 Inspire";
-            
+
             // Custom Text for Energize
             medsTexts[perkStem + "energize1a"] = "At start of your first turn, gain 1 Energize.";
             medsTexts[perkStem + "energize1b"] = "Energize gives 2 energy per charge, but you can only have a maximum of 1 Energize.";
             medsTexts[perkStem + "energize1c"] = "Energize increases all damage 1 per charge.";
             medsTexts[perkStem + "energize1d"] = "If you end your turn with 4 or more energy, gain 1 Energize.";
-            
+
 
             // Custom Text for Spellsword
             medsTexts[perkStem + "spellsword1a"] = "Max stacks +2";
             medsTexts[perkStem + "spellsword1b"] = "Spellsword on heroes reduces incoming damage by 2, but does not increase damage";
             medsTexts[perkStem + "spellsword1c"] = "At the start of your turn, all heroes and monsters gain 1 Spellsword";
             medsTexts[perkStem + "spellsword1d"] = "When this hero cast a Spell or Attack that costs 4 or more, gain 1 Spellsword";
-            
+
             // Custom Text for Powerful
-            medsTexts[perkStem + "powerful1d"] = "If this hero gains Powerful when it is at max charges, gain 1 Vitality.";            
+            medsTexts[perkStem + "powerful1d"] = "If this hero gains Powerful when it is at max charges, gain 1 Vitality.";
 
             // Custom Text for Paralyze
             // medsTexts[perkStem + "paralyze1a"] = "+1 Charge.";
             medsTexts[perkStem + "paralyze1b"] = "At the end of your turn, dispel Paralyze from all heroes.";
             medsTexts[perkStem + "paralyze1c"] = "Once per enemy per combat, when an enemy reaches 100 Spark, apply 1 Paralyze.";
-            
+
 
             // Custom Text for Rust
             // medsTexts[perkStem + "rust1a"] = "+1 Charge.";
@@ -267,7 +270,7 @@ namespace PerkManager{
             medsTexts[perkStem + "weak1b"] = "Weak on monsters reduces the application of Auras and Curses by 20%.";
             medsTexts[perkStem + "weak1c"] = "Weak cannot be prevented by Immunity or Buffer, but reduces damage and healing by 25% instead of 50%.";
             medsTexts[perkStem + "weak1d"] = "This hero is immune to Weak.";
-            
+
             // Custom Text for Healing
             medsTexts[perkStem + "heal5b"] = "When this hero heals a character at Max HP, apply 2 Powerful. [Powerful application cannot be increased by modifiers]";
             medsTexts[perkStem + "heal5c"] = "+35% Heal received.";
@@ -276,11 +279,11 @@ namespace PerkManager{
             medsTexts[perkStem + "insane2d"] = "Crack on monsters increases Blunt damage by an additional 1 for every 40 charges of Insane on that monster.";
             medsTexts[perkStem + "insane2e"] = "Insane on this hero increases the effectiveness of Sharp by 1% per charge.";
             medsTexts[perkStem + "insane2f"] = "At the start of their turn, heroes and monsters gain 1 Scourge for every 30 Insane charges on them.";
-            
+
             // Custom Text for Dark
             medsTexts[perkStem + "dark2e"] = "Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.5% per charge in addition to reducing Shadow resistance.";
             medsTexts["dark2b"] = "Dark on this hero explodes at 38 charges and cannot be dispelled unless specified.";
-            
+
 
             // Custom Text for Sanctify
             medsTexts[perkStem + "sanctify2d"] = "Every 5 stacks of Sanctify increase the number of Dark charges needed for an explosion by 1.";
@@ -312,7 +315,27 @@ namespace PerkManager{
             harmony.PatchAll();
         }
 
-        
+        internal static void LogDebug(string msg)
+        {
+            if (EnableDebugging.Value)
+            {
+                Log.LogDebug(debugBase + msg);
+            }
+        }
+        internal static void LogInfo(string msg)
+        {
+            if (EnableDebugging.Value)
+            {
+                Log.LogInfo(debugBase + msg);
+            }
+        }
+        internal static void LogError(string msg)
+        {
+            if (EnableDebugging.Value)
+            {
+                Log.LogError(debugBase + msg);
+            }
+        }
 
     }
 }

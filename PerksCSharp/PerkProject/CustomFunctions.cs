@@ -453,6 +453,7 @@ namespace PerkManager
         /// <returns>true if the team has the item/trait/perk</returns>
         public static bool IfCharacterHas(Character characterOfInterest, CharacterHas characterHas, string id, AppliesTo appliesTo = AppliesTo.Global, string _type = "", string onlyThisType = "")
         {
+            LogDebug($"Applying Perk - {id}");
 
             if (appliesTo == AppliesTo.None || characterOfInterest == null || AtOManager.Instance == null)
                 return false;
