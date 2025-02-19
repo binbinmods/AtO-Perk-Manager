@@ -1,3 +1,15 @@
+# 1.4.5
+
+Updated spark2e and spark2f
+
+Fixed Rust1c and Rust1d
+
+Fortify1e text should now display
+
+Health6d changed to give Vitality at end of turn, and updated to actually give vitality
+
+Shackle1d should now apply the correct amount of fortify.
+
 # 1.4.4
 
 Added improved Debug Logging

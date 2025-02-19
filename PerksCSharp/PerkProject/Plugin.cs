@@ -63,7 +63,7 @@ namespace PerkManager
             // medsTexts[perkStem + "health6a"] = "+16 Max HP.";
             medsTexts[perkStem + "health6b"] = "Max HP -12. Gain 12 Max HP on level up.";
             medsTexts[perkStem + "health6c"] = "Max HP +36. Lose 14 Max HP on level up";
-            medsTexts[perkStem + "health6d"] = "At the start of your turn, if you are at max HP, gain 2 Vitality.";
+            medsTexts[perkStem + "health6d"] = "At the end of your turn, if you are at max HP, gain 2 Vitality.";
 
             // Custom Text for Resistances
             // medsTexts[perkStem + "resistance5a"] = "+8% Resistances.";
@@ -245,7 +245,7 @@ namespace PerkManager
             // medsTexts[perkStem + "rust1a"] = "+1 Charge.";
             medsTexts[perkStem + "rust1b"] = "Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.";
             medsTexts[perkStem + "rust1c"] = "Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.";
-            medsTexts[perkStem + "rust1c"] = "Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.";
+            medsTexts[perkStem + "rust1d"] = "Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.";
 
 
             // Custom text for Zeal        

@@ -488,7 +488,7 @@ namespace PerkManager
             {
                 // spark2f: When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
 
-                PLog("spark2f Hitted: " + target.SubclassName);
+                PLog($"spark2f Hit by: {target.SourceName}");
 
                 int n = __instance.GetAuraCharges("spark");
                 int toDeal = RoundToInt(n * 0.2f);
@@ -497,18 +497,12 @@ namespace PerkManager
                 foreach (NPC sideTarget in npcSides)
                 {
                     if (IsLivingNPC(sideTarget))
+                    {
+                        LogDebug($"spark2f dealing damage to: {sideTarget.SourceName}");
                         sideTarget.IndirectDamage(Enums.DamageType.Lightning, toDeal);
+                    }
                 }
-                // int[] sides = [npcIndex - 1, npcIndex + 1];
-                // foreach (int side in sides)
-                // {
-                //     if (side >= 0 && side < teamNpc.Length)
-                //     {
-                //         NPC sideTarget = teamNpc[side];
-                //         if (sideTarget.Alive && sideTarget != null)
-                //             sideTarget.IndirectDamage(Enums.DamageType.Lightning, toDeal);
-                //     }
-                // }
+                
             }
             if (theEvent == Enums.EventActivation.CastCard && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "spellsword1d"))
             {
@@ -682,7 +676,8 @@ namespace PerkManager
             if (CharacterObjectHavePerk(__instance, "shackle1d"))
             {
                 int n_charges = __instance.GetAuraCharges("shackle");
-                __instance.SetAuraTrait(__instance, "fortify", n_charges);
+                int multiplier = 2;
+                __instance.SetAuraTrait(__instance, "fortify", n_charges * multiplier);
             }
             if (CharacterObjectHavePerk(__instance, "mitigate1a"))
             {
@@ -830,6 +825,13 @@ namespace PerkManager
                     character.SetAuraTrait(character, "inspire", 1);
                 }
             }
+            
+            if (CharacterObjectHavePerk(character, "health6d") && character.GetHpLeftForMax()<=0)
+            {
+                LogDebug("health6d");
+                character.SetAuraTrait(character, "vitality", 2);
+            }
+
 
             if (TeamHasPerk("fury1d") && character.HasEffect("fury"))
             {
@@ -1711,7 +1713,7 @@ namespace PerkManager
                     {
                         LogDebug("rust1d");
                         AuraCurseData noneAC = GetAuraCurseData("None");
-                        __result.PreventedAuraCurse = noneAC;
+                        __result.PreventedAuraCurse = noneAC;                        
                         __result.PreventedAuraCurseStackPerStack = 0;
                         __result.RemoveAuraCurse = noneAC;
                     }
@@ -1964,43 +1966,22 @@ namespace PerkManager
                 case "spark":
                     // spark2d: Gain +1 Lightning Damage for every 5 stacks of Spark on this hero."
                     // spark2e: Spark deal Fire damage. Spark decreases Fire resistance by 0.5% per charge and Lightning resistance by 0.5% per charge.";
-
-
-                    if (_type == "set")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "spark2d", AppliesTo.ThisHero))
                     {
-                        if (CharacterHasPerkForSet("spark2d", SetAppliesToHeroes, __instance, _characterTarget))
-                        {
-                            __result.AuraDamageType = Enums.DamageType.Lightning;
-                            __result.AuraDamageIncreasedPerStack = 1;
-                            __result.ChargesAuxNeedForOne1 = 5;
-                        }
-                        if (TeamHasPerkForSet("spark2e", SetAppliesToHeroes, __instance, _characterTarget))
-                        {
-                            __result.DamageTypeWhenConsumed = Enums.DamageType.Fire;
-                            __result.ResistModified = Enums.DamageType.Lightning;
-                            __result.ResistModified2 = Enums.DamageType.Fire;
-                            __result.ResistModifiedPercentagePerStack = -0.5f;
-                            __result.ResistModifiedPercentagePerStack2 = -0.5f;
-                        }
-
+                        LogDebug("spark2d");
+                        __result.AuraDamageType = Enums.DamageType.Lightning;
+                        __result.AuraDamageIncreasedPerStack = 1;
+                        __result.ChargesAuxNeedForOne1 = 5;
                     }
-                    if (_type == "consume")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "spark2e", AppliesTo.Monsters))
                     {
-                        if (CharacterHasPerkForConsume("spark2d", ConsumeAppliesToHeroes, __instance, _characterCaster))
-                        {
-                            __result.AuraDamageType = Enums.DamageType.Lightning;
-                            __result.AuraDamageIncreasedPerStack = 0.2f;
-                            // __result.ChargesAuxNeedForOne1 = 5;
-                        }
-                        if (TeamHasPerkForConsume("spark2e", ConsumeAppliesToHeroes, __instance, _characterCaster))
-                        {
-                            __result.DamageTypeWhenConsumed = Enums.DamageType.Fire;
-                            __result.ResistModified = Enums.DamageType.Lightning;
-                            __result.ResistModified2 = Enums.DamageType.Fire;
-                            __result.ResistModifiedPercentagePerStack = -0.5f;
-                            __result.ResistModifiedPercentagePerStack2 = -0.5f;
-                        }
-                    }
+                        LogDebug("spark2e");
+                        __result.DamageTypeWhenConsumed = Enums.DamageType.Fire;
+                        __result.ResistModified = Enums.DamageType.Lightning;
+                        __result.ResistModified2 = Enums.DamageType.Fire;
+                        __result.ResistModifiedPercentagePerStack = -0.5f;
+                        __result.ResistModifiedPercentagePerStack2 = -0.5f;                    
+                    }                    
                     break;
 
                 case "shield":

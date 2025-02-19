@@ -65,7 +65,7 @@ aura_curse_string = '''bless
     wet'''
     
 additional_sprites = set([file.split(".png")[0] for file in os.listdir("Assets/perkSprites") if file.endswith(".png")])
-aura_curses=set(aura_curse_string.split())
+aura_curses =set(aura_curse_string.split())
 
 PERK_DESC_STEM = "custom_binbin_mainperk_"
 PERK_ID_STEM = "binbin_mainperk_"
@@ -78,51 +78,51 @@ NODE_DIR = "CustomPerks/perkNode/"
 PERK_DIR = "CustomPerks/perk/"
 
 def create_new_perk(id:str,
-                    aura_curse:str="",
+                    aura_curse:str ="",
                     aura_curse_bonus:int = 0,
-                    icon:str=""):
+                    icon:str =""):
     
     if id.startswith(PERK_ID_STEM):
         id = id.replace(PERK_ID_STEM,'')
     
     if (id.startswith("forttify1")):
-        id= id.replace("forttify1","fortify1")
+        id = id.replace("forttify1","fortify1")
 
     perk = Perk() 
-    perk.AuraCurseBonus="None"# if aura_curse_bonus == 0 else aura_curse
-    perk.AuraCurseBonusValue=aura_curse_bonus
-    perk.CustomDescription=f"{PERK_DESC_STEM}{id}"
-    perk.Icon=icon
-    perk.ID= f"{PERK_ID_STEM}{id}" 
-    perk.IconTextValue="+1"
-    perk.CardClass="None"
-    if id=="shackle1a":
-        perk.AuraCurseBonus="shackle"
+    perk.AuraCurseBonus ="None"# if aura_curse_bonus == 0 else aura_curse
+    perk.AuraCurseBonusValue = aura_curse_bonus
+    perk.CustomDescription = f"{PERK_DESC_STEM}{id}"
+    perk.Icon =icon
+    perk.Id = f"{PERK_ID_STEM}{id}" 
+    perk.IconTextValue ="+1"
+    perk.CardClass ="None"
+    if id =="shackle1a":
+        perk.AuraCurseBonus ="shackle"
         perk.AuraCurseBonusValue = 1
-    if id=="health6b":
+    if id =="health6b":
         perk.MaxHealth = -12
-    if id=="health6c":
+    if id =="health6c":
         perk.MaxHealth = 36
-    if id=="resistance5b":
+    if id =="resistance5b":
         perk.ResistModified = "All"
         perk.ResistModifiedValue = -4
-    if id=="resistance5c":
+    if id =="resistance5c":
         perk.ResistModified = "All"
         perk.ResistModifiedValue = 12
-    if id=="paralyze1a":
-        perk.AuraCurseBonus="paralyze"
+    if id =="paralyze1a":
+        perk.AuraCurseBonus ="paralyze"
         perk.AuraCurseBonusValue = 1
-        perk.CustomDescription=""
-    if id=="poison2h":
-        perk.AuraCurseBonus="poison"
+        perk.CustomDescription =""
+    if id =="poison2h":
+        perk.AuraCurseBonus ="poison"
         perk.AuraCurseBonusValue = -1
     if id =="mark1f":
-        perk.AuraCurseBonus="mark"
-        perk.AuraCurseBonusValue=1
-    if id=="rust1a":
-        perk.AuraCurseBonus="rust"
+        perk.AuraCurseBonus ="mark"
+        perk.AuraCurseBonusValue =1
+    if id =="rust1a":
+        perk.AuraCurseBonus ="rust"
         perk.AuraCurseBonusValue = 1
-        perk.CustomDescription=""
+        perk.CustomDescription =""
 
 
 
@@ -140,39 +140,39 @@ def get_next_letter(base:PerkNode):
 def create_new_perk_node(perk:Perk,
                          col:int,
                          row:int,
-                         previous_perk:str=None,
-                         node_base:PerkNode=None,
-                         cost:int=3,
-                         prevent_stacking:bool=False,
-                         locked_in_town:bool=False,
-                         category:str="General"
+                         previous_perk:str =None,
+                         node_base:PerkNode =None,
+                         cost:int =3,
+                         prevent_stacking:bool = False,
+                         locked_in_town:bool = False,
+                         category:str ="General"
                         ):
     
     perkNode = PerkNode()
-    perkNode.Perk=perk.ID
+    perkNode.Perk =perk.ID
     perk_base_id = perk.ID.split("_")[-1]
-    perkNode.Column=col
-    perkNode.Row=row
+    perkNode.Column = col
+    perkNode.Row =row
 
 
     ''''''
     if node_base!=None:
-        perk_node_id=f"binbin_perknode_{perk_base_id}{get_next_letter(node_base)}"
+        perk_node_id = f"binbin_perknode_{perk_base_id}{get_next_letter(node_base)}"
         node_base.PerksConnected.append(perk_node_id)
-        perkNode.Cost=node_base.Cost
+        perkNode.Cost =node_base.Cost
     else:
-        perk_node_id=f"binbin_perknode_{perk_base_id}"
-        perkNode.Cost="PerkCostBase" if cost==1 else "PerkCostAdvanced"
+        perk_node_id = f"binbin_perknode_{perk_base_id}"
+        perkNode.Cost ="PerkCostBase" if cost ==1 else "PerkCostAdvanced"
 
     perkNode.ID = perk_node_id
-    perkNode.NotStack=prevent_stacking
-    perkNode.LockedInTown=locked_in_town
+    perkNode.NotStack =prevent_stacking
+    perkNode.LockedInTown = locked_in_town
     perkNode.PerkRequired = previous_perk if previous_perk != None else ""
-    #perkNode.Sprite=icon
+    #perkNode.Sprite =icon
 
     if category not in type_dict:
         raise TypeError("PerkNodeData - Invalid Category")
-    perkNode.Type=type_dict[category]
+    perkNode.Type =type_dict[category]
 
     return perkNode
 
@@ -181,26 +181,28 @@ def create_new_perk_node_improved(perk:Perk,
                          perk_node_name:str,                         
                          col:int,
                          row:int,
-                         previous_perk:str=None,
-                         sprite:str=None,
-                         cost:int=3,
-                         prevent_stacking:bool=False,
-                         locked_in_town:bool=False,
-                         category:int=0
+                         previous_perk:str =None,
+                         sprite:str =None,
+                         cost:int =3,
+                         prevent_stacking:bool = False,
+                         locked_in_town:bool = False,
+                         category:int =0
                         ):
     perkNode = PerkNode()
-    perkNode.Perk=perk.ID
-    perkNode.Column=col
+    perkNode.Perk =perk.ID
+    perkNode.Column = col
     perkNode.Row = row
-    perkNode.PerkRequired=previous_perk if previous_perk != None else ""
-    #perkNode.Cost=cost
-    perkNode.NotStack=prevent_stacking
-    perkNode.LockedInTown=locked_in_town
-    perkNode.Type=category
-    perkNode.ID=perk_node_name
+    perkNode.PerkRequired =previous_perk if previous_perk != None else ""
+    #perkNode.Cost = cost
+    perkNode.NotStack =prevent_stacking
+    perkNode.LockedInTown = locked_in_town
+    perkNode.Type = category
+    perkNode.Id =perk_node_name
     perkNode.Cost = "PerkCostAdvanced"
     perkNode.Sprite = sprite
-    if (perk_node_name=="binbin_perknode_forttify1d"):
+    if (perk_node_name =="binbin_perknode_forttify1d"):
+        perkNode.Sprite = "fortify"
+    if (perk_node_name =="binbin_perknode_forttify1e"):
         perkNode.Sprite = "fortify"
     return perkNode
 
@@ -210,7 +212,7 @@ def save_object_to_json(obj,file_to_create):
         file_to_create+=".json"
 
     with open(file_to_create,"w") as f:
-        json.dump(obj.__dict__,f,indent=4)
+        json.dump(obj.__dict__,f,indent =4)
     
 
 def create_new_perk_split():
@@ -222,29 +224,29 @@ def test1():
     id = "zeal0"
     ac = "zeal"
     desc = ""
-    icon=ac
+    icon = ac
     base = PerkNode()
-    directory_name="TestPerks"
+    directory_name ="TestPerks"
     importing_dir = f"{directory_name}/config/Obeliskial_importing"
-    config_directory =f"{directory_name}/config/Obeliskial_importing/{directory_name}"
-    new_perk = create_new_perk(id=id,aura_curse=ac,desc=desc,icon=icon,)
+    config_directory = f"{directory_name}/config/Obeliskial_importing/{directory_name}"
+    new_perk = create_new_perk(id =id,aura_curse = ac,desc = desc,icon =icon,)
     new_perk_node = create_new_perk_node(perk = new_perk,
-                                         col=5,
-                                         row=1,
-                                         previous_perk="",
-                                         #node_base=base,
-                                         cost=3,
+                                         col =5,
+                                         row =1,
+                                         previous_perk ="",
+                                         #node_base =base,
+                                         cost =3,
                                          prevent_stacking = False,
-                                         locked_in_town=False,
-                                         category="General")
+                                         locked_in_town = False,
+                                         category ="General")
     
     mod.save_object_to_json(new_perk,f"{config_directory}/perk",f"binbin_mainperk_{id}")
     mod.save_object_to_json(new_perk_node,f"{config_directory}/perkNode",f"{new_perk_node.ID}.json")
 
-    mod.create_json_to_load_folders(f"{directory_name}","Testing for perks",f"{importing_dir}",types=["perk","perkNode"])
+    mod.create_json_to_load_folders(f"{directory_name}","Testing for perks",f"{importing_dir}",types =["perk","perkNode"])
 
 
-def get_perk_from_name(perk_name,perk_folders)->Perk:#, is_vanilla=True)->Perk:
+def get_perk_from_name(perk_name,perk_folders)->Perk:#, is_vanilla =True)->Perk:
     perk_file = ""
     for folder in perk_folders:   
         potential_file = f"{folder}/perk/{perk_name}.json"
@@ -259,10 +261,10 @@ def get_perk_from_name(perk_name,perk_folders)->Perk:#, is_vanilla=True)->Perk:
     return new_perk
 
 
-def get_perk_node_from_name(perk_node_name,perk_folders:list[str])->PerkNode:#, is_vanilla=True)->Perk:
+def get_perk_node_from_name(perk_node_name,perk_folders:list[str])->PerkNode:#, is_vanilla =True)->Perk:
     node_file = ""
     for folder in perk_folders:
-        if perk_node_name=="nodeperkFortify1":
+        if perk_node_name =="nodeperkFortify1":
             potential_file = f"{folder}/perkNode/nodeperkForttify1.json" 
         else:
 
@@ -285,7 +287,7 @@ def create_perk_from_id(short_ID):
     ac_str = ac if is_ac else ""
     icon = ac if is_ac else ""
     icon = ac if ac in additional_sprites else ""
-    p = create_new_perk(id=id,aura_curse=ac_str,icon=icon)
+    p = create_new_perk(id =id,aura_curse = ac_str,icon =icon)
     file_name = p.ID
     save_object_to_json(p,PERK_DIR+file_name)
     #print(p.CustomDescription)
@@ -312,32 +314,32 @@ def create_perk_nodes_from_base(base:str):
     #print(perk_base.PerksConnected)
     for connected_perk in perk_base.PerksConnected:
         id,ac_str,icon = get_perk_inputs_from_id(connected_perk)
-        perk = create_new_perk(id=id,aura_curse=ac_str,icon=icon)
+        perk = create_new_perk(id =id,aura_curse = ac_str,icon =icon)
 
         new_perk_node_name = NODE_ID_STEM+id
-        p = create_new_perk_node_improved(perk=perk,
-                            perk_node_name=new_perk_node_name,
-                            col=perk_base.Column,
-                            row=perk_base.Row,
-                            sprite=icon,
-                            cost=perk_base.Cost,
-                            prevent_stacking=True,
-                            category=perk_base.Type
+        p = create_new_perk_node_improved(perk =perk,
+                            perk_node_name =new_perk_node_name,
+                            col =perk_base.Column,
+                            row =perk_base.Row,
+                            sprite =icon,
+                            cost =perk_base.Cost,
+                            prevent_stacking =True,
+                            category =perk_base.Type
                             )
         #print(p.ID)
         save_object_to_json(p,NODE_DIR+p.ID)
         save_object_to_json(perk,PERK_DIR+perk.ID)
 
 
-def create_new_perk_base(id,row,col,n:int=0,category:str="General"):
+def create_new_perk_base(id,row,col,n:int =0,category:str ="General"):
         p = PerkNode()
-        p.ID=NODE_ID_STEM+id
+        p.Id =NODE_ID_STEM+id
         p.Column = col
         p.Row = row
-        p.PerksConnected=[NODE_ID_STEM+id+chr(ord('a')+i) for i in range(n)]
-        p.Type=type_dict[category]
-        p.Perk=""
-        p.Sprite="perk"
+        p.PerksConnected =[NODE_ID_STEM+id+chr(ord('a')+i) for i in range(n)]
+        p.Type =type_dict[category]
+        p.Perk =""
+        p.Sprite ="perk"
         p.Cost = "PerkCostAdvanced"
         return p
 
@@ -362,29 +364,29 @@ def add_perks_to_existing_node(node:PerkNode, n_perks_to_add,is_vanilla):
         if existing_node[-1].isdigit():
             raise ValueError("Connected Perk has wrong format: " + existing_node)
         if ord(existing_node[-1])>last_letter:
-            last_letter=ord(existing_node[-1])
+            last_letter =ord(existing_node[-1])
     
-    if is_vanilla==False:
+    if is_vanilla == False:
         raise ValueError("Non-Vanilla implemenation not added yet")
 
     perk_base = node.ID.replace("nodeperk",'').lower()
     for i in range(n_perks_to_add):
         next_perk_id = PERK_ID_STEM+perk_base+chr(last_letter+i+1)
         id,ac_str,icon = get_perk_inputs_from_id(next_perk_id)
-        new_perk:Perk = create_new_perk(id=id,aura_curse=ac_str,icon=icon)
+        new_perk:Perk = create_new_perk(id =id,aura_curse = ac_str,icon =icon)
         save_object_to_json(new_perk,PERK_DIR+new_perk.ID)
 
         new_perk_node_name = NODE_ID_STEM+id
-        p = create_new_perk_node_improved(perk=new_perk,
-                            perk_node_name=new_perk_node_name,
-                            col=node.Column,
-                            row=node.Row,
-                            sprite=icon,
-                            cost=node.Cost,
-                            prevent_stacking=True,
-                            category=node.Type
+        p = create_new_perk_node_improved(perk =new_perk,
+                            perk_node_name =new_perk_node_name,
+                            col =node.Column,
+                            row =node.Row,
+                            sprite =icon,
+                            cost =node.Cost,
+                            prevent_stacking =True,
+                            category =node.Type
                             )
-        p.PerkRequired=node.PerkRequired
+        p.PerkRequired =node.PerkRequired
         save_object_to_json(p,NODE_DIR+p.ID)
 
         connected_nodes.append(p.ID)
@@ -394,20 +396,20 @@ def add_perks_to_existing_node(node:PerkNode, n_perks_to_add,is_vanilla):
 
 def create_new_perk_node_and_perk_jsons(source_node:PerkNode,full_perk_id:str):
     id,ac_str,icon = get_perk_inputs_from_id(full_perk_id)
-    new_perk:Perk = create_new_perk(id=id,aura_curse=ac_str,icon=icon)
+    new_perk:Perk = create_new_perk(id =id,aura_curse = ac_str,icon =icon)
     save_object_to_json(new_perk,PERK_DIR+new_perk.ID)
 
     new_perk_node_name = NODE_ID_STEM+id
-    p = create_new_perk_node_improved(perk=new_perk,
-                        perk_node_name=new_perk_node_name,
-                        col=source_node.Column,
-                        row=source_node.Row,
-                        sprite=icon,
-                        cost=source_node.Cost,
-                        prevent_stacking=True,
-                        category=source_node.Type
+    p = create_new_perk_node_improved(perk =new_perk,
+                        perk_node_name =new_perk_node_name,
+                        col =source_node.Column,
+                        row =source_node.Row,
+                        sprite =icon,
+                        cost =source_node.Cost,
+                        prevent_stacking =True,
+                        category =source_node.Type
                         )
-    p.PerkRequired=source_node.PerkRequired
+    p.PerkRequired =source_node.PerkRequired
     source_node.PerksConnected.append(p.ID)
     save_object_to_json(p,NODE_DIR+p.ID)
 
@@ -418,15 +420,15 @@ def create_new_split_node(node_id:str,n_to_add:int):
     new_perk_id = orig_perk_id + "a"
     old_node_id = orig_node.ID
     new_node_id = orig_node.ID+"a"
-    orig_node.ID=new_node_id
+    orig_node.Id =new_node_id
     save_object_to_json(orig_node,NODE_DIR+new_node_id)
 
-    orig_node.PerksConnected=[new_node_id]
+    orig_node.PerksConnected =[new_node_id]
     orig_node.Perk = ""
 
     
     orig_perk:Perk = get_perk_from_name(orig_perk_id,["VanillaPerkData"])
-    orig_perk.ID= new_perk_id
+    orig_perk.Id = new_perk_id
     save_object_to_json(orig_perk,PERK_DIR+new_perk_id)
 
     for i in range(1,n_to_add+1):
@@ -434,7 +436,7 @@ def create_new_split_node(node_id:str,n_to_add:int):
         next_perk_id = PERK_ID_STEM+orig_perk_id.replace(VANILLA_PERK_STEM,'')+next_letter
         create_new_perk_node_and_perk_jsons(orig_node,next_perk_id)
             
-    orig_node.ID=old_node_id
+    orig_node.Id =old_node_id
     save_object_to_json(orig_node,NODE_DIR+orig_node.ID)
 
 
