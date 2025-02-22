@@ -307,7 +307,7 @@ namespace PerkManager
             medsTexts[perkStem + "stanza0e"] = "This hero has Stanza II for their first turn. This hero cannot gain Stanza I or Stanza III.";
 
             // Custom Text for Regeneration
-            medsTexts[perkStem + "regeneration1d"] = "Regeneration on heroes prevents 1 Vulnerable per charge";
+            medsTexts[perkStem + "regeneration1d"] = "Regeneration on this hero prevents 1 Vulnerable per charge";
 
             medsTexts["binbintestasdf"] = "asdfqwerafsdb";
 

@@ -1,6 +1,12 @@
+# 1.4.6
+
+Nerfed Regen1d to only apply to the hero with the perk
+
+Hopefully fixed shackle1f
+
 # 1.4.5
 
-Updated spark2e and spark2f
+Updated spark2e to apply to monsters not heroes
 
 Fixed Rust1c and Rust1d
 

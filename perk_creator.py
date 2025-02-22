@@ -93,7 +93,7 @@ def create_new_perk(id:str,
     perk.AuraCurseBonusValue = aura_curse_bonus
     perk.CustomDescription = f"{PERK_DESC_STEM}{id}"
     perk.Icon =icon
-    perk.Id = f"{PERK_ID_STEM}{id}" 
+    perk.ID = f"{PERK_ID_STEM}{id}" 
     perk.IconTextValue ="+1"
     perk.CardClass ="None"
     if id =="shackle1a":
@@ -197,7 +197,7 @@ def create_new_perk_node_improved(perk:Perk,
     perkNode.NotStack =prevent_stacking
     perkNode.LockedInTown = locked_in_town
     perkNode.Type = category
-    perkNode.Id =perk_node_name
+    perkNode.ID =perk_node_name
     perkNode.Cost = "PerkCostAdvanced"
     perkNode.Sprite = sprite
     if (perk_node_name =="binbin_perknode_forttify1d"):
@@ -333,7 +333,7 @@ def create_perk_nodes_from_base(base:str):
 
 def create_new_perk_base(id,row,col,n:int =0,category:str ="General"):
         p = PerkNode()
-        p.Id =NODE_ID_STEM+id
+        p.ID =NODE_ID_STEM+id
         p.Column = col
         p.Row = row
         p.PerksConnected =[NODE_ID_STEM+id+chr(ord('a')+i) for i in range(n)]
@@ -420,7 +420,7 @@ def create_new_split_node(node_id:str,n_to_add:int):
     new_perk_id = orig_perk_id + "a"
     old_node_id = orig_node.ID
     new_node_id = orig_node.ID+"a"
-    orig_node.Id =new_node_id
+    orig_node.ID =new_node_id
     save_object_to_json(orig_node,NODE_DIR+new_node_id)
 
     orig_node.PerksConnected =[new_node_id]
@@ -428,7 +428,7 @@ def create_new_split_node(node_id:str,n_to_add:int):
 
     
     orig_perk:Perk = get_perk_from_name(orig_perk_id,["VanillaPerkData"])
-    orig_perk.Id = new_perk_id
+    orig_perk.ID = new_perk_id
     save_object_to_json(orig_perk,PERK_DIR+new_perk_id)
 
     for i in range(1,n_to_add+1):
@@ -436,7 +436,7 @@ def create_new_split_node(node_id:str,n_to_add:int):
         next_perk_id = PERK_ID_STEM+orig_perk_id.replace(VANILLA_PERK_STEM,'')+next_letter
         create_new_perk_node_and_perk_jsons(orig_node,next_perk_id)
             
-    orig_node.Id =old_node_id
+    orig_node.ID =old_node_id
     save_object_to_json(orig_node,NODE_DIR+orig_node.ID)
 
 

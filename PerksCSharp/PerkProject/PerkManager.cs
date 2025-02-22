@@ -1344,58 +1344,25 @@ namespace PerkManager
                     break;
 
                 case "shackle":
-                    if (_type == "set")
+                    // shackle1b: This hero is immune to Shackle.";
+                    // shackle1c: Shackle cannot be prevented.";
+                    // shackle1d: At start of your turn, gain Fortify equal to your twice your Shackles.";
+                    // shackle1e: Shackle increases Dark charges you apply by 1 per charge of Shackle.";
+                    // shackle1f: Shackles on monsters increases all damage received by 1 per base Speed.";
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "shackle1f", AppliesTo.Monsters))
                     {
-                        // shackle1b: This hero is immune to Shackle.";
-                        // shackle1c: Shackle cannot be prevented.";
-                        // shackle1d: At start of your turn, gain Fortify equal to your twice your Shackles.";
-                        // shackle1e: Shackle increases Dark charges you apply by 1 per charge of Shackle.";
-                        // shackle1f: Shackles on monsters increases all damage received by 1 per base Speed.";
-
-                        if (TeamHasPerkForSet("shackle1c", AppliesGlobally, __instance, _characterTarget))
-                        {
-                            LogDebug("shackle1c");
-                            __result.Preventable = false;
-                        }
-                        // if (CharacterHasPerkForSet("shackle1e", SetAppliesToHeroes, __instance, _characterTarget))
-                        // {
-                        //     int n_charges = _characterTarget.GetAuraCharges("shackle");
-                        //     _characterTarget.ModifyAuraCurseQuantity("dark", n_charges);
-                        // }
-                        if (TeamHasPerkForSet("shackle1f", SetAppliesToMonsters, __instance, _characterTarget))
-                        {
-                            LogDebug("shackle1f");
-                            // PLog("shackle1f set - .Speed " + _characterTarget.Speed);
-                            // PLog("shackle1f set - GetSpeed[1] " + _characterTarget.GetSpeed()[1]);
-                            int baseSpeed = _characterTarget.GetSpeed()[1];
-                            // int n_charges = _characterTarget.GetAuraCharges("shackle");
-                            __result.IncreasedDamageReceivedType = Enums.DamageType.All;
-                            __result.IncreasedDirectDamageReceivedPerStack = RoundToInt(baseSpeed * 0.5f);
-
-                        }
+                        LogDebug("shackle1f");
+                        int baseSpeed = characterOfInterest.GetSpeed()[1];                        
+                        __result.IncreasedDamageReceivedType = Enums.DamageType.All;
+                        __result.IncreasedDirectDamageReceivedPerStack = RoundToInt(baseSpeed * 0.5f);
                     }
-                    if (_type == "consume")
+
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "shackle1c", AppliesTo.Global))
                     {
-                        if (TeamHasPerkForConsume("shackle1c", AppliesGlobally, __instance, _characterCaster))
-                        {
-                            LogDebug("shackle1c");
-                            __result.Preventable = false;
-                        }
-                        // if (CharacterHasPerkForConsume("shackle1e", ConsumeAppliesToHeroes, __instance, _characterCaster))
-                        // {
-                        //     int n_charges = _characterCaster.GetAuraCharges("shackle");
-                        //     _characterCaster.ModifyAuraCurseQuantity("dark", n_charges);
-                        // }
-
-                        if (TeamHasPerkForConsume("shackle1f", ConsumeAppliesToMonsters, __instance, _characterCaster))
-                        {
-                            LogDebug("shackle1f");
-                            int baseSpeed = _characterCaster.GetSpeed()[1];
-                            // int n_charges = _characterCaster.GetAuraCharges("shackle");
-                            __result.IncreasedDamageReceivedType = Enums.DamageType.All;
-                            __result.IncreasedDirectDamageReceivedPerStack = RoundToInt(baseSpeed * 0.5f);
-                        }
+                        LogDebug("shackle1c");
+                        __result.Preventable = false;
                     }
+
                     break;
 
                 case "mitigate":
