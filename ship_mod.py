@@ -21,7 +21,7 @@ def copy_directory(source_dir: str, destination_dir: str):
 
 def zip_mods():
     download_dir = os.path.expanduser("~/Downloads")
-    output_name = f"{download_dir}/Mod Zips/{mod_dir} Beta"
+    output_name = f"{download_dir}/Mod Zips/{mod_dir}"
 
     print("zipping to Mod Zips")
     zip_dir = f"{script_dir}/{mod_dir}"
@@ -33,8 +33,8 @@ def zip_mods():
 
 
 if __name__ == "__main__":  
-    dir_to_ship = "Too Many Perks"  
-    mod_dir = "Too Many Perks"
+    dir_to_ship = "Too Many Perks" # This is the name of the folder that is copied to the local folder
+    mod_dir = "Too Many Perks" # This is the name of the mod folder that is zipped. Also the name of the output mod
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
     source = f"{script_dir}/{dir_to_ship}/BepInEx/config/Obeliskial_importing"

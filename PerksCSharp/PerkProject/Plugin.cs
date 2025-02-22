@@ -124,7 +124,7 @@ namespace PerkManager
             medsTexts[perkStem + "shackle1c"] = "Shackle cannot be prevented by Immunity or Buffer.";
             medsTexts[perkStem + "shackle1d"] = "At start of your turn, gain Fortify equal to your twice your Shackles.";
             medsTexts[perkStem + "shackle1e"] = "Shackle on this hero increases Dark charges applied by 1 per charge of Shackle.";
-            medsTexts[perkStem + "shackle1f"] = "Shackle on monsters increases all damage received by 0.5 per base Speed per charge of Shackle.";
+            medsTexts[perkStem + "shackle1f"] = "Shackle on monsters increases all damage received by 1 per base Speed.";
 
             // Custom Text for Mitigate
             medsTexts[perkStem + "mitigate1a"] = "At the start of your turn, gain 2 Mitigate, but only stacks to 5.";

@@ -37,6 +37,7 @@ namespace PerkManager
         public static bool poison2gFlag = true;
         public static bool bleed2gFlag = true;
         public static bool thorns1eFlag = true;
+        public static bool shackle1fFlag = false;
 
         public static bool isDamagePreviewActive = false;
 
@@ -1352,9 +1353,16 @@ namespace PerkManager
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "shackle1f", AppliesTo.Monsters))
                     {
                         LogDebug("shackle1f");
-                        int baseSpeed = characterOfInterest.GetSpeed()[1];                        
+                        shackle1fFlag = !shackle1fFlag;
+                        if(!shackle1fFlag)
+                        {
+                            break;
+                        }
+                        int baseSpeed = characterOfInterest.GetSpeed()[1];
                         __result.IncreasedDamageReceivedType = Enums.DamageType.All;
-                        __result.IncreasedDirectDamageReceivedPerStack = RoundToInt(baseSpeed * 0.5f);
+                        float multiplier = 1.0f;
+                        // int n_shackle = Math.Max(1,characterOfInterest.GetAuraCharges("shackle"));
+                        __result.IncreasedDirectDamageReceivedPerStack = RoundToInt(baseSpeed * multiplier);
                     }
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "shackle1c", AppliesTo.Global))

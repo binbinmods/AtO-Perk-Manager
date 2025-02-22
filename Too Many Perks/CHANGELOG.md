@@ -2,7 +2,7 @@
 
 Nerfed Regen1d to only apply to the hero with the perk
 
-Hopefully fixed shackle1f
+Shackle1f no longer crashes the game
 
 # 1.4.5
 
