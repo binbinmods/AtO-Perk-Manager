@@ -127,7 +127,7 @@ namespace PerkManager
             medsTexts[perkStem + "shackle1f"] = "Shackle on monsters increases all damage received by 1 per base Speed.";
 
             // Custom Text for Mitigate
-            medsTexts[perkStem + "mitigate1a"] = "At the start of your turn, gain 2 Mitigate, but only stacks to 5.";
+            medsTexts[perkStem + "mitigate1a"] = "At the start of your turn, gain 2 Mitigate (this only increases the amount of Mitigate you have by 1), but only stacks to 5.";
             medsTexts[perkStem + "mitigate1b"] = "Mitigate on this hero does not lose charges at start of turn and stacks to 12.";
             medsTexts[perkStem + "mitigate1c"] = "At the start of your turn, gain 7 Block per Mitigate charge.";
             medsTexts[perkStem + "mitigate1d"] = "Mitigate on this hero reduces incoming damage by 2 per charge, but loses all charges at the start of your turn.";

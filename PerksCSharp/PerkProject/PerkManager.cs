@@ -38,6 +38,7 @@ namespace PerkManager
         public static bool bleed2gFlag = true;
         public static bool thorns1eFlag = true;
         public static bool shackle1fFlag = false;
+        public static bool insulate1dFlag = false;
 
         public static bool isDamagePreviewActive = false;
 
@@ -1700,6 +1701,29 @@ namespace PerkManager
                         __result.ResistModifiedValue2 = 40;
                         __result.ResistModifiedValue3 = 40;
                     }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "insulate1d", AppliesTo.ThisHero))
+                    {
+                        LogDebug("insulate1d");
+                        insulate1dFlag = !insulate1dFlag;
+                        if(!insulate1dFlag)
+                        {
+                            break;
+                        }
+                        // AuraCurseData chill = GetAuraCurseData("chill");
+                        // chill.CharacterStatModified = Enums.CharacterStat.None;
+                        // chill.CharacterStatAbsoluteValuePerStack = 0;
+                        characterOfInterest.GetSpeed();
+
+                        // Dictionary<string,AuraCurseData> _AurasCurses = Traverse.Create(Globals.Instance).Field("_AurasCurses").GetValue<Dictionary<string,AuraCurseData>>();
+                        // if (_AurasCurses.ContainsKey("chill"))
+                        // {
+                        //     _AurasCurses["chill"] = chill;
+                        //     Traverse.Create(Globals.Instance).Field("_AurasCurses").SetValue(_AurasCurses);
+
+                        // }
+
+                    }
+
                     if (_type == "set")
                     {
                         if (CharacterHasPerkForSet("insulate1e", AppliesGlobally, __instance, _characterTarget))
@@ -1847,59 +1871,31 @@ namespace PerkManager
                     // chill2e: Chill reduces Cold and Mind resistance by 0.5% per charge.";
                     // chill2f: At the start of your turn, suffer 3 Chill. Chill on this hero reduces Speed by 1 for every 10 charges";
                     // chill2g: Chill on this hero reduces Speed by 1 for every 3 charges but does not reduce Cold resistance.";
-
-                    if (_type == "set")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "chill2e", AppliesTo.Global))
                     {
-                        if (TeamHasPerkForSet("chill2e", SetAppliesToMonsters, __instance, _characterTarget))
-                        {
-                            __result.ResistModified = Enums.DamageType.Cold;
-                            __result.ResistModified2 = Enums.DamageType.Mind;
-                            __result.ResistModifiedPercentagePerStack = -0.5f;
-                            __result.ResistModifiedPercentagePerStack2 = -0.5f;
-                        }
-                        if (CharacterHasPerkForSet("chill2f", SetAppliesToHeroes, __instance, _characterTarget))
-                        {
-                            __result.CharacterStatChargesMultiplierNeededForOne = 10;
-                        }
-                        if (CharacterHasPerkForSet("insulate1d", SetAppliesToHeroes, __instance, _characterTarget) && _characterTarget.HasEffect("insulate"))
-                        {
-                            __result.CharacterStatModified = Enums.CharacterStat.None;
-                            __result.CharacterStatAbsoluteValuePerStack = 0;
-                        }
-                        if (CharacterHasPerkForSet("chill2g", SetAppliesToHeroes, __instance, _characterTarget))
-                        {
-                            __result.CharacterStatChargesMultiplierNeededForOne = 3;
-                            __result.ResistModified = Enums.DamageType.None;
-                            __result.ResistModifiedPercentagePerStack = 0.0f;
-                        }
-
+                        LogDebug("chill2e");
+                        __result.ResistModified = Enums.DamageType.Cold;
+                        __result.ResistModified2 = Enums.DamageType.Mind;
+                        __result.ResistModifiedPercentagePerStack = -0.5f;
+                        __result.ResistModifiedPercentagePerStack2 = -0.5f;
                     }
-                    if (_type == "consume")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "chill2f", AppliesTo.ThisHero))
                     {
-                        if (TeamHasPerkForConsume("chill2e", ConsumeAppliesToMonsters, __instance, _characterCaster))
-                        {
-                            __result.ResistModified = Enums.DamageType.Cold;
-                            __result.ResistModified2 = Enums.DamageType.Mind;
-                            __result.ResistModifiedPercentagePerStack = 0.5f;
-                            __result.ResistModifiedPercentagePerStack2 = 0.5f;
-                        }
-                        if (CharacterHasPerkForSet("chill2f", ConsumeAppliesToHeroes, __instance, _characterCaster))
-                        {
-                            __result.CharacterStatChargesMultiplierNeededForOne = 10;
-                        }
-                        if (CharacterHasPerkForConsume("chill2g", ConsumeAppliesToHeroes, __instance, _characterCaster))
-                        {
+                        LogDebug("chill2f");
+                        __result.CharacterStatChargesMultiplierNeededForOne = 10;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "chill2g", AppliesTo.ThisHero))
+                    {
+                        LogDebug("chill2g");
                             __result.CharacterStatChargesMultiplierNeededForOne = 3;
                             __result.ResistModified = Enums.DamageType.None;
                             __result.ResistModifiedPercentagePerStack = 0.0f;
-                        }
-                        if (CharacterHasPerkForConsume("insulate1d", ConsumeAppliesToHeroes, __instance, _characterCaster) && _characterCaster.HasEffect("insulate"))
-                        {
-                            __result.CharacterStatModified = Enums.CharacterStat.None;
-                            __result.CharacterStatAbsoluteValuePerStack = 0;
-                        }
-
-
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "insulate1d", AppliesTo.ThisHero))
+                    {
+                        LogDebug("insulate1d");
+                        __result.CharacterStatModified = Enums.CharacterStat.None;
+                        __result.CharacterStatAbsoluteValuePerStack = 0;
                     }
                     break;
                 case "wet":

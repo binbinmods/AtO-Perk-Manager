@@ -1,3 +1,9 @@
+# 1.4.7
+
+Updated Insulate1d to update when Insulate is applied.
+
+Updated description for Mitigate1a
+
 # 1.4.6
 
 Nerfed Regen1d to only apply to the hero with the perk
