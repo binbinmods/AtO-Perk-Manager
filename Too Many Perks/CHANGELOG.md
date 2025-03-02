@@ -1,3 +1,7 @@
+# 1.4.8
+
+Added sharp1f
+
 # 1.4.7
 
 Updated Insulate1d to update when Insulate is applied.

@@ -129,6 +129,8 @@ fortify1e: Fortify on all heroes is capped at 5 but reduces damage by 1 per char
 
 ### Perks for Sharp
 sharp1e: If Sharp on a hero would increase a damage type, it increases it by 1.5 damage per charge. Sharp on heroes only stacks to 25.  
+sharp1f: +1 Bleed charge applied for every 8 Sharp on this hero. Sharp does not increase damage.  
+
 
 ### Perks for Fury
 fury1d: For all heroes, at the end of turn, spread 70% of Fury to adjacent heroes. Fury on heroes loses all charges at end of turn.  

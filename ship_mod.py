@@ -37,10 +37,10 @@ if __name__ == "__main__":
     mod_dir = "Too Many Perks" # This is the name of the mod folder that is zipped. Also the name of the output mod
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    source = f"{script_dir}/{dir_to_ship}/BepInEx/config/Obeliskial_importing"
-    destination = f"../../config/Obeliskial_importing"
+    # source = f"{script_dir}/{dir_to_ship}/BepInEx/config/Obeliskial_importing"
+    # destination = f"../../config/Obeliskial_importing"
     
-    copy_directory(source, destination)
+    # copy_directory(source, destination)
 
     output_name = dir_to_ship
     zip_dir = dir_to_ship

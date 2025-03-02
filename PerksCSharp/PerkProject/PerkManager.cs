@@ -1273,6 +1273,8 @@ namespace PerkManager
                         // LogDebug("sharp1d");
                         __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Shadow, 0, 1, 0);
                     }
+
+                    
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "sharp1e", AppliesTo.Heroes))
                     {
                         // LogDebug("sharp1e");
@@ -1294,6 +1296,16 @@ namespace PerkManager
                         __result.AuraDamageIncreasedPerStack2 *= 1 + 0.01f * n;
                         __result.AuraDamageIncreasedPerStack3 *= 1 + 0.01f * n;
                         __result.AuraDamageIncreasedPerStack4 *= 1 + 0.01f * n;
+                    }
+
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "sharp1f", AppliesTo.ThisHero))
+                    {
+                        // LogDebug("sharp1f");
+                        __result.AuraDamageIncreasedPerStack = 0;
+                        __result.AuraDamageIncreasedPerStack2 = 0;
+                        __result.AuraDamageIncreasedPerStack3 = 0;
+                        __result.AuraDamageIncreasedPerStack4 = 0;
+                        __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Shadow, 0, 1, 0);
                     }
                     break;
 
@@ -2286,7 +2298,25 @@ namespace PerkManager
                         }
                     }
                     break;
+            }            
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Character), nameof(Character.GetTraitAuraCurseModifiers))]
+        public static void GetTraitAuraCurseModifiersPostfix(ref Character __instance, ref Dictionary<string,int> __result)
+        {
+            // Sharp1f: For every 8 Sharp, gain +1 Bleed
+
+            string perkOfInterest = perkBase + "sharp1f";
+            if (IsLivingHero(__instance) && AtOManager.Instance.CharacterHavePerk(__instance.SubclassName, perkOfInterest))
+            {
+                LogDebug($"Executing Perk {perkOfInterest}");
+                int nSharp = __instance.EffectCharges("sharp");
+                int bonusBleedCharges = FloorToInt(nSharp * 0.125f);
+
+                if(bonusBleedCharges!=0) {__result["bleed"] = bonusBleedCharges;}                
             }
+
         }
     }
 }
