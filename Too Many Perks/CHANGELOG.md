@@ -4,6 +4,8 @@ Updated Insulate1d to update when Insulate is applied.
 
 Updated description for Mitigate1a
 
+Fixed thorns1f from accidentally squaring thorns damage.
+
 # 1.4.6
 
 Nerfed Regen1d to only apply to the hero with the perk

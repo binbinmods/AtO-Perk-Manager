@@ -8,7 +8,9 @@ Currently adds/modifies over 100 perks.
 
 There are likely a good number of bugs that were not caught, simply because there are so many perks. If you do come across any bugs, please ping me in the **modding #support-and-requests** channel of the [Discord](https://discord.gg/across-the-obelisk-679706811108163701)
 
-Thank to Stonewall, sara, JackRenoson, Voodoo, GCHero, ga7021, Corydonn, and Corrufiles for their opinions and help with testing/debugging.
+Thanks to Stonewall, sara, JackRenoson, Voodoo, GCHero, ga7021, Corydonn, and Corrufiles for their opinions and help with initial testing/debugging.
+
+An additional thanks to JackRenoson, Jonahds29, and DomhnallTD for their continued efforts.
 
 ## List of Perks
 <details>
