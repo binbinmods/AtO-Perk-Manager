@@ -1533,36 +1533,18 @@ namespace PerkManager
                         // LogDebug("bleed2c");
                         __result.Removable = false;
                     }
-                    if (_type == "set")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "bleed2d", AppliesTo.Global))
                     {
-                        if (TeamHasPerkForSet("bleed2d", AppliesGlobally, __instance, _characterTarget))
-                        {
-                            LogDebug("bleed2d");
-                            __result.MaxMadnessCharges = 300;
-                        }
-                        if (TeamHasPerkForSet("bleed2f", AppliesGlobally, __instance, _characterTarget))
-                        {
-                            LogDebug("bleed2f");
-                            __result.ResistModified3 = Enums.DamageType.Piercing;
-                            __result.ResistModifiedPercentagePerStack3 = -0.25f;
-                        }
+                        // LogDebug("bleed2d");
+                        __result.MaxMadnessCharges = 300;
 
                     }
-                    if (_type == "consume")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "bleed2f", AppliesTo.Monsters))
                     {
-                        if (TeamHasPerkForConsume("bleed2d", AppliesGlobally, __instance, _characterCaster))
-                        {
-                            LogDebug("bleed2d");
-                            __result.MaxMadnessCharges = 300;
-                        }
-                        if (TeamHasPerkForConsume("bleed2f", AppliesGlobally, __instance, _characterCaster))
-                        {
-                            LogDebug("bleed2f");
-                            __result.ResistModified3 = Enums.DamageType.Piercing;
-                            __result.ResistModifiedPercentagePerStack3 = -0.25f;
-                        }
-
-                    }
+                        // LogDebug("bleed2f");
+                        __result.ResistModified3 = Enums.DamageType.Piercing;
+                        __result.ResistModifiedPercentagePerStack3 = -0.25f;
+                    }                    
                     break;
 
                 case "thorns":
@@ -2043,7 +2025,7 @@ namespace PerkManager
                     // dark2e: Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.25% per charge in addition to reducing Shadow resistance..";
                     // burn1e: Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
                     // sanctify2d: Every 5 stacks of Sanctify increase the number of Dark charges needed for an explosion by 1.";
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, "mainperkdark2b", AppliesTo.ThisHero))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkdark2b", AppliesTo.ThisHero))
                     {
                         __result.Removable = false;
                     }

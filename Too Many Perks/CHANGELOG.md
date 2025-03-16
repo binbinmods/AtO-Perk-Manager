@@ -1,3 +1,9 @@
+# 1.4.9
+
+bleed2f now applies only to monsters
+
+dark2b now properly prevents it from being dispelled
+
 # 1.4.8
 
 Added sharp1f
