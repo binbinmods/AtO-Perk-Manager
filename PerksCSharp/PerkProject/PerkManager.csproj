@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>com.binbin.PerkManager</AssemblyName>
     <Product>Custom Perks</Product>
-    <Version>1.4.9</Version>
+    <Version>1.5.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -46,7 +46,7 @@
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="../../../../plugins" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="../../Too Many Perks/BepInEx/plugins" />
-    <Exec Command="/usr/bin/python3 &quot;$(ProjectDir)../ship_mod.py&quot;" />
+    <Exec Command="/usr/bin/python3 &quot;$(ProjectDir)../../ship_mod.py&quot;" />
   </Target>
 
 

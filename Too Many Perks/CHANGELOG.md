@@ -1,3 +1,9 @@
+# 1.5.0
+
+bleed2c now properly applies to monsters rather than heroes
+
+scourge1b should now be more compatible with Hecar
+
 # 1.4.9
 
 bleed2f now applies only to monsters

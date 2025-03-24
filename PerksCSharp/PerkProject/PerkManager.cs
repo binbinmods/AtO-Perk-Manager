@@ -496,14 +496,15 @@ namespace PerkManager
                 int toDeal = RoundToInt(n * 0.2f);
                 int npcIndex = __instance.NPCIndex;
                 List<NPC> npcSides = MatchManager.Instance.GetNPCSides(npcIndex);
-                foreach (NPC sideTarget in npcSides)
-                {
-                    if (IsLivingNPC(sideTarget))
+                for (int index = 0; index < npcSides.Count; ++index)
+                {                    
+                    if(npcSides[index].Alive && npcSides[index] != null)
                     {
-                        LogDebug($"spark2f dealing damage to: {sideTarget.SourceName}");
-                        sideTarget.IndirectDamage(Enums.DamageType.Lightning, toDeal);
-                    }
+                        LogDebug($"spark2f dealing damage to: {npcSides[index].SourceName}");
+                        npcSides[index].IndirectDamage(Enums.DamageType.Lightning, toDeal);    
+                    }                    
                 }
+                
                 
             }
             if (theEvent == Enums.EventActivation.CastCard && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "spellsword1d"))
@@ -1528,7 +1529,7 @@ namespace PerkManager
                         __result.MaxMadnessCharges = 50;
                     }
 
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkbleed2c", AppliesTo.Heroes))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkbleed2c", AppliesTo.Monsters))
                     {
                         // LogDebug("bleed2c");
                         __result.Removable = false;
@@ -2169,47 +2170,22 @@ namespace PerkManager
                     // scourge1c: Scourge on monsters can Stack but increases all resists by 3% per stack.";
                     // scourge1d: Scourge deals damage based on Sight rather than Chill.";
                     // scourge1e: Scourge on monsters increases burn damage by 15%/stack";
-                    if (_type == "set")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge1b", AppliesTo.Global))
                     {
-                        if (TeamHasPerkForSet("scourge1b", AppliesGlobally, __instance, _characterTarget))
-                        {
-                            __result.ConsumeAll = false;
-                            __result.AuraConsumed = 3;
-                        }
-                        if (TeamHasPerkForSet("scourge1c", SetAppliesToMonsters, __instance, _characterTarget))
-                        {
-                            __result.GainCharges = true;
-                            __result.ResistModified2 = Enums.DamageType.All;
-                            __result.ResistModifiedPercentagePerStack2 = 3.0f;
-                        }
-                        if (TeamHasPerkForSet("scourge1d", AppliesGlobally, __instance, _characterTarget))
-                        {
-                            // __result.DamageTypeWhenConsumed = Enums.DamageType.Fire;
-                            __result.ConsumedDamageChargesBasedOnACCharges = GetAuraCurseData("sight");
-                            __result.DamageWhenConsumedPerCharge = 2;
-                        }
+                        __result.ConsumeAll = false;
+                        __result.AuraConsumed = IfCharacterHas(characterOfInterest, CharacterHas.Trait, "moontouchedtrait4a", AppliesTo.Global) ? 0 : 3;
                     }
-                    if (_type == "consume")
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge1c", AppliesTo.Monsters))
                     {
-                        if (TeamHasPerkForConsume("scourge1b", AppliesGlobally, __instance, _characterCaster))
-                        {
-                            __result.ConsumeAll = false;
-                            __result.AuraConsumed = 3;
-                        }
-
-                        if (TeamHasPerkForConsume("scourge1c", ConsumeAppliesToMonsters, __instance, _characterCaster))
-                        {
-                            __result.GainCharges = true;
-                            __result.ResistModified2 = Enums.DamageType.All;
-                            __result.ResistModifiedPercentagePerStack2 = 3.0f;
-                        }
-                        if (TeamHasPerkForConsume("scourge1d", AppliesGlobally, __instance, _characterCaster))
-                        {
-                            __result.ConsumedDamageChargesBasedOnACCharges = GetAuraCurseData("sight");
-                            __result.DamageWhenConsumedPerCharge = 2;
-                        }
-
+                        __result.GainCharges = true;
+                        __result.ResistModified2 = Enums.DamageType.All;
+                        __result.ResistModifiedPercentagePerStack2 = 3.0f;
                     }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge1d", AppliesTo.Global))
+                    {
+                        __result.ConsumedDamageChargesBasedOnACCharges = GetAuraCurseData("sight");
+                        __result.DamageWhenConsumedPerCharge = 2;
+                    }                    
                     break;
 
                 case "weak":
