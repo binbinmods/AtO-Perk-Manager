@@ -1,3 +1,11 @@
+# 1.5.1
+
+Update for AtO v1.6.22
+
+Fixed Fortify Perk not displaying properly
+
+Sharp1f should now display properly
+
 # 1.5.0
 
 bleed2c now properly applies to monsters rather than heroes
