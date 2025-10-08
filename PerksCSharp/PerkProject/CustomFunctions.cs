@@ -15,7 +15,7 @@ namespace PerkManager
 
         public static void PLog(string s)
         {
-            Plugin.Log.LogDebug(debugBase+s);
+            Plugin.Log.LogDebug(debugBase + s);
         }
         public static void TraitHeal(ref Character _character, ref Character _target, int healAmount, string traitName)
         {
@@ -44,10 +44,11 @@ namespace PerkManager
 
         public static void TraitHealHero(ref Character _character, ref Hero _target, int healAmount, string traitName)
         {
-            if (_target==null || !_target.IsHero || !_target.Alive){
+            if (_target == null || !_target.IsHero || !_target.Alive)
+            {
                 return;
             }
-            
+
             int _hp = healAmount;
             if (_target.GetHpLeftForMax() < healAmount)
                 _hp = _target.GetHpLeftForMax();
@@ -56,7 +57,7 @@ namespace PerkManager
             _target.ModifyHp(_hp);
             CastResolutionForCombatText _cast = new CastResolutionForCombatText();
             _cast.heal = _hp;
-            if ((Object) _target.HeroItem != (Object) null)
+            if ((Object)_target.HeroItem != (Object)null)
             {
                 _target.HeroItem.ScrollCombatTextDamageNew(_cast);
                 EffectsManager.Instance.PlayEffectAC("healimpactsmall", true, _target.HeroItem.CharImageT, false);
@@ -188,7 +189,8 @@ namespace PerkManager
             _character.ModifyAuraCurseQuantity(auraCurseToModify, toIncrease);
         }
 
-        public static AuraCurseData GetAuraCurseData(string ac){
+        public static AuraCurseData GetAuraCurseData(string ac)
+        {
             return Globals.Instance.GetAuraCurseData(ac);
         }
 
@@ -272,7 +274,7 @@ namespace PerkManager
 
             if (!_castedCard.GetCardTypes().Contains(whenYouPlayThis))
                 return;
-            
+
             if (MatchManager.Instance.CountHeroHand() == 0 || !((Object)_character.HeroData != (Object)null))
                 return;
 
@@ -280,21 +282,23 @@ namespace PerkManager
             List<CardData> cardDataList = new List<CardData>();
             List<string> heroHand = MatchManager.Instance.GetHeroHand(_character.HeroIndex);
 
-            if (reduceThis==Enums.CardType.None){ 
+            if (reduceThis == Enums.CardType.None)
+            {
                 for (int handIndex = 0; handIndex < heroHand.Count; ++handIndex)
                 {
                     CardData cardData = MatchManager.Instance.GetCardData(heroHand[handIndex]);
                     if ((Object)cardData != (Object)null)
                         cardDataList.Add(cardData);
-                }  
+                }
             }
-            else{
-               for (int handIndex = 0; handIndex < heroHand.Count; ++handIndex)
+            else
+            {
+                for (int handIndex = 0; handIndex < heroHand.Count; ++handIndex)
                 {
                     CardData cardData = MatchManager.Instance.GetCardData(heroHand[handIndex]);
                     if ((Object)cardData != (Object)null && cardData.GetCardTypes().Contains(reduceThis))
                         cardDataList.Add(cardData);
-                }  
+                }
             }
 
             if (!MatchManager.Instance.activatedTraits.ContainsKey(traitName))
@@ -311,8 +315,9 @@ namespace PerkManager
         }
 
 
-        
-        public static int CountAllStacks(string auraCurse, Hero[] teamHero, NPC[] teamNpc){
+
+        public static int CountAllStacks(string auraCurse, Hero[] teamHero, NPC[] teamNpc)
+        {
             int stacks = 0;
             for (int index = 0; index < teamHero.Length; ++index)
             {
@@ -331,13 +336,15 @@ namespace PerkManager
             return stacks;
         }
 
-        public static void DealIndirectDamageToAllMonsters(Enums.DamageType damageType, int amount){
-            Plugin.Log.LogDebug(debugBase+"Dealing Indirect Damage");
+        public static void DealIndirectDamageToAllMonsters(Enums.DamageType damageType, int amount)
+        {
+            Plugin.Log.LogDebug(debugBase + "Dealing Indirect Damage");
             NPC[] teamNpc = MatchManager.Instance.GetTeamNPC();
-            for (int index = 0; index<teamNpc.Length; ++index)
+            for (int index = 0; index < teamNpc.Length; ++index)
             {
                 NPC npc = teamNpc[index];
-                if (npc!=null && npc.Alive&& !npc.IsHero){
+                if (npc != null && npc.Alive && !npc.IsHero)
+                {
                     npc.IndirectDamage(damageType, amount);
                 }
             }
@@ -345,33 +352,33 @@ namespace PerkManager
 
         public static Character GetRandomCharacter(Character[] array)
         {
-            if (array==null)
+            if (array == null)
             {
-                Plugin.Log.LogDebug(debugBase+"Null Array");
+                Plugin.Log.LogDebug(debugBase + "Null Array");
 
             }
-            List<Character> validCharacters =[];
-            for(int index = 0; index<array.Length;index++)
+            List<Character> validCharacters = [];
+            for (int index = 0; index < array.Length; index++)
             {
-                if (array[index]==null)
+                if (array[index] == null)
                 {
-                    Plugin.Log.LogDebug(debugBase+"Null index");
+                    Plugin.Log.LogDebug(debugBase + "Null index");
                     continue;
                 }
                 Character _character = array[index];
-                if (_character.Alive&&_character!=null)
+                if (_character.Alive && _character != null)
                 {
                     validCharacters.Add(_character);
                 }
             }
-            if (validCharacters.Count==0)
+            if (validCharacters.Count == 0)
                 return null;
-            
+
             int i = MatchManager.Instance.GetRandomIntRange(0, validCharacters.Count);
 
-            if (i<validCharacters.Count)
+            if (i < validCharacters.Count)
                 return validCharacters[i];
-            if (validCharacters[i]==null)
+            if (validCharacters[i] == null)
                 return null;
             else
                 return validCharacters[0];
@@ -379,42 +386,48 @@ namespace PerkManager
 
         public static bool IsLivingHero(Character _character)
         {
-            return _character!=null&&_character.Alive&&_character.IsHero;
+            return _character != null && _character.Alive && _character.IsHero;
         }
         public static bool IsLivingNPC(Character _character)
         {
-            return _character!=null&&_character.Alive&&!_character.IsHero;
+            return _character != null && _character.Alive && !_character.IsHero;
         }
 
-        public static bool CharacterHasPerkForSet(string perkName, bool flag, AtOManager __instance,Character _characterTarget){
-            return flag && _characterTarget != null && __instance.CharacterHavePerk(_characterTarget.SubclassName,perkBase+perkName);
+        public static bool CharacterHasPerkForSet(string perkName, bool flag, AtOManager __instance, Character _characterTarget)
+        {
+            return flag && _characterTarget != null && __instance.CharacterHavePerk(_characterTarget.SubclassName, perkBase + perkName);
         }
 
-        public static bool CharacterHasPerkForConsume(string perkName, bool flag, AtOManager __instance,Character _characterCaster){
-            return flag && _characterCaster != null && __instance.CharacterHavePerk(_characterCaster.SubclassName,perkBase+perkName);
+        public static bool CharacterHasPerkForConsume(string perkName, bool flag, AtOManager __instance, Character _characterCaster)
+        {
+            return flag && _characterCaster != null && __instance.CharacterHavePerk(_characterCaster.SubclassName, perkBase + perkName);
         }
 
-        public static bool TeamHasPerkForSet(string perkName, bool flag, AtOManager __instance,Character _characterTarget){
-            return _characterTarget != null && __instance.TeamHavePerk(perkBase+perkName)&& flag;
+        public static bool TeamHasPerkForSet(string perkName, bool flag, AtOManager __instance, Character _characterTarget)
+        {
+            return _characterTarget != null && __instance.TeamHavePerk(perkBase + perkName) && flag;
         }
 
-        public static bool TeamHasPerk(string perkName){
-            return AtOManager.Instance.TeamHavePerk(perkBase+perkName);
+        public static bool TeamHasPerk(string perkName)
+        {
+            return AtOManager.Instance.TeamHavePerk(perkBase + perkName);
         }
 
-        public static bool TeamHasPerkForConsume(string perkName, bool flag, AtOManager __instance,Character _characterCaster){
-            return _characterCaster != null && __instance.TeamHavePerk(perkBase+perkName) && flag;
+        public static bool TeamHasPerkForConsume(string perkName, bool flag, AtOManager __instance, Character _characterCaster)
+        {
+            return _characterCaster != null && __instance.TeamHavePerk(perkBase + perkName) && flag;
         }
 
         public static bool CharacterObjectHavePerk(Character _character, string _perk_id)
         {
-            if (_character==null)
+            if (_character == null)
                 return false;
-            return AtOManager.Instance.CharacterHavePerk(_character.SubclassName, perkBase+_perk_id)||AtOManager.Instance.CharacterHavePerk(_character.SubclassName, _perk_id);
+            return AtOManager.Instance.CharacterHavePerk(_character.SubclassName, perkBase + _perk_id) || AtOManager.Instance.CharacterHavePerk(_character.SubclassName, _perk_id);
         }
 
 
-        public static void CastTargetCard(string cardToCast){
+        public static void CastTargetCard(string cardToCast)
+        {
             //Plugin.Log.LogDebug("Binbin PestilyBiohealer - trying to cast card: "+cardToCast);
             CardData card = Globals.Instance.GetCardData(cardToCast);
             MatchManager.Instance.StartCoroutine(MatchManager.Instance.CastCard(_automatic: true, _card: card, _energy: 0));
@@ -441,7 +454,7 @@ namespace PerkManager
             Trait
         }
 
-         /// <summary>
+        /// <summary>
         /// Checks to see if your team has an item/trait/perk in the global aura curse modification function.
         /// </summary>
         /// <param name="characterOfInterest">Character we are checking</param>
@@ -453,7 +466,7 @@ namespace PerkManager
         /// <returns>true if the team has the item/trait/perk</returns>
         public static bool IfCharacterHas(Character characterOfInterest, CharacterHas characterHas, string id, AppliesTo appliesTo = AppliesTo.Global, string _type = "", string onlyThisType = "")
         {
-            LogDebug($"Applying Perk - {id}");
+
 
             if (appliesTo == AppliesTo.None || characterOfInterest == null || AtOManager.Instance == null)
                 return false;
@@ -494,6 +507,8 @@ namespace PerkManager
                         break;
                 }
             }
+            if (hasX && correctCharacterType)
+                LogDebug($"Applying Perk - {id}");
 
             return hasX && correctCharacterType;
         }

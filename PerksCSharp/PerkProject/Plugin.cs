@@ -75,7 +75,7 @@ namespace PerkManager
             //medsTexts[perkStem + "currency6a"] = "+225 Gold.";
             medsTexts[perkStem + "currency6b"] = "Gain 125 gold on level up.";
             //medsTexts[perkStem + "currency6c"] = "Increases chance for Scarabs to spawn by 10%."; CANNOT BE DONE EASILY
-            medsTexts[perkStem + "currency6c"] = "For every 2,000 gold you have, gain +10% damage.";
+            medsTexts[perkStem + "currency6c"] = "For every 250 gold you have, gain +1% damage.  ";
             medsTexts[perkStem + "currency6d"] = "Rerolling the shop costs 25% less.";
             medsTexts[perkStem + "currency6e"] = "Divinations cost 15% less.";
 

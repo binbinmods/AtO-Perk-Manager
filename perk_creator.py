@@ -504,7 +504,7 @@ def handle_new_nodes():
             "zeal1",
             6,
             2,
-            6,
+            7,
             "Elemental"
         ),
         (

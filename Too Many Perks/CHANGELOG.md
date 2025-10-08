@@ -1,5 +1,7 @@
 # 1.5.2
 
+Reduced excessive logging
+
 Added new perks: scourge1f, scourge1g, zeal1g, decay1f, powerful1e, fortify1f, taunt1f, rust1e, decay1g, energy2e, energy2f, inspire0f, energize1e
 
 Nerfs to old perks:

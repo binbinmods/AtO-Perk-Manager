@@ -93,6 +93,10 @@ energy2d: Significantly increases the damage dealt by some high cost cards. Redu
 energy2e: Energy Regeneration -1. When this hero plays a card that costs 4 or more Energy, refund 1 Energy
 energy2f: On every round after round 3, this hero gains 1 additional Energy at the start of the turn.
 
+### Perks for Stealth
+
+TODO
+
 ## Physical
 
 ### Perks for Shackle
