@@ -10,7 +10,9 @@
         "nodeperkEnergy2a",
         "nodeperkEnergy2b",
         "nodeperkEnergy2c",
-        "binbin_perknode_energy2d"
+        "binbin_perknode_energy2d",
+        "binbin_perknode_energy2e",
+        "binbin_perknode_energy2f"
     ],
     "Row": 6,
     "Sprite": "perk",

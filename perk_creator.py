@@ -476,7 +476,7 @@ def handle_new_nodes():
             "energize1",
             6,
             8,
-            4,
+            5,
             "Elemental"
         ),
         (
@@ -497,30 +497,30 @@ def handle_new_nodes():
             "rust1",
             6,
             3,
+            5,
+            "Elemental"
+        ),
+        (
+            "zeal1",
+            6,
+            2,
+            6,
+            "Elemental"
+        ),
+        (
+            "scourge1",
+            6,
+            5,
+            7,
+            "Elemental"
+        ),
+        (
+            "weak1",
+            6,
+            8,
             4,
             "Elemental"
         ),
-        # (
-        #     "zeal1",
-        #     6,
-        #     2,
-        #     5,
-        #     "Elemental"
-        # ),
-        # (
-        #     "scourge1",
-        #     6,
-        #     5,
-        #     5,
-        #     "Elemental"
-        # ),
-        # (
-        #     "weak1",
-        #     6,
-        #     8,
-        #     4,
-        #     "Elemental"
-        # ),
         
     ]
     create_all_perk_jsons(tuples)
@@ -533,26 +533,26 @@ def handle_adding_perks_to_vanilla_nodes():
         ("bleed2",4),
         ("thorns1",3),
         ("reinforce1",1),
-        ("taunt1",1),
+        ("taunt1",2),
         ("sight1",2),
         ("burn2",1),
         ("chill2",3),
         ("spark2",4),
         ("wet1",1),
-        ("inspire0",1),
+        ("inspire0",2),
         ("insane2",3),
         ("dark2",1),
         ("sanctify2",2),
-        ("decay1",2),
+        ("decay1",4),
         ("courage1",1),
         ("vitality1",1),
         ("bless1",1),
-        ("powerful1",1),
+        ("powerful1",2),
         ("fury1",1),
         ("mark1",4),
-        ("fortify1",2),
+        ("fortify1",3),
         ("sharp1",2),
-        ("energy2",1),
+        ("energy2",3),
         ("insulate1",2),
         ("regeneration1",1),
         ("stanza0",2),

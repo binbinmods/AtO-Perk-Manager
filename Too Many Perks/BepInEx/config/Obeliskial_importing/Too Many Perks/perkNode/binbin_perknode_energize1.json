@@ -10,7 +10,8 @@
         "binbin_perknode_energize1a",
         "binbin_perknode_energize1b",
         "binbin_perknode_energize1c",
-        "binbin_perknode_energize1d"
+        "binbin_perknode_energize1d",
+        "binbin_perknode_energize1e"
     ],
     "Row": 6,
     "Sprite": "perk",

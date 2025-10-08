@@ -1,3 +1,28 @@
+# 1.5.2
+
+Added new perks: scourge1f, scourge1g, zeal1g, decay1f, powerful1e, fortify1f, taunt1f, rust1e, decay1g, energy2e, energy2f, inspire0f, energize1e
+
+Nerfs to old perks:
+
+- zeal1f - no longer increases resistances or applies burn.
+- weak1c - reduced damage to 20% from 25%
+- insane2d - nerfed to 50 from 40. Fixed working with Rust
+- crack2f and 2g - nerfed to 0.75 damage/charge
+- spark2g - No longer works with Icebreaker or is improved by modifiers. Now applies 2 Crack though
+- insulate1e - brought down to 5%, stacks to 8
+- currency5c - nerfed to 1% per 250 gold from 10% per 2000 gold. Also fixed this, it was assigned to the wrong perk before.
+- poison2h - nerfed to 20% from 30%, now affected by Rust to bring it back to 30%
+
+Buffs to old perks:
+
+- zeal1c no longer reduces damage.
+
+Altered old perks:
+
+- decay1d - Now purges Insulate rather than Reinforce
+- rust1g - Now scales on Rust rather than Bless. Damage increased
+- poison2f - Changed to be "Poison on enemies deals Shadow Damage"
+
 # 1.5.1
 
 Update for AtO v1.6.22
@@ -66,7 +91,7 @@ Added Rust Perks, updated existing perks to be compatible with Rust.
 
 These perks have not been tested so are likely to have some issues.
 
-Refactored all auracurses related to Rust. 
+Refactored all auracurses related to Rust.
 
 # 1.4.0
 
@@ -170,7 +195,7 @@ Fixes for weak1b, shackle1e, and sight1f.
 
 # 1.0.2
 
-Small fix to the mod not loading properly sometimes. Minor updates to wording. 
+Small fix to the mod not loading properly sometimes. Minor updates to wording.
 
 # 1.0.1
 

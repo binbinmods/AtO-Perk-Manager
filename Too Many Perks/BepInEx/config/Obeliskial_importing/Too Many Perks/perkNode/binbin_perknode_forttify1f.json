@@ -1,0 +1,13 @@
+{
+    "Column": 9,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_forttify1f",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_fortify1f",
+    "PerkRequired": "nodeperkForttify0",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "",
+    "Type": 1
+}

@@ -1,10 +1,10 @@
 {
     "AdditionalCurrency": 0,
     "AdditionalShards": 0,
-    "AuraCurseBonus": "weak",
-    "AuraCurseBonusValue": 1,
+    "AuraCurseBonus": "None",
+    "AuraCurseBonusValue": 0,
     "CardClass": "None",
-    "CustomDescription": "",
+    "CustomDescription": "custom_binbin_mainperk_weak1a",
     "DamageFlatBonus": "None",
     "DamageFlatBonusValue": 0,
     "EnergyBegin": 0,

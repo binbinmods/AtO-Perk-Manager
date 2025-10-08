@@ -11,7 +11,9 @@
         "nodeperkDecay1b",
         "nodeperkDecay1c",
         "binbin_perknode_decay1d",
-        "binbin_perknode_decay1e"
+        "binbin_perknode_decay1e",
+        "binbin_perknode_decay1f",
+        "binbin_perknode_decay1g"
     ],
     "Row": 6,
     "Sprite": "perk",
