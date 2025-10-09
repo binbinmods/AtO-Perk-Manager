@@ -226,7 +226,7 @@ namespace PerkManager
 
             // Custom Text for Inspire
             medsTexts[perkStem + "inspire0d"] = "If this hero ends their turn with 4 or more cards, gain 1 Inspire";
-            medsTexts[perkStem + "inspire0f"] = "Inspire on this hero is lost at the end of turn and increases Holy and Mind damage by 0.5 per charge.";
+            medsTexts[perkStem + "inspire0e"] = "Inspire on this hero is lost at the end of turn and increases Holy and Mind damage by 0.5 per charge.";
 
             // Custom Text for Energize
             medsTexts[perkStem + "energize1a"] = "At start of your first turn, gain 1 Energize.";

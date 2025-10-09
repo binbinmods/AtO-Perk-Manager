@@ -1,8 +1,14 @@
+# 1.5.3
+
+Moved Weak, Scourge, Zeal to the appropriate page
+
+Renamed inspire0f to inspire0e since apparently I don't know my alphabet.
+
 # 1.5.2
 
 Reduced excessive logging
 
-Added new perks: scourge1f, scourge1g, zeal1g, decay1f, powerful1e, fortify1f, taunt1f, rust1e, decay1g, energy2e, energy2f, inspire0f, energize1e
+Added new perks: scourge1f, scourge1g, zeal1g, decay1f, powerful1e, fortify1f, taunt1f, rust1e, decay1g, energy2e, energy2f, inspire0e, energize1e
 
 Nerfs to old perks:
 

@@ -1676,9 +1676,9 @@ namespace PerkManager
                         __result.MaxCharges = __result.MaxMadnessCharges = -1;
                     }
                     break;
-                // inspire0f: Inspire on this hero is lost at the end of turn and increases Holy and Mind damage by 0.5 per charge
+                // inspire0e: Inspire on this hero is lost at the end of turn and increases Holy and Mind damage by 0.5 per charge
                 case "inspire":
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "inspire0f", AppliesTo.ThisHero))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "inspire0e", AppliesTo.ThisHero))
                     {
                         // LogDebug("taunt1f");
                         __result.AuraDamageType = Enums.DamageType.Holy;

@@ -210,7 +210,7 @@ wet1d: Wet does not Dispel or Prevent Burn.
 ### Perks for Inspire
 
 inspire0d: If this hero ends their turn with 4 or more cards, gain 1 Inspire
-inspire0f: Inspire on this hero is lost at the end of turn and increases Holy and Mind damage by 0.5 per charge
+inspire0e: Inspire on this hero is lost at the end of turn and increases Holy and Mind damage by 0.5 per charge
 
 ### Perks for Energize
 

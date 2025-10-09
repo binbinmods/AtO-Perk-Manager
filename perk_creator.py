@@ -505,21 +505,21 @@ def handle_new_nodes():
             6,
             2,
             7,
-            "Elemental"
+            "Mystical"
         ),
         (
             "scourge1",
             6,
             5,
             7,
-            "Elemental"
+            "Mystical"
         ),
         (
             "weak1",
             6,
             8,
             4,
-            "Elemental"
+            "Mystical"
         ),
         
     ]
