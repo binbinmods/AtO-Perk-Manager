@@ -141,6 +141,10 @@ thorns1f: Rust on heroes increases Thorns damage by 10% per charge. (UNTESTED)
 
 reinforce1d: Reinforce on this hero increases Block charges received by 1 per charge of Reinforce.
 
+### Perks for Vulnerable
+
+vulnerable0d: Immune to Vulnerable, Reinforce, Insulate, and Courage.
+
 ### Perks for Block
 
 block5b: If Restricted Power is enabled, increases Max Charges to 600.  
@@ -173,7 +177,7 @@ crack2d: Crack on monsters reduces Speed by 1 for every 5 charges.
 crack2e: Crack on monsters reduces Lightning resistance by 0.3% per charge.  
 crack2f: Crack on monsters increases Fire damage by 0.5/charge.  
 crack2g: Crack on monsters increases Mind damage by 0.5/charge.  
-crack2h: Crack on monsters reduces Slashing resistance by 0.3% per charge.  
+crack2h: Crack on monsters reduces Slashing and Piercing resistance by 0.3% per charge.  
 crack2i: Crack on monsters increases max Vulnerable charges by 1 per 25 stacks of Crack.
 
 ### Perks for Burn

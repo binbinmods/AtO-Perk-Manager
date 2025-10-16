@@ -1,3 +1,11 @@
+# 1.5.4
+
+Fixed issue with dark crashing the game
+
+Updated crack2h to include Piercing resist
+
+Added Vulnerable0d
+
 # 1.5.3
 
 Moved Weak, Scourge, Zeal to the appropriate page

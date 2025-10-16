@@ -167,6 +167,9 @@ namespace PerkManager
             medsTexts[perkStem + "block5d"] = "When this hero gains Block, they deal 1 Blunt to themselves and a random monster.";
             //medsTexts[perkStem + "block5e"] = "Block only functions if you are above 50% Max Health [Currently not working].";
 
+            // Custom Text for Vulnerable
+            medsTexts[perkStem + "vulnerable0d"] = "Immune to Vulnerable, Reinforce, Insulate, and Courage.";
+
             // Custom Text for Taunt
             medsTexts[perkStem + "taunt1e"] = "Taunt on this hero can stack and increases damage by 1 per charge.";
             medsTexts[perkStem + "taunt1f"] = "Taunt on heroes increases maximum Powerful by 1 per charge.";
@@ -189,7 +192,7 @@ namespace PerkManager
             medsTexts[perkStem + "crack2e"] = "Crack on monsters reduces Lightning resist by 0.3% per charge.";
             medsTexts[perkStem + "crack2f"] = "Crack on monsters increases Fire damage received by 0.5 per charge in addition to Blunt damage.[Not compatible with the Mind version.]";
             medsTexts[perkStem + "crack2g"] = "Crack on monsters increases Mind damage received by 0.5 per charge in addition to Blunt damage. [Overrides the Burn version.]";
-            medsTexts[perkStem + "crack2h"] = "Crack on monsters reduces Slashing resist by 0.3% per charge.";
+            medsTexts[perkStem + "crack2h"] = "Crack on monsters reduces Slashing and Piercing resist by 0.3% per charge.";
             medsTexts[perkStem + "crack2i"] = "Crack on monsters increases max Vulnerable charges by 1 per 25 charges of Crack.";
 
             // Custom Text for Burn

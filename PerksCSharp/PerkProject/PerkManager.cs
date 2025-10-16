@@ -208,6 +208,14 @@ namespace PerkManager
                     AddImmunityToHero("fatigue", ref _hero);
                 }
 
+                if (CharacterObjectHavePerk(_hero, "vulnerable0d"))
+                {
+                    AddImmunityToHero("vulnerable", ref _hero);
+                    AddImmunityToHero("reinforce", ref _hero);
+                    AddImmunityToHero("insulate", ref _hero);
+                    AddImmunityToHero("courage", ref _hero);
+                }
+
 
 
             }
@@ -1385,8 +1393,8 @@ namespace PerkManager
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2e", AppliesTo.Monsters))
                     {
                         // LogDebug("crack2e");
-                        __result.ResistModified = Enums.DamageType.Lightning;
-                        __result.ResistModifiedPercentagePerStack = hasRust ? -0.45f : -0.3f;
+                        float amountToModify = hasRust ? -0.45f : -0.3f;
+                        __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Lightning, 0, amountToModify);
                     }
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2f", AppliesTo.Monsters))
@@ -1404,8 +1412,9 @@ namespace PerkManager
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2h", AppliesTo.Global))
                     {
                         // LogDebug("crack2h");
-                        __result.ResistModified2 = Enums.DamageType.Slashing;
-                        __result.ResistModifiedPercentagePerStack2 = hasRust ? -0.45f : -0.3f;
+                        float amountToModify = hasRust ? -0.45f : -0.3f;
+                        __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Slashing, 0, amountToModify);
+                        __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Piercing, 0, amountToModify);
                     }
                     break;
 
@@ -1923,12 +1932,12 @@ namespace PerkManager
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "sanctify2d", AppliesTo.Global))
                     {
-                        int n = _characterTarget.GetAuraCharges("sanctify");
+                        int n = characterOfInterest.GetAuraCharges("sanctify");
                         __result.ExplodeAtStacks += FloorToInt(0.2f * n);
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "burn2e", AppliesTo.Global))
                     {
-                        int n_charges = _characterTarget.GetAuraCharges("burn");
+                        int n_charges = characterOfInterest.GetAuraCharges("burn");
                         float multiplier = 1 + 0.05f * n_charges;
                         __result.DamageWhenConsumedPerCharge *= multiplier;
                     }
