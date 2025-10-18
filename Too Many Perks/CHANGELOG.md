@@ -1,6 +1,6 @@
 # 1.5.4
 
-Fixed issue with dark crashing the game
+Fixed issue with scourge1e and dark crashing the game
 
 Updated crack2h to include Piercing resist
 

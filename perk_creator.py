@@ -200,9 +200,7 @@ def create_new_perk_node_improved(perk:Perk,
     perkNode.ID =perk_node_name
     perkNode.Cost = "PerkCostAdvanced"
     perkNode.Sprite = sprite
-    if (perk_node_name =="binbin_perknode_forttify1d"):
-        perkNode.Sprite = "fortify"
-    if (perk_node_name =="binbin_perknode_forttify1e"):
+    if (perk_node_name.startswith("binbin_perknode_forttify")):
         perkNode.Sprite = "fortify"
     return perkNode
 
@@ -522,9 +520,37 @@ def handle_new_nodes():
             "Mystical"
         ),
         
+        
     ]
+    handle_exp_nodes()
     create_all_perk_jsons(tuples)
 
+def handle_exp_nodes():
+    id = "exp"
+    for i in range(4):
+        p = PerkNode()
+        p.ID = NODE_ID_STEM + id + str(i)
+        p.Column = 4
+        p.Row = i
+        p.PerkRequired = "" if i == 0 else NODE_ID_STEM + id + str(i-1)
+        p.Type =type_dict["General"]
+        p.Perk = PERK_ID_STEM + id + str(i)
+        p.Sprite ="exp"
+        p.Cost = "PerkCostAdvanced" if i == 3 else "PerkCostBase"
+        save_object_to_json(p,f"{NODE_DIR}{p.ID}")
+
+        perk = Perk() 
+        perk.AuraCurseBonus ="None"# if aura_curse_bonus == 0 else aura_curse
+        perk.AuraCurseBonusValue = 0
+        perk.CustomDescription = f"{PERK_DESC_STEM}{id}{i}"
+        perk.Icon ="exp"
+        perk.ID = f"{PERK_ID_STEM}{id}{i}" 
+        perk.IconTextValue = "+40" if i == 3 else "+10"
+        perk.CardClass ="None"
+        save_object_to_json(perk,f"{PERK_DIR}{perk.ID}")
+
+
+    return
 
 def handle_adding_perks_to_vanilla_nodes():
     # Adds perks to currently existing node

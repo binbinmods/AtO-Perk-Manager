@@ -1769,7 +1769,7 @@ namespace PerkManager
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge1e", AppliesTo.Heroes))
                     {
-                        int scourge_charges = _characterTarget.GetAuraCharges("scourge");
+                        int scourge_charges = characterOfInterest.GetAuraCharges("scourge");
                         float multiplier = 0.15f * scourge_charges + 1;
                         __result.DamageWhenConsumedPerCharge *= multiplier;
                     }
