@@ -155,6 +155,7 @@ block5d: When this hero gains Block, they deal 1 Blunt to themselves and a rando
 
 taunt1e: Taunt on this hero can stack and increases damage by 1 per charge.  
 taunt1f: Taunt on heroes increases maximum Powerful by 1 per charge.
+taunt1g: Taunt on you is not lost at the start of turn, but 1 charge is consumed when you take damage.
 
 ### Perks for Fortify
 

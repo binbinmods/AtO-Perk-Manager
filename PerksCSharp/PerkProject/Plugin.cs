@@ -173,6 +173,7 @@ namespace PerkManager
             // Custom Text for Taunt
             medsTexts[perkStem + "taunt1e"] = "Taunt on this hero can stack and increases damage by 1 per charge.";
             medsTexts[perkStem + "taunt1f"] = "Taunt on heroes increases maximum Powerful by 1 per charge.";
+            medsTexts[perkStem + "taunt1g"] = "Taunt on you is not lost at the start of turn, but 1 charge is consumed when you take damage.";
 
             // Custom Text for Fortify
 

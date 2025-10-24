@@ -315,6 +315,7 @@ namespace PerkManager
             //     __instance.IndirectDamage(Enums.DamageType.Mind, damageToDeal);
             // }
 
+
             if (theEvent == Enums.EventActivation.AuraCurseSet && IsLivingNPC(__instance) && TeamHasPerk("mark1d") && __instance.HasEffect("mark") && auxString == "mark")
             {
                 if (__instance.GetAuraCharges("mark") >= 10 && mark1dFlag)
@@ -620,8 +621,12 @@ namespace PerkManager
             //         }
             //     }
             // }
-
-
+            if (theEvent == Enums.EventActivation.Damaged && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "taunt1g") && __instance.HasEffect("taunt"))
+            {
+                // taunt1g: Taunt on you is not lost at the start of turn, but 1 charge is consumed when you take damage
+                LogDebug("taunt1g");
+                __instance.ConsumeEffectCharges("taunt", 1);
+            }
         }
 
         [HarmonyPostfix]
@@ -1629,6 +1634,11 @@ namespace PerkManager
                         __result.GainCharges = true;
                         __result.AuraDamageType = Enums.DamageType.All;
                         __result.AuraDamageIncreasedPerStack = 1;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "taunt1g", AppliesTo.ThisHero))
+                    {
+                        // LogDebug("taunt1e");
+                        __result.ConsumedAtTurn = false;
                     }
                     break;
             }

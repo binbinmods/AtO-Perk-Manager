@@ -123,6 +123,9 @@ def create_new_perk(id:str,
         perk.AuraCurseBonus ="rust"
         perk.AuraCurseBonusValue = 1
         perk.CustomDescription =""
+    # if id =="taunt1g":
+    #     perk.AuraCurseBonus ="taunt"
+    #     perk.AuraCurseBonusValue = 1
 
 
 
@@ -559,7 +562,7 @@ def handle_adding_perks_to_vanilla_nodes():
         ("bleed2",4),
         ("thorns1",3),
         ("reinforce1",1),
-        ("taunt1",2),
+        ("taunt1",3),
         ("vulnerable0",1),
         ("sight1",2),
         ("burn2",1),
