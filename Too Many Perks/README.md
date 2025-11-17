@@ -167,6 +167,7 @@ fortify1f: At the start of combat, apply 2 Fortify to all heroes. Fortify on all
 
 sharp1e: If Sharp on a hero would increase a damage type, it increases it by 1.5 damage per charge. Sharp on heroes only stacks to 25.  
 sharp1f: +1 Bleed charge applied for every 8 Sharp on this hero. Sharp does not increase damage.
+sharp1g: Sharp on Heroes also increases Mind damage by 1 per charge. Increased to 1.5 per charge with Shrill Tone.
 
 ### Perks for Fury
 

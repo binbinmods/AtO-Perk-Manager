@@ -1339,6 +1339,40 @@ namespace PerkManager
                         __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Shadow, 0, 1, 0);
                     }
 
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "sharp1g", AppliesTo.ThisHero))
+                    {
+                        // LogDebug("sharp1d");
+                        float amountToModify = AtOManager.Instance.TeamHaveTrait("shrilltone") ? 1.5f : 1;
+                        if (hasRust)
+                            amountToModify *= 0.5f;
+                        if (AtOManager.Instance.TeamHaveTrait("shrilltone"))
+                        {
+                            if (__result.AuraDamageType == Enums.DamageType.Mind)
+                            {
+                                __result.AuraDamageIncreasedPerStack = amountToModify;
+                            }
+                            if (__result.AuraDamageType2 == Enums.DamageType.Mind)
+                            {
+                                __result.AuraDamageIncreasedPerStack2 = amountToModify;
+                            }
+                            if (__result.AuraDamageType3 == Enums.DamageType.Mind)
+                            {
+                                __result.AuraDamageIncreasedPerStack3 = amountToModify;
+                            }
+                            if (__result.AuraDamageType4 == Enums.DamageType.Mind)
+                            {
+                                __result.AuraDamageIncreasedPerStack4 = amountToModify;
+                            }
+                        }
+                        else
+                        {
+                            __result.AuraDamageType4 = Enums.DamageType.Mind;
+                            __result.AuraDamageIncreasedPerStack4 = amountToModify;
+                        }
+
+
+                    }
+
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "sharp1e", AppliesTo.Heroes))
                     {

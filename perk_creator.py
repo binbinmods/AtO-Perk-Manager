@@ -581,7 +581,7 @@ def handle_adding_perks_to_vanilla_nodes():
         ("fury1",1),
         ("mark1",4),
         ("fortify1",3),
-        ("sharp1",2),
+        ("sharp1",3),
         ("energy2",3),
         ("insulate1",2),
         ("regeneration1",1),
