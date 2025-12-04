@@ -259,31 +259,31 @@ namespace PerkManager
 
             // Custom Text for Rust
             // medsTexts[perkStem + "rust1a"] = "+1 Charge.";
-            medsTexts[perkStem + "rust1b"] = "Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.";
-            medsTexts[perkStem + "rust1c"] = "Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.";
-            medsTexts[perkStem + "rust1d"] = "Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.";
-            medsTexts[perkStem + "rust1e"] = "At the start of combat, apply 2 Rust to eveyone.";
-            medsTexts[perkStem + "rust1f"] = "When you apply Rust to a monster, Purge 1 (untested).";
+            medsTexts[perkStem + "rust0d"] = "Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.";
+            medsTexts[perkStem + "rust0e"] = "Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.";
+            medsTexts[perkStem + "rust0f"] = "Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.";
+            medsTexts[perkStem + "rust0g"] = "At the start of combat, apply 2 Rust to eveyone.";
+            medsTexts[perkStem + "rust0h"] = "When you apply Rust to a monster, Purge 1 (untested).";
 
 
             // Custom text for Zeal        
-            medsTexts[perkStem + "zeal1a"] = "Zeal +1.";
-            medsTexts[perkStem + "zeal1b"] = "Zeal on this hero loses 3 charges per turn rather than all charges.";
-            medsTexts[perkStem + "zeal1c"] = "Zeal on all heroes can stack up to " + ZealCap.Value + ", but reduces Speed by 2 per charge.";
-            medsTexts[perkStem + "zeal1d"] = "Zeal on heroes and monsters increases all resistances by 0.5% per Wet charge.";
-            medsTexts[perkStem + "zeal1e"] = "When this hero loses Zeal at end of turn, deal indirect Holy and Fire damage to all monsters equal to 4x the number of charges lost.";
-            medsTexts[perkStem + "zeal1f"] = "Zeal on this hero can stack, but no longer increases Resistances. At the end of turn, suffer 5 Burn per charge.";
-            medsTexts[perkStem + "zeal1g"] = "Zeal on heroes makes Thorns apply half their damage as Burn rather than dealing damage (untested).";
+            medsTexts[perkStem + "zeal0d"] = "Zeal +1.";
+            medsTexts[perkStem + "zeal0e"] = "Zeal on this hero loses 3 charges per turn rather than all charges.";
+            medsTexts[perkStem + "zeal0f"] = "Zeal on all heroes can stack up to " + ZealCap.Value + ", but reduces Speed by 2 per charge.";
+            medsTexts[perkStem + "zeal0g"] = "Zeal on heroes and monsters increases all resistances by 0.5% per Wet charge.";
+            medsTexts[perkStem + "zeal0h"] = "When this hero loses Zeal at end of turn, deal indirect Holy and Fire damage to all monsters equal to 4x the number of charges lost.";
+            medsTexts[perkStem + "zeal0i"] = "Zeal on this hero can stack, but no longer increases Resistances. At the end of turn, suffer 5 Burn per charge.";
+            medsTexts[perkStem + "zeal0j"] = "Zeal on heroes makes Thorns apply half their damage as Burn rather than dealing damage (untested).";
             // medsTexts[perkStem + "zeal1f"] = "If this hero dies with Zeal, deal indirect Fire damage equal to 5x their insane to every monster.";
 
             // Custom text for Scourge
-            medsTexts[perkStem + "scourge1a"] = "Scourge +1.";
-            medsTexts[perkStem + "scourge1b"] = "Scourge on heroes and monsters loses 3 charges per turn rather than all charges.";
-            medsTexts[perkStem + "scourge1c"] = "Scourge on monsters can stack but increases all resists by 3% per charge.";
-            medsTexts[perkStem + "scourge1d"] = "Instead of Chill, Scourge deals 2 Shadow damage per Sight charge.";
-            medsTexts[perkStem + "scourge1e"] = "Scourge on monsters increases burn damage by 15%/charge";
-            medsTexts[perkStem + "scourge1f"] = "Dark explosions deal 10% of their damage to the target's sides for each charge of Scourge (Not working currently).";
-            medsTexts[perkStem + "scourge1g"] = "If an enemy has two or less curses, Scourge deals 4x damage.";
+            medsTexts[perkStem + "scourge0d"] = "Scourge +1.";
+            medsTexts[perkStem + "scourge0e"] = "Scourge on heroes and monsters loses 3 charges per turn rather than all charges.";
+            medsTexts[perkStem + "scourge0f"] = "Scourge on monsters can stack but increases all resists by 3% per charge.";
+            medsTexts[perkStem + "scourge0g"] = "Instead of Chill, Scourge deals 2 Shadow damage per Sight charge.";
+            medsTexts[perkStem + "scourge0h"] = "Scourge on monsters increases burn damage by 15%/charge";
+            medsTexts[perkStem + "scourge0i"] = "Temporarily Disabled - Dark explosions deal 10% of their damage to the target's sides for each charge of Scourge (Not working currently).";
+            medsTexts[perkStem + "scourge0j"] = "If an enemy has two or less curses, Scourge deals 4x damage.";
 
             // Custom text for Weak
             medsTexts[perkStem + "weak1a"] = "Weak +1.";

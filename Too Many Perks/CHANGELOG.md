@@ -1,3 +1,13 @@
+# 1.6.0
+
+Update for AtO v1.7.0
+
+Updated Scourge, Zeal, and Rust perks to be added to the new options
+
+# 1.5.8
+
+Second rebuild for v1.6.22
+
 # 1.5.7
 
 Rebuild for v1.6.22

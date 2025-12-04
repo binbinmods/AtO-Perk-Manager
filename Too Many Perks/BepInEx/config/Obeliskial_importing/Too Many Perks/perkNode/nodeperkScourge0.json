@@ -1,0 +1,24 @@
+{
+    "Column": 5,
+    "Cost": "PerkCostAdvanced",
+    "ID": "nodeperkScourge0",
+    "LockedInTown": false,
+    "NotStack": false,
+    "Perk": "",
+    "PerkRequired": "",
+    "PerksConnected": [
+        "nodeperkScourge0a",
+        "nodeperkScourge0b",
+        "nodeperkScourge0c",
+        "binbin_perknode_scourge0d",
+        "binbin_perknode_scourge0e",
+        "binbin_perknode_scourge0f",
+        "binbin_perknode_scourge0g",
+        "binbin_perknode_scourge0h",
+        "binbin_perknode_scourge0i",
+        "binbin_perknode_scourge0j"
+    ],
+    "Row": 6,
+    "Sprite": "scourge",
+    "Type": 3
+}

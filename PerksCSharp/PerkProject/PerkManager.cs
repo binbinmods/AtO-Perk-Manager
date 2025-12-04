@@ -606,8 +606,8 @@ namespace PerkManager
             //     }
             // }
 
-            // Scourge1f: Dark explosions deal 10% of their damage to the target's sides for each charge of Scourge.
-            // if (theEvent == Enums.EventActivation.CurseExploded && IsLivingNPC(__instance))
+            // Scourge0i: Dark explosions deal 10% of their damage to the target's sides for each charge of Scourge.
+            // if (theEvent == Enums.EventActivation && IsLivingNPC(__instance))
             // {
             //     LogDebug("Scourge1f");
             //     float multiplier = 0.1f * __instance.GetAuraCharges("scourge");
@@ -1806,12 +1806,12 @@ namespace PerkManager
                     break;
                 case "burn":
                     // mainperkburn2d: changed to be less than 4 rather than less than 3 curses
-                    // scourge1e: Scourge on monsters increases burn damage by 15%/stack";
+                    // scourge0h: Scourge on monsters increases burn damage by 15%/stack";
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkburn2d", AppliesTo.Monsters))
                     {
                         __result.DoubleDamageIfCursesLessThan = 4;
                     }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge1e", AppliesTo.Heroes))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge0h", AppliesTo.Heroes))
                     {
                         int scourge_charges = characterOfInterest.GetAuraCharges("scourge");
                         float multiplier = 0.15f * scourge_charges + 1;
@@ -2041,31 +2041,31 @@ namespace PerkManager
                     break;
 
                 case "scourge":
-                    // scourge1a: Scourge +1.";
-                    // scourge1b: Scourge on heroes and monsters loses 3 charges per turn rather than all charges.
-                    // scourge1c: Scourge on monsters can Stack but increases all resists by 3% per stack.
-                    // scourge1d: Scourge deals damage based on Sight rather than Chill.
-                    // scourge1e: Scourge on monsters increases burn damage by 15%/stack
-                    // scourge1f: Dark explosions deal 10% of their damage to the target's sides for each charge of Scourge
-                    // scourge1g: If an enemy has two or less curses, Scourge deals 4x damage
+                    // scourge0d: Scourge +1.";
+                    // scourge0e: Scourge on heroes and monsters loses 3 charges per turn rather than all charges.
+                    // scourge0f: Scourge on monsters can Stack but increases all resists by 3% per stack.
+                    // scourge0g: Scourge deals damage based on Sight rather than Chill.
+                    // scourge0h: Scourge on monsters increases burn damage by 15%/stack
+                    // scourge0i: Dark explosions deal 10% of their damage to the target's sides for each charge of Scourge
+                    // scourge0j: If an enemy has two or less curses, Scourge deals 4x damage
 
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge1b", AppliesTo.Global))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge0e", AppliesTo.Global))
                     {
                         __result.ConsumeAll = false;
                         __result.AuraConsumed = IfCharacterHas(characterOfInterest, CharacterHas.Trait, "moontouchedtrait4a", AppliesTo.Global) ? 0 : 3;
                     }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge1c", AppliesTo.Monsters))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge0f", AppliesTo.Monsters))
                     {
                         __result.GainCharges = true;
                         __result.ResistModified2 = Enums.DamageType.All;
                         __result.ResistModifiedPercentagePerStack2 = 3.0f;
                     }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge1d", AppliesTo.Global))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge0g", AppliesTo.Global))
                     {
                         __result.ConsumedDamageChargesBasedOnACCharges = GetAuraCurseData("sight");
                         __result.DamageWhenConsumedPerCharge = 2;
                     }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge1g", AppliesTo.Global))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge0j", AppliesTo.Global))
                     {
                         if (characterOfInterest.GetCurseList().Count <= 2)
                         {

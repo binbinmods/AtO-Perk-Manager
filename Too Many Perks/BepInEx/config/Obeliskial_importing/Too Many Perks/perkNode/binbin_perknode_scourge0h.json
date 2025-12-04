@@ -1,0 +1,13 @@
+{
+    "Column": 5,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_scourge0h",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_scourge0h",
+    "PerkRequired": "",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "scourge",
+    "Type": 3
+}

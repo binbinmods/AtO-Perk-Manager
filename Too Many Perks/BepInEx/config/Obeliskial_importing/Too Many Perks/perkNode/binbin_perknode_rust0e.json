@@ -1,0 +1,13 @@
+{
+    "Column": 5,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_rust0e",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_rust0e",
+    "PerkRequired": "",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "rust",
+    "Type": 1
+}

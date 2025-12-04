@@ -1,0 +1,24 @@
+{
+    "Column": 2,
+    "Cost": "PerkCostAdvanced",
+    "ID": "nodeperkZeal0",
+    "LockedInTown": false,
+    "NotStack": false,
+    "Perk": "",
+    "PerkRequired": "",
+    "PerksConnected": [
+        "nodeperkZeal0a",
+        "nodeperkZeal0b",
+        "nodeperkZeal0c",
+        "binbin_perknode_zeal0d",
+        "binbin_perknode_zeal0e",
+        "binbin_perknode_zeal0f",
+        "binbin_perknode_zeal0g",
+        "binbin_perknode_zeal0h",
+        "binbin_perknode_zeal0i",
+        "binbin_perknode_zeal0j"
+    ],
+    "Row": 6,
+    "Sprite": "zeal",
+    "Type": 3
+}

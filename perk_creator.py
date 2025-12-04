@@ -119,10 +119,10 @@ def create_new_perk(id:str,
     if id =="mark1f":
         perk.AuraCurseBonus ="mark"
         perk.AuraCurseBonusValue =1
-    if id =="rust1a":
-        perk.AuraCurseBonus ="rust"
-        perk.AuraCurseBonusValue = 1
-        perk.CustomDescription =""
+    # if id =="rust1a":
+    #     perk.AuraCurseBonus ="rust"
+    #     perk.AuraCurseBonusValue = 1
+    #     perk.CustomDescription =""
     # if id =="taunt1g":
     #     perk.AuraCurseBonus ="taunt"
     #     perk.AuraCurseBonusValue = 1
@@ -494,27 +494,27 @@ def handle_new_nodes():
             3,
             "Elemental"
         ),
-        (
-            "rust1",
-            6,
-            3,
-            5,
-            "Elemental"
-        ),
-        (
-            "zeal1",
-            6,
-            2,
-            7,
-            "Mystical"
-        ),
-        (
-            "scourge1",
-            6,
-            5,
-            7,
-            "Mystical"
-        ),
+        # (
+        #     "rust1",
+        #     6,
+        #     3,
+        #     5,
+        #     "Elemental"
+        # ),
+        # (
+        #     "zeal1",
+        #     6,
+        #     2,
+        #     7,
+        #     "Mystical"
+        # ),
+        # (
+        #     "scourge1",
+        #     6,
+        #     5,
+        #     7,
+        #     "Mystical"
+        # ),
         (
             "weak1",
             6,
@@ -587,6 +587,11 @@ def handle_adding_perks_to_vanilla_nodes():
         ("regeneration1",1),
         ("stanza0",2),
         ("crack2",6),
+        ("zeal0",7),
+        ("scourge0",7),
+        ("rust0",5),
+        # ("infuse",0),
+        # ("leech",0),
     ]
     for tuple in tuples:
         node_name,n = tuple

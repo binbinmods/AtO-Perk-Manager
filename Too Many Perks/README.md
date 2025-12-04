@@ -246,32 +246,33 @@ paralyze1c: Once per enemy per combat, when an enemy reaches 100 Spark, apply 1 
 
 ### Perks for Rust
 
-rust1a: +1 Charge.  
-rust1b: Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.  
-rust1c: Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.
-rust1d: Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.
-rust1e: At the start of combat, apply 2 Rust to eveyone.
-rust1f: When you apply Rust to an enemy, Purge 1.
+<!-- rust1c: +1 Charge.   -->
+
+rust0d: Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.  
+rust0e: Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.
+rust0f: Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.
+rust0g: At the start of combat, apply 2 Rust to eveyone.
+rust0h: When you apply Rust to an enemy, Purge 1.
 
 ### Perks for Zeal
 
-zeal1a: Zeal +1.  
-zeal1b: Zeal on this hero loses 3 charges per turn rather than all charges.  
-zeal1c: Zeal on this hero can stack up to 10, but reduces Speed by 2 per charge.  
-zeal1d: Zeal on heroes and monsters increases all resistances by 0.5% per Wet charge.  
-zeal1e: When this hero loses Zeal at end of turn, deal indirect Holy and Fire damage to all monsters equal to 4x the number of charges lost.  
-zeal1f: Zeal on this hero can stack, but no longer increases Resistances.
-zeal1g: Zeal on heroes makes Thorns apply half their damage as Burn rather than dealing damage
+zeal0d: Zeal +1.  
+zeal0e: Zeal on this hero loses 3 charges per turn rather than all charges.  
+zeal0f: Zeal on this hero can stack up to 10, but reduces Speed by 2 per charge.  
+zeal0g: Zeal on heroes and monsters increases all resistances by 0.5% per Wet charge.  
+zeal0h: When this hero loses Zeal at end of turn, deal indirect Holy and Fire damage to all monsters equal to 4x the number of charges lost.  
+zeal0i: Zeal on this hero can stack, but no longer increases Resistances.
+zeal0j: Zeal on heroes makes Thorns apply half their damage as Burn rather than dealing damage
 
 ### Perks for Scourge
 
-scourge1a: Scourge +1.  
-scourge1b: Scourge on heroes and monsters loses 3 charges per turn rather than all charges. // TODO: Replace with -1/dark explosion  
-scourge1c: Scourge on monsters can stack but increases all resists by 3% per charge.  
-scourge1d: Instead of Chill, Scourge deals 2 Shadow damage per Sight charge.  
-scourge1e: Scourge on monsters increases burn damage by 15%/charge.  
-scourge1f: Dark explosions deal 10% of their damage to the target's sides for each charge of Scourge
-scourge1g: If an enemy has two or less curses, Scourge deals 4x damage.
+scourge0d: Scourge +1.  
+scourge0e: Scourge on heroes and monsters loses 3 charges per turn rather than all charges. // TODO: Replace with -1/dark explosion  
+scourge0f: Scourge on monsters can stack but increases all resists by 3% per charge.  
+scourge0g: Instead of Chill, Scourge deals 2 Shadow damage per Sight charge.  
+scourge0h: Scourge on monsters increases burn damage by 15%/charge.  
+scourge0i: Dark explosions deal 10% of their damage to the target's sides for each charge of Scourge
+scourge0j: If an enemy has two or less curses, Scourge deals 4x damage.
 
 ### Perks for Weak
 
