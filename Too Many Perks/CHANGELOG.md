@@ -1,3 +1,7 @@
+# 1.6.1
+
+Added Shield5d
+
 # 1.6.0
 
 Update for AtO v1.7.0

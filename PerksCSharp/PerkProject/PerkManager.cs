@@ -1908,10 +1908,17 @@ namespace PerkManager
 
                 case "shield":
                     // shield5b: If Restricted Power is enabled, increases Max Charges to 300.";
+                    // shield5d: Shield on you increases Holy damage by 0.2 per charge
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "shield5b", AppliesTo.Global))
                     {
                         // LogDebug("shield5b");
                         __result.MaxMadnessCharges = 300;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "shield5d", AppliesTo.Heroes))
+                    {
+                        // __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Holy, 0, 0.2f, 0);
+                        __result.AuraDamageType = Enums.DamageType.Holy;
+                        __result.AuraDamageIncreasedPerStack = 0.2f;
                     }
                     break;
             }

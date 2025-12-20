@@ -9,7 +9,8 @@
     "PerksConnected": [
         "nodeperkShield5a",
         "binbin_perknode_shield5b",
-        "binbin_perknode_shield5c"
+        "binbin_perknode_shield5c",
+        "binbin_perknode_shield5d"
     ],
     "Row": 5,
     "Sprite": "shield",

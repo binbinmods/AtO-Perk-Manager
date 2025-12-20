@@ -610,7 +610,7 @@ def handle_creating_new_split_nodes():
         ("block5",3),
         ("fast0",2),
         ("slow0",2),
-        ("shield5",2),
+        ("shield5",3),
         ("heal5",2),
         ("evasion0",1),
     ]

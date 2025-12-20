@@ -208,6 +208,7 @@ insulate1e: Insulate on this hero increases Elemental damage by 5% per stack, bu
 
 shield5b: If Restricted Power is enabled, increases Max Charges to 300.  
 shield5c: At start of combat, apply 4 Shield to all heroes.
+shield5d: Shield on you increases Holy Damage by 0.2 per charge.
 
 ### Perks for Wet
 

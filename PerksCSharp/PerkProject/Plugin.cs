@@ -225,6 +225,7 @@ namespace PerkManager
             // medsTexts[perkStem + "shield5a"] = "+ Charges";
             medsTexts[perkStem + "shield5b"] = "If Restricted Power is enabled, increases Max Charges to 300.";
             medsTexts[perkStem + "shield5c"] = "At start of combat, apply 4 Shield to all heroes.";
+            medsTexts[perkStem + "shield5d"] = "Shield on you increases Holy damage done by 0.2 per charge.";
 
             // Custom Text for Wet
             medsTexts[perkStem + "wet1d"] = "Wet does not Dispel or Prevent Burn.";
