@@ -1,3 +1,17 @@
+# 1.6.2
+
+Update for AtO v1.7.3.2
+
+Hopefully reduced lag somewhat
+
+New Perks:
+
+- Zeal0d rework
+- Zeal0e rework
+- Rust0e rework
+
+Bug fixes for all Rust and Zeal perks
+
 # 1.6.1
 
 Added Shield5d
@@ -28,7 +42,7 @@ Added Taunt1g
 
 # 1.5.4
 
-Fixed issue with scourge1e and dark crashing the game
+Fixed issue with scourge0e and dark crashing the game
 
 Updated crack2h to include Piercing resist
 
@@ -44,11 +58,11 @@ Renamed inspire0f to inspire0e since apparently I don't know my alphabet.
 
 Reduced excessive logging
 
-Added new perks: scourge1f, scourge1g, zeal1g, decay1f, powerful1e, fortify1f, taunt1f, rust1e, decay1g, energy2e, energy2f, inspire0e, energize1e
+Added new perks: scourge0f, scourge0g, zeal0g, decay1f, powerful1e, fortify1f, taunt1f, rust0e, decay1g, energy2e, energy2f, inspire0e, energize1e
 
 Nerfs to old perks:
 
-- zeal1f - no longer increases resistances or applies burn.
+- zeal0f - no longer increases resistances or applies burn.
 - weak1c - reduced damage to 20% from 25%
 - insane2d - nerfed to 50 from 40. Fixed working with Rust
 - crack2f and 2g - nerfed to 0.75 damage/charge
@@ -59,12 +73,12 @@ Nerfs to old perks:
 
 Buffs to old perks:
 
-- zeal1c no longer reduces damage.
+- zeal0c no longer reduces damage.
 
 Altered old perks:
 
 - decay1d - Now purges Insulate rather than Reinforce
-- rust1g - Now scales on Rust rather than Bless. Damage increased
+- rust0g - Now scales on Rust rather than Bless. Damage increased
 - poison2f - Changed to be "Poison on enemies deals Shadow Damage"
 
 # 1.5.1
@@ -79,7 +93,7 @@ Sharp1f should now display properly
 
 bleed2c now properly applies to monsters rather than heroes
 
-scourge1b should now be more compatible with Hecar
+scourge0b should now be more compatible with Hecar
 
 # 1.4.9
 
@@ -109,7 +123,7 @@ Shackle1f no longer crashes the game
 
 Updated spark2e to apply to monsters not heroes
 
-Fixed Rust1c and Rust1d
+Fixed Rust0c and Rust0d
 
 Fortify1e text should now display
 
@@ -179,11 +193,11 @@ Added evasion0b perk
 
 # 1.1.8 and 1.1.9
 
-Created zeal1f, minor description changes, removed damage reduction from zeal1c
+Created zeal0f, minor description changes, removed damage reduction from zeal0c
 
 # 1.1.7
 
-Nerfed zeal1c
+Nerfed zeal0c
 
 # 1.1.6
 

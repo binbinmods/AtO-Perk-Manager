@@ -39,15 +39,15 @@ namespace PerkManager
                 num4 = AtOManager.Instance.GetObeliskMadness();
             }
 
-            // Plugin.Log.LogDebug(debugBase + "Testing Perk shards5c: Original Corruption odds" + num3 +);
-            PLog("GetCardByRarityPrefix - CardDataId - " + _cardData.Id);
+            // LogDebug(debugBase + "Testing Perk shards5c: Original Corruption odds" + num3 +);
+            // LogDebug("GetCardByRarityPrefix - CardDataId - " + _cardData.Id);
             if (AtOManager.Instance.TeamHavePerk(perkBase + "shards5c"))
             {
                 int amountModified = 2;
                 num1 -= amountModified;
                 num2 -= amountModified;
                 num3 -= amountModified;
-                Plugin.Log.LogDebug(debugBase + "Testing Perk shards5c: Modified value " + num3);
+                // LogDebug(debugBase + "Testing Perk shards5c: Modified value " + num3);
             }
             if (num4 > 0)
             {
@@ -57,7 +57,7 @@ namespace PerkManager
             if (rarity < num1)
             {
                 __result = _cardData.CardUpgraded == Enums.CardUpgraded.No || !(_cardData.UpgradedFrom != "") ? _cardData.Id.ToLower() : _cardData.UpgradedFrom.ToLower();
-                                    PLog("GetCardByRarityPrefix Exit 1");
+                // LogDebug("GetCardByRarityPrefix Exit 1");
 
                 return false;
             }
@@ -66,21 +66,21 @@ namespace PerkManager
                 if (_cardData.CardUpgraded == Enums.CardUpgraded.A)
                 {
                     __result = _cardData.Id.ToLower();
-                    PLog("GetCardByRarityPrefix Exit 2");
+                    // LogDebug("GetCardByRarityPrefix Exit 2");
                     return false;
 
                 }
                 if (_cardData.CardUpgraded == Enums.CardUpgraded.No)
                 {
                     __result = _cardData.UpgradesTo1.ToLower();
-                    PLog("GetCardByRarityPrefix Exit 3");
+                    // LogDebug("GetCardByRarityPrefix Exit 3");
                     return false;
 
                 }
                 if (_cardData.CardUpgraded == Enums.CardUpgraded.B)
                 {
                     __result = (_cardData.UpgradedFrom + "A").ToLower();
-                    PLog("GetCardByRarityPrefix Exit 4");
+                    // LogDebug("GetCardByRarityPrefix Exit 4");
                     return false;
                 }
             }
@@ -91,29 +91,29 @@ namespace PerkManager
                     if (_cardData.CardUpgraded == Enums.CardUpgraded.B)
                     {
                         __result = _cardData.Id.ToLower();
-                        PLog("GetCardByRarityPrefix Exit 5");
+                        // LogDebug("GetCardByRarityPrefix Exit 5");
                         return false;
                     }
                     __result = _cardData.CardUpgraded == Enums.CardUpgraded.No ? _cardData.UpgradesTo2.ToLower() : (_cardData.UpgradedFrom + "B").ToLower();
-                    PLog("GetCardByRarityPrefix Exit 6");
+                    // LogDebug("GetCardByRarityPrefix Exit 6");
                     return false;
                 }
                 if (_cardData.CardUpgraded == Enums.CardUpgraded.No)
                 {
                     __result = (UnityEngine.Object)_cardData.UpgradesToRare != (UnityEngine.Object)null ? _cardData.UpgradesToRare.Id.ToLower() : _cardData.Id.ToLower();
-                    PLog("GetCardByRarityPrefix Exit 7");
+                    // LogDebug("GetCardByRarityPrefix Exit 7");
                     return false;
                 }
                 CardData cardData = Globals.Instance.GetCardData(_cardData.UpgradedFrom, false);
                 if ((UnityEngine.Object)cardData != (UnityEngine.Object)null && (UnityEngine.Object)cardData.UpgradesToRare != (UnityEngine.Object)null)
                 {
                     __result = cardData.UpgradesToRare.Id.ToLower();
-                    PLog("GetCardByRarityPrefix Exit 8");
+                    // LogDebug("GetCardByRarityPrefix Exit 8");
                     return false;
                 }
             }
             __result = _cardData.Id.ToLower();
-            PLog("GetCardByRarityPrefix - END");
+            // LogDebug("GetCardByRarityPrefix - END");
             return false;
         }
 
@@ -150,7 +150,7 @@ namespace PerkManager
                         break;
                     }
                     num += Traverse.Create(__instance).Field("resistBlunt").GetValue<int>();
-                    
+
                     if (!__instance.IsHero && AtOManager.Instance.IsChallengeTraitActive("reinforcedmonsters"))
                     {
                         num += 10;
@@ -260,10 +260,10 @@ namespace PerkManager
                 }
                 num = num + __instance.GetItemResistModifiers(damageType) + __instance.GetAuraResistModifiers(damageType, acId, countChargesConsumedPre, countChargesConsumedPost);
             }
-            if (AtOManager.Instance.TeamHavePerk(perkBase+"resistance5d"))
-                Plugin.Log.LogDebug(debugBase+"Attemting to change max resists");
-            int maxResist = AtOManager.Instance.TeamHavePerk(perkBase+"resistance5d")? 97 : 95;
-            __result=Mathf.Clamp(num, -95, maxResist);            
+            // if (AtOManager.Instance.TeamHavePerk(perkBase + "resistance5d"))
+            //     LogDebug(debugBase + "Attemting to change max resists");
+            int maxResist = AtOManager.Instance.TeamHavePerk(perkBase + "resistance5d") ? 97 : 95;
+            __result = Mathf.Clamp(num, -95, maxResist);
             return false;
         }
     }

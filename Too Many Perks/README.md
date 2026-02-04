@@ -97,6 +97,19 @@ energy2f: On every round after round 3, this hero gains 1 additional Energy at t
 
 TODO
 
+<!-- ### Perks for Infuse
+
+infuse0d: Charges applied +1. Infuse on all heroes loses 3 charges per turn.
+infuse0e: Max. Infuse charges +4. Infuse no longer increases resistances.
+infuse0f: Infuse on heroes increases damage by 0.5 per Reinforce/Insulate/Courage charge rather than 1/Infuse charge.
+infuse0g: Infuse on heroes increases the effectiveness of Reinforce/Insulate/Courage by 15% per charge rather than 50%.
+
+### Perks for Leech
+
+leech0d: Charges applied +1. Decrease healing done by Leech by 50%.
+leech0e: Leech explodes at the end of turn.
+leech0f: Increase curses applied by Leech by 50%. Leech no longer reduces enemy resistances. -->
+
 ## Physical
 
 ### Perks for Shackle
@@ -247,19 +260,19 @@ paralyze1c: Once per enemy per combat, when an enemy reaches 100 Spark, apply 1 
 
 ### Perks for Rust
 
-<!-- rust1c: +1 Charge.   -->
+<!-- rust0c: +1 Charge.   -->
 
 rust0d: Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.  
-rust0e: Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.
+rust0e: Rust on enemies does not Prevent or Dispel Reinforce. Rust on enemies reduces Physical resistance by 5% per charge.
 rust0f: Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.
 rust0g: At the start of combat, apply 2 Rust to eveyone.
 rust0h: When you apply Rust to an enemy, Purge 1.
 
 ### Perks for Zeal
 
-zeal0d: Zeal +1.  
-zeal0e: Zeal on this hero loses 3 charges per turn rather than all charges.  
-zeal0f: Zeal on this hero can stack up to 10, but reduces Speed by 2 per charge.  
+zeal0d: Zeal on this hero increases All Damage done by 1.5% per Bleed charge on this hero
+zeal0e: While this hero has Zeal, Sharp increases their Holy damage by 1 per charge
+zeal0f: Zeal on all heroes increases Speed by 2 per charge.  
 zeal0g: Zeal on heroes and monsters increases all resistances by 0.5% per Wet charge.  
 zeal0h: When this hero loses Zeal at end of turn, deal indirect Holy and Fire damage to all monsters equal to 4x the number of charges lost.  
 zeal0i: Zeal on this hero can stack, but no longer increases Resistances.

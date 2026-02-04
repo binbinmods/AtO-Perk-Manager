@@ -119,7 +119,7 @@ def create_new_perk(id:str,
     if id =="mark1f":
         perk.AuraCurseBonus ="mark"
         perk.AuraCurseBonusValue =1
-    # if id =="rust1a":
+    # if id =="rust0a":
     #     perk.AuraCurseBonus ="rust"
     #     perk.AuraCurseBonusValue = 1
     #     perk.CustomDescription =""
@@ -495,21 +495,21 @@ def handle_new_nodes():
             "Elemental"
         ),
         # (
-        #     "rust1",
+        #     "rust0",
         #     6,
         #     3,
         #     5,
         #     "Elemental"
         # ),
         # (
-        #     "zeal1",
+        #     "zeal0",
         #     6,
         #     2,
         #     7,
         #     "Mystical"
         # ),
         # (
-        #     "scourge1",
+        #     "scourge0",
         #     6,
         #     5,
         #     7,

@@ -37,7 +37,7 @@ namespace PerkManager
             // EnableMultipleReroll = Config.Bind(new ConfigDefinition("Debug", "Enable Multiple Rerolls"), true, new ConfigDescription("Enables the Multiple Reroll Mod. By default, only works for M3+"));
             // LimitRerollsForLowMadness = Config.Bind(new ConfigDefinition("Debug", "Limit Rerolls for Low Madness"), true, new ConfigDescription("Limits the rolls for low Madness (Below Base Madness 3)"));
             EnableDebugging = Config.Bind(new ConfigDefinition("TooManyPerks", "Enable Debugging"), false, new ConfigDescription("Enables debugging logs."));
-            ZealCap = Config.Bind(new ConfigDefinition("TooManyPerks", "Cap on Zeal stacks"), 10, new ConfigDescription("Sets a Cap on the number of Zeal Stacks that heroes can have for the zeal1c perk. -1 should remove the cap."));
+            ZealCap = Config.Bind(new ConfigDefinition("TooManyPerks", "Cap on Zeal stacks"), 10, new ConfigDescription("Sets a Cap on the number of Zeal Stacks that heroes can have for the zeal0c perk. -1 should remove the cap."));
             string perkStem = "custom_binbin_mainperk_";
 
             // register with Obeliskial Essentials
@@ -259,23 +259,23 @@ namespace PerkManager
 
 
             // Custom Text for Rust
-            // medsTexts[perkStem + "rust1a"] = "+1 Charge.";
+            // medsTexts[perkStem + "rust0a"] = "+1 Charge.";
             medsTexts[perkStem + "rust0d"] = "Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.";
-            medsTexts[perkStem + "rust0e"] = "Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.";
+            medsTexts[perkStem + "rust0e"] = "Rust on enemies does not Prevent or Dispel Reinforce. Rust on enemies reduces Physical resistance by 5% per charge.";
             medsTexts[perkStem + "rust0f"] = "Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.";
             medsTexts[perkStem + "rust0g"] = "At the start of combat, apply 2 Rust to eveyone.";
             medsTexts[perkStem + "rust0h"] = "When you apply Rust to a monster, Purge 1 (untested).";
 
 
             // Custom text for Zeal        
-            medsTexts[perkStem + "zeal0d"] = "Zeal +1.";
-            medsTexts[perkStem + "zeal0e"] = "Zeal on this hero loses 3 charges per turn rather than all charges.";
-            medsTexts[perkStem + "zeal0f"] = "Zeal on all heroes can stack up to " + ZealCap.Value + ", but reduces Speed by 2 per charge.";
-            medsTexts[perkStem + "zeal0g"] = "Zeal on heroes and monsters increases all resistances by 0.5% per Wet charge.";
-            medsTexts[perkStem + "zeal0h"] = "When this hero loses Zeal at end of turn, deal indirect Holy and Fire damage to all monsters equal to 4x the number of charges lost.";
+            medsTexts[perkStem + "zeal0d"] = "Zeal on this hero increases All Damage done by 1.5% per Bleed charge on this hero";
+            medsTexts[perkStem + "zeal0e"] = "While this hero has Zeal, Sharp increases their Holy damage by 1 per charge.";
+            medsTexts[perkStem + "zeal0f"] = "Zeal on all heroes increases Speed by 2 per charge.";
+            medsTexts[perkStem + "zeal0g"] = "While any hero and monster has Zeal, Wet increases all resistances by 0.5%.";
+            medsTexts[perkStem + "zeal0h"] = "When this hero loses Zeal at the end of turn, deal indirect Holy damage to all monsters equal to 4x the number of charges lost. This damage is affected by modifiers.";
             medsTexts[perkStem + "zeal0i"] = "Zeal on this hero can stack, but no longer increases Resistances. At the end of turn, suffer 5 Burn per charge.";
             medsTexts[perkStem + "zeal0j"] = "Zeal on heroes makes Thorns apply half their damage as Burn rather than dealing damage (untested).";
-            // medsTexts[perkStem + "zeal1f"] = "If this hero dies with Zeal, deal indirect Fire damage equal to 5x their insane to every monster.";
+            // medsTexts[perkStem + "zeal0f"] = "If this hero dies with Zeal, deal indirect Fire damage equal to 5x their insane to every monster.";
 
             // Custom text for Scourge
             medsTexts[perkStem + "scourge0d"] = "Scourge +1.";

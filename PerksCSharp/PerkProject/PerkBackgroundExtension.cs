@@ -17,7 +17,7 @@ namespace PerkManager
         [HarmonyPatch(typeof(PerkNodeAmplify), "SetForNodes")]
         public static bool SetForNodesPrefix(PerkNodeAmplify __instance, int _numNodes)
         {
-            // Plugin.Log.LogDebug(Plugin.debugBase + "Extending Clickbox for Perks");
+            // LogDebug(Plugin.debugBase + "Extending Clickbox for Perks");
             PolygonCollider2D component = __instance.GetComponent<PolygonCollider2D>();
             float horizontalShift = -0.7f * (_numNodes - 1);
             if (_numNodes == 2)
@@ -57,13 +57,13 @@ namespace PerkManager
 
         }
 
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(PerkTree), "DrawTree")]
-        public static void DrawTreePrefix()
-        {
-            // No idea why but this debug log seems to be necessary for the other prefix to work. No clue what's going on.
-            Plugin.Log.LogDebug(Plugin.debugBase + "Draw Tree");
-        }
+        // [HarmonyPrefix]
+        // [HarmonyPatch(typeof(PerkTree), "DrawTree")]
+        // public static void DrawTreePrefix()
+        // {
+        //     // No idea why but this debug log seems to be necessary for the other prefix to work. No clue what's going on.
+        //     Plugin.LogDebug(Plugin.debugBase + "Draw Tree");
+        // }
 
     }
 }

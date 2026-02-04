@@ -172,11 +172,11 @@ namespace PerkManager
 
                 Hero _hero = teamHero[index];
                 // LogDebug(" PerkList for " + _hero.SubclassName + ": " + string.Join(",", _hero.PerkList.ToArray()));
-                if (CharacterObjectHavePerk(_hero, "mitigate1d"))
-                    LogDebug("Hero has mitigate1d");
+                // if (CharacterObjectHavePerk(_hero, "mitigate1d"))
+                //     LogDebug("Hero has mitigate1d");
 
 
-                LogDebug("Adding Immunities weak1d and more");
+                // LogDebug("Adding Immunities weak1d and more");
 
                 if (CharacterObjectHavePerk(_hero, "weak1d"))
                 {
@@ -292,7 +292,7 @@ namespace PerkManager
             Hero[] teamHero = MatchManager.Instance.GetTeamHero();
             NPC[] teamNpc = MatchManager.Instance.GetTeamNPC();
             string eventString = Enum.GetName(typeof(Enums.EventActivation), theEvent);//((Enums.EventActivation)theEvent).ToString();
-            LogDebug("SETEVENTPREFIX - START - " + eventString);
+            // LogDebug("SETEVENTPREFIX - START - " + eventString);
 
             if (theEvent == Enums.EventActivation.BeginCombat)
             {
@@ -303,11 +303,11 @@ namespace PerkManager
 
 
 
-            // if (theEvent == Enums.EventActivation.Killed && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance, "zeal1f") && __instance.HasEffect("zeal"))
+            // if (theEvent == Enums.EventActivation.Killed && __instance.IsHero && __instance != null && CharacterObjectHavePerk(__instance, "zeal0f") && __instance.HasEffect("zeal"))
             // {
-            //     // zeal1f: If this hero dies with Zeal, deal indirect Mind damage to all enemies equal to 5x their Burn/Insane stacks.
+            //     // zeal0f: If this hero dies with Zeal, deal indirect Mind damage to all enemies equal to 5x their Burn/Insane stacks.
 
-            //     LogDebug("zeal1f");
+            //     LogDebug("zeal0f");
             //     LogDebug("Target Charges = " + target.GetAuraCharges("burn"));
             //     int n_stacks = __instance.GetAuraCharges("burn");
             //     LogDebug("Instance Charges = " + n_stacks);
@@ -320,7 +320,7 @@ namespace PerkManager
             {
                 if (__instance.GetAuraCharges("mark") >= 10 && mark1dFlag)
                 {
-                    LogDebug("mark1d");
+                    // LogDebug("mark1d");
                     __instance.SetAura(__instance, GetAuraCurseData("taunt"), 2, useCharacterMods: false);
                     mark1dFlag = false;
                 }
@@ -328,7 +328,7 @@ namespace PerkManager
 
             if (theEvent == Enums.EventActivation.AuraCurseSet && IsLivingNPC(target) && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "spark2g") && auxString == "spark")
             {
-                LogDebug("spark2g");
+                // LogDebug("spark2g");
                 target.SetAura(null, GetAuraCurseData("crack"), 2);
             }
 
@@ -339,7 +339,7 @@ namespace PerkManager
                 AuraCurseData powerful = GetAuraCurseData("powerful");
                 if ((__instance.GetAuraCharges("powerful") == powerful.MaxCharges || __instance.GetAuraCharges("powerful") == powerful.MaxCharges + 7) && infiniteProctectionPowerful < 10)
                 {
-                    LogDebug("powerful1d");
+                    // LogDebug("powerful1d");
                     __instance.SetAuraTrait(__instance, "vitality", 1);
                     infiniteProctectionPowerful++;
                 }
@@ -349,7 +349,7 @@ namespace PerkManager
             {
                 // shackle1e: Shackle on this hero increases Dark charges you apply by 1 per charge of Shackle.";
 
-                LogDebug("shackle1e");
+                // LogDebug("shackle1e");
                 int n_shackle = __instance.GetAuraCharges("shackle");
                 __instance.ModifyAuraCurseQuantity("dark", n_shackle);
                 // if (auraCurseModifiers.ContainsKey(traitData.AuracurseBonus1.Id))
@@ -362,7 +362,7 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.AuraCurseSet && IsLivingHero(__instance) && IsLivingNPC(target) && CharacterObjectHavePerk(__instance, "poison2h") && auxString == "poison")
             {
                 // poison2h: -1 Poison. When this hero applies poison, deal Mind damage to the target equal to 30% of their Poison charges.";
-                LogDebug("poison2h");
+                // LogDebug("poison2h");
 
                 int n = target.GetAuraCharges("poison");
                 float multiplier = target.HasEffect("rust") ? 0.3f : 0.2f;
@@ -381,7 +381,7 @@ namespace PerkManager
                 shieldCount++;
                 if (shieldCount % 2 == 1 && shieldCount < 100)
                 {
-                    LogDebug("courage1d");
+                    // LogDebug("courage1d");
                     target.SetAura(__instance, GetAuraCurseData("shield"), n, useCharacterMods: false);
                 }
                 // LogDebug("courage1d  AuxInt  after: " + auxInt);
@@ -394,7 +394,7 @@ namespace PerkManager
                 blockCount++;
                 if (blockCount % 2 == 1 && blockCount < 100)
                 {
-                    LogDebug("reinforce1d");
+                    // LogDebug("reinforce1d");
                     target.SetAura(__instance, GetAuraCurseData("block"), n, useCharacterMods: false);
                 }
                 // LogDebug("courage1d  AuxInt  after: " + auxInt);
@@ -405,7 +405,7 @@ namespace PerkManager
                 // "sight1e: Once an enemy reaches 100 charges of Sight, Dispel Sight and Purge 3.";
                 if (target.HasEffect("sight") && target.GetAuraCharges("sight") >= 100)
                 {
-                    LogDebug("sight1e");
+                    // LogDebug("sight1e");
                     target.HealCursesName(singleCurse: "sight");
                     target.DispelAuras(3);
                 }
@@ -417,7 +417,7 @@ namespace PerkManager
                 int n = target.GetAuraCharges("spark");
                 if (n >= 100 && paralyzeCounters[target.NPCIndex] <= 0)
                 {
-                    LogDebug("paralyze1c");
+                    // LogDebug("paralyze1c");
                     AuraCurseData paralyze = GetAuraCurseData("paralyze");
                     paralyzeCounters[target.NPCIndex]++;
                     target.SetAura(__instance, paralyze, 1);
@@ -426,7 +426,7 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.AuraCurseSet && auxString == "block" && IsLivingHero(target) && CharacterObjectHavePerk(target, "block5d"))
             {
                 // block5e: When this hero gains Block, they deal 1 Blunt to themselves and a random monster.";
-                LogDebug("block5d");
+                // LogDebug("block5d");
                 int damageToDeal = 1;
                 Enums.DamageType damageType = Enums.DamageType.Blunt;
                 int modifiedDamage = target.DamageWithCharacterBonus(damageToDeal, damageType, Enums.CardClass.None);
@@ -438,16 +438,16 @@ namespace PerkManager
                 }
             }
 
-            // rust1f: When you apply Rust to an enemy, Purge 1.
-            if (theEvent == Enums.EventActivation.AuraCurseSet && auxString == "rust" && IsLivingNPC(__instance) && CharacterObjectHavePerk(target, "rust1f"))
+            // rust0h: When you apply Rust to an enemy, Purge 1.
+            if (theEvent == Enums.EventActivation.AuraCurseSet && auxString == "rust" && IsLivingNPC(__instance) && CharacterObjectHavePerk(target, "rust0h"))
             {
-                LogDebug("rust1f");
+                // LogDebug("rust0h");
                 __instance.DispelAuras(1);
             }
             // decay1g"] = "When you apply Decay, apply and suffer 1 Rust
             if (theEvent == Enums.EventActivation.AuraCurseSet && auxString == "decay" && IsLivingNPC(__instance) && IsLivingHero(target) && CharacterObjectHavePerk(target, "decay1g"))
             {
-                LogDebug("decay1g");
+                // LogDebug("decay1g");
                 target.SetAura(__instance, GetAuraCurseData("rust"), 1, useCharacterMods: true);
                 target.SetAura(target, GetAuraCurseData("rust"), 1, useCharacterMods: true);
             }
@@ -456,7 +456,6 @@ namespace PerkManager
             {
                 // block5c: At start of combat, apply 2 Block to all heroes.";
                 // LogDebug("block5c");
-                LogDebug("block5c");
                 bool allHeroes = true;
                 bool allNpcs = false;
                 ApplyAuraCurseTo("block", 2, allHeroes, allNpcs, false, false, ref __instance, ref teamHero, ref teamNpc, "", "");
@@ -465,7 +464,6 @@ namespace PerkManager
             {
                 // shield5c: At start of combat, apply 4 Shield to all heroes.";
                 // LogDebug("shield5c");
-                LogDebug("shield5c");
                 bool allHeroes = true;
                 bool allNpcs = false;
                 ApplyAuraCurseTo("shield", 4, allHeroes, allNpcs, false, false, ref __instance, ref teamHero, ref teamNpc, "", "");
@@ -473,15 +471,15 @@ namespace PerkManager
             // fortify1f: At the start of combat, apply 2 Fortify to all heroes. Fortify on all heroes has a maximum of 2.
             if (theEvent == Enums.EventActivation.BeginCombat && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "fortify1f"))
             {
-                LogDebug("fortify1f");
+                // LogDebug("fortify1f");
                 bool allHeroes = true;
                 bool allNpcs = false;
                 ApplyAuraCurseTo("fortify", 2, allHeroes, allNpcs, false, false, ref __instance, ref teamHero, ref teamNpc, "", "");
             }
-            if (theEvent == Enums.EventActivation.BeginCombat && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "rust1e"))
+            if (theEvent == Enums.EventActivation.BeginCombat && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "rust0g"))
             {
-                // rust1e:At the start of combat, apply 2 Rust to eveyone.";
-                LogDebug("rust1e");
+                // rust0g:At the start of combat, apply 2 Rust to eveyone.";
+                // LogDebug("rust0g");
                 bool allHeroes = true;
                 bool allNpcs = false;
                 ApplyAuraCurseTo("rust", 2, allHeroes, allNpcs, false, false, ref __instance, ref teamHero, ref teamNpc, "", "");
@@ -490,12 +488,12 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.CharacterKilled && !target.IsHero && target != null && TeamHasPerk("poison2g") && target.HasEffect("poison"))
             {
                 // poison2g: When a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
-                LogDebug("poison2g");
+                // LogDebug("poison2g");
                 if (poison2gFlag)
                 {
                     poison2gFlag = false;
                     int n = target.GetAuraCharges("poison");
-                    LogDebug("poison2g - n charges: " + n);
+                    // LogDebug("poison2g - n charges: " + n);
                     int toApply = RoundToInt(n * 0.5f);
                     Character randomNPC = GetRandomCharacter(teamNpc);
                     // LogDebug("poison2g - random npc index: " + randomNPC.NPCIndex);
@@ -508,7 +506,7 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.CharacterKilled && !target.IsHero && target != null && TeamHasPerk("thorns1e") && target.HasEffect("thorns"))
             {
                 // thorns1e when a monster with Thorns dies, transfer their Thorns charges to a random hero.
-                LogDebug("thorns1e");
+                // LogDebug("thorns1e");
                 if (thorns1eFlag)
                 {
                     thorns1eFlag = false;
@@ -525,9 +523,9 @@ namespace PerkManager
                 if (bleed2gFlag)
                 {
                     bleed2gFlag = false;
-                    LogDebug("bleed2g");
+                    // LogDebug("bleed2g");
                     int n = target.GetAuraCharges("bleed");
-                    LogDebug("bleed2g Bleed charges: " + n);
+                    // LogDebug("bleed2g Bleed charges: " + n);
                     int toDeal = RoundToInt(n * 0.25f);
                     DealIndirectDamageToAllMonsters(Enums.DamageType.None, toDeal);
 
@@ -538,7 +536,7 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.Hitted && IsLivingNPC(__instance) && IsLivingHero(target) && CharacterObjectHavePerk(target, "bleed2e"))
             {
                 // bleed2e: When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
-                LogDebug("bleed2e");
+                // LogDebug("bleed2e");
                 int n = __instance.GetAuraCharges("bleed");
                 int toHeal = RoundToInt(n * 0.25f);
                 target.IndirectHeal(toHeal);
@@ -548,7 +546,7 @@ namespace PerkManager
             {
                 // spark2f: When you hit an enemy with Sparks, deal Lightning damage equal to 20% of their Sparks to their sides.";
 
-                LogDebug($"spark2f Hit by: {target.SourceName}");
+                // LogDebug($"spark2f Hit by: {target.SourceName}");
 
                 int n = __instance.GetAuraCharges("spark");
                 int toDeal = RoundToInt(n * 0.2f);
@@ -558,7 +556,7 @@ namespace PerkManager
                 {
                     if (npcSides[index].Alive && npcSides[index] != null)
                     {
-                        LogDebug($"spark2f dealing damage to: {npcSides[index].SourceName}");
+                        // LogDebug($"spark2f dealing damage to: {npcSides[index].SourceName}");
                         npcSides[index].IndirectDamage(Enums.DamageType.Lightning, toDeal);
                     }
                 }
@@ -609,7 +607,7 @@ namespace PerkManager
             // Scourge0i: Dark explosions deal 10% of their damage to the target's sides for each charge of Scourge.
             // if (theEvent == Enums.EventActivation && IsLivingNPC(__instance))
             // {
-            //     LogDebug("Scourge1f");
+            //     LogDebug("scourge0f");
             //     float multiplier = 0.1f * __instance.GetAuraCharges("scourge");
             //     List<NPC> sides = MatchManager.Instance.GetNPCSides(__instance.NPCIndex);
             //     for (int index = 0; index < sides.Count; ++index)
@@ -624,7 +622,7 @@ namespace PerkManager
             if (theEvent == Enums.EventActivation.Damaged && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "taunt1g") && __instance.HasEffect("taunt"))
             {
                 // taunt1g: Taunt on you is not lost at the start of turn, but 1 charge is consumed when you take damage
-                LogDebug("taunt1g");
+                // LogDebug("taunt1g");
                 __instance.ConsumeEffectCharges("taunt", 1);
             }
         }
@@ -636,7 +634,7 @@ namespace PerkManager
             // energy2e: Energy Regeneration -1. 
             if (CharacterObjectHavePerk(__instance, "energy2e") && __instance.IsHero && __instance.Alive && __instance != null)
             {
-                LogDebug("energy2e");
+                // LogDebug("energy2e");
                 __result -= 1;
                 if (__result < 0)
                     __result = 0;
@@ -647,7 +645,7 @@ namespace PerkManager
         [HarmonyPatch(typeof(Character), nameof(Character.DamageReflected))]
         public static bool DamageReflectedPrefix(ref Character __instance, Hero theCasterHero, NPC theCasterNPC, int damageAmount = 0, int blockedAmount = 0)
         {
-            // zeal1g: Zeal on heroes makes Thorns apply Burn rather than dealing damage
+            // zeal0j: Zeal on heroes makes Thorns apply Burn rather than dealing damage
 
             if (__instance.IsHero && theCasterHero != null)
             {
@@ -669,9 +667,9 @@ namespace PerkManager
                 {
                     case Enums.RefectedDamageModifierType.DamagePerAuraCharge:
                         {
-                            if (aCData.Id == "thorns" && theCasterNPC != null && IfCharacterHas(__instance, CharacterHas.Perk, "zeal1g", AppliesTo.Heroes) && __instance.HasEffect("zeal"))
+                            if (aCData.Id == "thorns" && theCasterNPC != null && IfCharacterHas(__instance, CharacterHas.Perk, "zeal0j", AppliesTo.Heroes) && __instance.HasEffect("zeal"))
                             {
-                                // LogDebug("zeal1g - applying burn instead of damage");
+                                // LogDebug("zeal0j - applying burn instead of damage");
                                 theCasterNPC.SetAura(__instance, Globals.Instance.GetAuraCurseData("burn"), Functions.FuncRoundToInt((float)auraList[i].AuraCharges * 0.5f));
                                 if (aCData.DamageReflectedConsumeCharges > 0)
                                 {
@@ -772,7 +770,7 @@ namespace PerkManager
         {
             if (TeamHasPerk("weak1b") && __instance != null && __instance.Alive && IsLivingNPC(theCaster))
             {
-                LogDebug("weak1b");
+                // LogDebug("weak1b");
                 if (theCaster.HasEffect("weak"))
                     charges = Functions.FuncRoundToInt(0.8f * charges);
             }
@@ -787,6 +785,7 @@ namespace PerkManager
             // mitigate1c: At the start of your turn, gain 7 Block per Mitigate charge.";
             // health6c: At the start of your turn, if you are at max HP, gain 2 Vitality.";
             // chill2f: At the start of your turn, suffer 3 Chill. Chill on this hero reduces Speed by 1 for every 10 charges";
+            // rust0f: Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust
             poison2gFlag = true;
             bleed2gFlag = true;
             thorns1eFlag = true;
@@ -799,7 +798,7 @@ namespace PerkManager
             Hero[] teamHero = MatchManager.Instance.GetTeamHero();
             NPC[] teamNPC = MatchManager.Instance.GetTeamNPC();
 
-            if (CharacterObjectHavePerk(__instance, "rust1d"))
+            if (CharacterObjectHavePerk(__instance, "rust0f"))
             {
                 int n_charges = 2;
                 __instance.SetAuraTrait(__instance, "rust", n_charges);
@@ -951,7 +950,7 @@ namespace PerkManager
 
             if (CharacterObjectHavePerk(character, "inspire0d"))
             {
-                LogDebug("Handsize at End of Turn: " + __instance.CountHeroHand());
+                // LogDebug("Handsize at End of Turn: " + __instance.CountHeroHand());
                 if (__instance.CountHeroHand() >= 4)
                 {
                     character.SetAuraTrait(character, "inspire", 1);
@@ -960,14 +959,14 @@ namespace PerkManager
 
             if (CharacterObjectHavePerk(character, "health6d") && character.GetHpLeftForMax() <= 0)
             {
-                LogDebug("health6d");
+                // LogDebug("health6d");
                 character.SetAuraTrait(character, "vitality", 2);
             }
 
 
             if (TeamHasPerk("fury1d") && character.HasEffect("fury"))
             {
-                LogDebug("fury1d");
+                // LogDebug("fury1d");
                 float fractionSpread = 0.7f;
                 if ((UnityEngine.Object)character.HeroItem != (UnityEngine.Object)null)
                 {
@@ -1086,10 +1085,10 @@ namespace PerkManager
                 return;
 
             Hero[] teamHero = MatchManager.Instance.GetTeamHero();
-            // zeal1e: When this hero loses Zeal, deal indirect Holy and Fire damage equal to 4x the number of stacks lost to all monsters.
-            if (CharacterHasPerkForConsume("zeal1e", __instance.IsHero, AtOManager.Instance, __instance))
+            // zeal0h: When this hero loses Zeal, deal indirect Holy and Fire damage equal to 4x the number of stacks lost to all monsters.
+            if (CharacterHasPerkForConsume("zeal0h", __instance.IsHero, AtOManager.Instance, __instance))
             {
-                LogDebug("zeal1e");
+                LogDebug("zeal0h");
                 int zealCharges = __instance.GetAuraCharges("zeal");
                 AuraCurseData zealData = GetAuraCurseData("zeal");
                 int chargesRemoved;
@@ -1103,8 +1102,11 @@ namespace PerkManager
                 }
                 int damageToDeal = 4 * chargesRemoved;
 
-                DealIndirectDamageToAllMonsters(Enums.DamageType.Holy, damageToDeal);
-                DealIndirectDamageToAllMonsters(Enums.DamageType.Fire, damageToDeal);
+                int damageToDealHoly = __instance.DamageWithCharacterBonus(damageToDeal, Enums.DamageType.Holy, Enums.CardClass.None);
+                // int damageToDealFire = __instance.DamageWithCharacterBonus(damageToDeal, Enums.DamageType.Fire, Enums.CardClass.None);
+
+                DealIndirectDamageToAllMonsters(Enums.DamageType.Holy, damageToDealHoly);
+                // DealIndirectDamageToAllMonsters(Enums.DamageType.Fire, damageToDealFire);
             }
 
             // paralyze1b: At the end of your turn, dispel Paralyze from all heroes.";
@@ -1158,7 +1160,7 @@ namespace PerkManager
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.GlobalAuraCurseModificationByTraitsAndItems))]
-        public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixGeneral(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
+        public static void GlobalAuraCurseModificationByTraitsAndItemsPostfix(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
             // LogDebug("Executing AC Modifications - General");
@@ -1278,33 +1280,7 @@ namespace PerkManager
                         __result.CharacterStatChargesMultiplierNeededForOne = hasRust ? 2 : 1;
                     }
                     break;
-            }
-        }
 
-
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.GlobalAuraCurseModificationByTraitsAndItems))]
-        public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixPhysical(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
-        {
-
-            // LogDebug("Executing AC Modifications - Physical");
-
-
-            Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
-            Character notCharacterOfInterest = _type == "set" ? _characterCaster : _characterTarget;
-
-            if (characterOfInterest == null) { return; }
-
-            bool hasRust = false;
-            if (characterOfInterest != null)
-            {
-                hasRust = characterOfInterest.HasEffect("rust");
-            }
-
-
-            switch (_acId)
-            {
                 // fortify1e: Fortify on all heroes is capped at 5 but reduces damage done by 1 per charge.  
                 // fortify1f: At the start of combat, apply 2 Fortify to all heroes. Fortify on all heroes has a maximum of 2.
                 case "fortify":
@@ -1333,10 +1309,15 @@ namespace PerkManager
                     // sharp1d: shadow damaage for all heroes
                     // sharp1e: If Sharp on a hero would increase a damage type, it increases it by 1.5 damage per charge. Sharp on heroes only stacks to 25.";
                     // insane2e: Insane on this hero increases the effectiveness of sharp by 1% per charge.";
+                    // zeal0e: While this hero has Zeal, Sharp increases their Holy damage by 1 per charge.
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperksharp1d", AppliesTo.Heroes))
                     {
                         // LogDebug("sharp1d");
                         __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Shadow, 0, 1, 0);
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "zeal0e", AppliesTo.ThisHero) && characterOfInterest.HasEffect("zeal"))
+                    {
+                        __result = AtOManager.Instance.GlobalAuraCurseModifyDamage(__result, Enums.DamageType.Holy, 0, 1, 0);
                     }
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "sharp1g", AppliesTo.ThisHero))
@@ -1529,7 +1510,7 @@ namespace PerkManager
                     // decay1e: Every stack of decay increases the damage dealt by poison by 20%.";
 
 
-                    // rust1c: "Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.";
+                    // rust0c: "Rather than increasing Poison Damage by 50%, Rust increases Poison Damage by 10% per stack (up to a max of 200%). Only affects Poison Damage.";
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkpoison2c", AppliesTo.Monsters))
                     {
@@ -1563,15 +1544,15 @@ namespace PerkManager
                         __result.DamageWhenConsumedPerCharge *= multiplier;
                     }
 
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust1c", AppliesTo.Global))
-                    {
-                        // LogDebug("rust1c");
-                        float undoRust = 1.0f / 1.5f;
-                        __result.DamageWhenConsumedPerCharge *= undoRust;
-                        int nRust = characterOfInterest.GetAuraCharges("rust");
-                        float newRustMultiplier = Min(1 + 0.1f * nRust, 3.0f); // caps at +200%
-                        __result.DamageWhenConsumedPerCharge *= newRustMultiplier;
-                    }
+                    // if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust0c", AppliesTo.Global))
+                    // {
+                    //     // LogDebug("rust0c");
+                    //     float undoRust = 1.0f / 1.5f;
+                    //     __result.DamageWhenConsumedPerCharge *= undoRust;
+                    //     int nRust = characterOfInterest.GetAuraCharges("rust");
+                    //     float newRustMultiplier = Min(1 + 0.1f * nRust, 3.0f); // caps at +200%
+                    //     __result.DamageWhenConsumedPerCharge *= newRustMultiplier;
+                    // }
 
                     break;
 
@@ -1675,41 +1656,28 @@ namespace PerkManager
                         __result.ConsumedAtTurn = false;
                     }
                     break;
-            }
-        }
 
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.GlobalAuraCurseModificationByTraitsAndItems))]
-        public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixElemental(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
-        {
-
-            // LogDebug("Executing AC Modifications - Elemental");
-
-
-            Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
-            Character notCharacterOfInterest = _type == "set" ? _characterCaster : _characterTarget;
-            if (characterOfInterest == null) { return; }
-
-            bool hasRust = false;
-            if (characterOfInterest != null)
-            {
-                hasRust = characterOfInterest.HasEffect("rust");
-            }
-
-
-            if (__result == null || (_characterCaster == null && _type == "consume") || (_characterTarget == null && _type == "set"))
-                return;
-
-            switch (_acId)
-            {
+                // rust0f: Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.";
+                // rust0e: Rust on enemies does not Prevent or Dispel Reinforce. Rust on enemies reduces Physical resistance by 5% per charge.
                 case "rust":
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust1d", AppliesTo.ThisHero))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust0f", AppliesTo.ThisHero))
                     {
-                        // LogDebug("rust1d");
+                        // LogDebug("rust0f");
                         AuraCurseData noneAC = GetAuraCurseData("None");
                         __result.PreventedAuraCurse = noneAC;
                         __result.PreventedAuraCurseStackPerStack = 0;
                         __result.RemoveAuraCurse = noneAC;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust0e", AppliesTo.ThisHero))
+                    {
+                        // LogDebug("rust0f");
+                        AuraCurseData noneAC = GetAuraCurseData("None");
+                        __result.PreventedAuraCurse = noneAC;
+                        __result.PreventedAuraCurseStackPerStack = 0;
+                        __result.RemoveAuraCurse = noneAC;
+                        __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Slashing, 0, -5f);
+                        __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Piercing, 0, -5f);
+                        __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Blunt, 0, -5f);
                     }
                     break;
                 // taunt1f: Taunt on heroes increases maximum Powerful by 1 per charge.
@@ -1850,11 +1818,11 @@ namespace PerkManager
                     }
                     break;
                 case "wet":
-                    // zeald: Zeal on heroes and enemies increases all resistances by 0.5% per Wet charge
                     // wet1d: Wet does not Dispel or Prevent Burn.";
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "zeal1d", AppliesTo.Global))
+                    // zeal0g: While any hero and monster has Zeal, Wet increases all resistances by 0.5%
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "zeal0g", AppliesTo.Global) && characterOfInterest.HasEffect("zeal"))
                     {
-                        // LogDebug("zeal1d");
+                        // LogDebug("zeal0g");
                         __result.ResistModified3 = Enums.DamageType.All;
                         // __result.ResistModifiedPercentagePerStack3 = 0.5f;
                         __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.All, 0, 0.5f);
@@ -1868,21 +1836,29 @@ namespace PerkManager
                         __result.PreventedAuraCurseStackPerStack = 0;
                         __result.RemoveAuraCurse = noneAC;
                     }
-                    bool hasRust1b = IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust1b", AppliesTo.Monsters);
-                    if (hasRust1b)
+                    bool hasRust0d = IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust0bd", AppliesTo.Monsters);
+                    if (hasRust0d)
                     {
-                        __result.IncreasedDirectDamageReceivedPerStack = 1.5f;
+                        __result.IncreasedDirectDamageReceivedPerStack *= 2.25f;
+                        __result.IncreasedDirectDamageReceivedPerStack2 *= 2.25f;
+                        __result.ResistModifiedPercentagePerStack *= 2.25f;
+                        __result.ResistModifiedPercentagePerStack2 *= 2.25f;
+                        __result.ResistModifiedPercentagePerStack3 *= 2.25f;
                     }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkwet1a", AppliesTo.Monsters) && hasRust1b)
-                    {
-                        __result.IncreasedDamageReceivedType2 = Enums.DamageType.Cold;
-                        __result.IncreasedDirectDamageReceivedPerStack2 = 1.5f;
-                    }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkwet1b", AppliesTo.Monsters) && hasRust1b)
-                    {
-                        __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Lightning, 0, -1.5f);
-                        __result.AuraConsumed = 0;
-                    }
+                    // if (hasRust0d)
+                    // {
+                    //     __result.IncreasedDirectDamageReceivedPerStack = 1.5f;
+                    // }
+                    // if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkwet1a", AppliesTo.Monsters) && hasRust0d)
+                    // {
+                    //     __result.IncreasedDamageReceivedType2 = Enums.DamageType.Cold;
+                    //     __result.IncreasedDirectDamageReceivedPerStack2 = 1.5f;
+                    // }
+                    // if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkwet1b", AppliesTo.Monsters) && hasRust0d)
+                    // {
+                    //     __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Lightning, 0, -1.5f);
+                    //     __result.AuraConsumed = 0;
+                    // }
                     break;
 
                 case "spark":
@@ -1921,44 +1897,7 @@ namespace PerkManager
                         __result.AuraDamageIncreasedPerStack = 0.2f;
                     }
                     break;
-            }
-        }
 
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(AtOManager), nameof(AtOManager.GlobalAuraCurseModificationByTraitsAndItems))]
-        public static void GlobalAuraCurseModificationByTraitsAndItemsPostfixMystical(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
-        {
-
-            // LogDebug("Executing AC Modifications - Mystical");
-
-            // bool ConsumeAppliesToHeroes = false; //flag1
-            // bool SetAppliesToHeroes = false; //flag2
-            // bool ConsumeAppliesToMonsters = false; //!flag1
-            // bool SetAppliesToMonsters = false; //!flag1
-            // bool AppliesGlobally = true;
-
-            if (_characterCaster != null)
-            {
-                // ConsumeAppliesToHeroes = _characterCaster.IsHero;
-                // ConsumeAppliesToMonsters = !_characterCaster.IsHero;
-            }
-            if (_characterTarget != null)
-            {
-                // SetAppliesToHeroes = _characterTarget.IsHero;
-                // SetAppliesToMonsters = !_characterTarget.IsHero;
-            }
-            Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
-            Character notCharacterOfInterest = _type == "set" ? _characterCaster : _characterTarget;
-            if (characterOfInterest == null) { return; }
-
-            bool hasRust = false;
-            if (characterOfInterest != null)
-            {
-                hasRust = characterOfInterest.HasEffect("rust");
-            }
-
-            switch (_acId)
-            {
                 case "regeneration":
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "regeneration1d", AppliesTo.Heroes))
                     {
@@ -2017,13 +1956,21 @@ namespace PerkManager
                     break;
 
                 case "zeal":
-                    // zealb: Zeal on this hero loses 3 charges per turn rather than all charges
-                    // zealc: Zeal on all heroes can stack, but reduces Speed by 2 per charge
-                    // zeald: Zeal on heroes and enemies increases all resistances by 0.5% per Wet charge
-                    // zeale: When this hero loses Zeal, deal indirect Holy and Fire damage equal to 4x the number of stacks lost to all monsters.
-                    // zealg: If this hero dies with Zeal, deal indirect Mind damage to all enemies equal to 5x their Burn/Insane stacks.
-                    // zeal1f: Zeal on this hero can stack, but only increases Fire resistance by 2.5% per charge. At the end of turn, suffer 5 Burn per charge.
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "zeal1f", AppliesTo.ThisHero))
+                    // zeal0d: Zeal on this hero increases All Damage done by 1.5% per Bleed charge on this hero
+                    // zeal0e: While this hero has Zeal, Sharp increases their Holy damage by 1 per charge.
+                    // zeal0f: Zeal on all heroes increases Speed by 2 per charge.
+                    // zeal0g: When this hero loses Zeal, deal indirect Holy and Fire damage equal to 4x the number of stacks lost to all monsters.
+                    // zeal0h: When this hero loses Zeal at end of turn, deal indirect Holy and Fire damage to all monsters equal to 4x the number of charges lost..
+                    // zeal0i: Zeal on this hero can stack, but no longer increases Resistances. At the end of turn, suffer 5 Burn per charge..
+                    // zeal0j: Zeal on heroes makes Thorns apply half their damage as Burn rather than dealing damage (untested).
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "zeal0d", AppliesTo.ThisHero))
+                    {
+                        // LogDebug("zeal0d");
+                        __result.AuraDamageType = Enums.DamageType.All;
+                        __result.AuraDamageIncreasedPercent = Mathf.RoundToInt(1.5f * characterOfInterest.GetAuraCharges("bleed"));
+                    }
+
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "zeal0i", AppliesTo.ThisHero))
                     {
                         __result.GainCharges = true;
                         __result.ResistModified = Enums.DamageType.None;
@@ -2031,19 +1978,11 @@ namespace PerkManager
                         __result.GainAuraCurseConsumption = GetAuraCurseData("burn");
                         __result.GainAuraCurseConsumptionPerCharge = 5;
                     }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "zeal1b", AppliesTo.ThisHero))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "zeal0f", AppliesTo.Heroes))
                     {
-                        __result.ConsumeAll = false;
-                        __result.AuraConsumed = 3;
-                    }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "zeal1c", AppliesTo.Heroes))
-                    {
-                        // LogDebug("zeal1c");
-                        __result.GainCharges = true;
-                        __result.MaxCharges = ZealCap.Value;
-                        __result.MaxMadnessCharges = ZealCap.Value;
+                        // LogDebug("zeal0f");
                         __result.CharacterStatModified = Enums.CharacterStat.Speed;
-                        __result.CharacterStatModifiedValuePerStack = -2;
+                        __result.CharacterStatModifiedValuePerStack = 2;
                     }
                     break;
 

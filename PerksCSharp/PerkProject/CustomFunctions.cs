@@ -13,10 +13,7 @@ namespace PerkManager
     public class CustomFunctions
     {
 
-        public static void PLog(string s)
-        {
-            Plugin.Log.LogDebug(debugBase + s);
-        }
+
         public static void TraitHeal(ref Character _character, ref Character _target, int healAmount, string traitName)
         {
             int _hp = healAmount;
@@ -115,13 +112,13 @@ namespace PerkManager
         public static void WhenYouGainXGainY(string gainedAuraCurse, string desiredAuraCurse, string appliedAuraCurse, int n_charges_incoming, int n_bonus_charges, float multiplier, ref Character _character, string traitName)
         {
             // Grants a multiplier or bonus charged amount of a second auraCurse given a first auraCurse
-            //Plugin.Log.LogDebug("WhenYouGainXGainY Debug Start");
+            //LogDebug("WhenYouGainXGainY Debug Start");
             if (MatchManager.Instance != null && gainedAuraCurse != null && _character.HeroData != null)
             {
-                //Plugin.Log.LogDebug("WhenYouGainXGainY inside conditions 1");
+                //LogDebug("WhenYouGainXGainY inside conditions 1");
                 if (gainedAuraCurse == desiredAuraCurse)
                 {
-                    //Plugin.Log.LogDebug("WhenYouGainXGainY inside conditions 2");
+                    //LogDebug("WhenYouGainXGainY inside conditions 2");
                     int toApply = RoundToInt((n_charges_incoming + n_bonus_charges) * multiplier);
                     _character.SetAuraTrait(_character, appliedAuraCurse, toApply);
                     _character.HeroItem.ScrollCombatText(Texts.Instance.GetText("traits_" + traitName), Enums.CombatScrollEffectType.Trait);
@@ -132,13 +129,13 @@ namespace PerkManager
         public static void WhenYouPlayXGainY(Enums.CardType desiredCardType, string desiredAuraCurse, int n_charges, CardData castedCard, ref Character _character, string traitName)
         {
             // Grants n_charges of desiredAuraCurse to self when you play a desired cardtype
-            //Plugin.Log.LogDebug("WhenYouPlayXGainY Debug Start");
+            //LogDebug("WhenYouPlayXGainY Debug Start");
             if (MatchManager.Instance != null && castedCard != null && _character.HeroData != null)
             {
-                //Plugin.Log.LogDebug("WhenYouPlayXGainY inside conditions 1");
+                //LogDebug("WhenYouPlayXGainY inside conditions 1");
                 if (castedCard.GetCardTypes().Contains(desiredCardType))
                 {
-                    //Plugin.Log.LogDebug("WhenYouPlayXGainY inside conditions 2");
+                    //LogDebug("WhenYouPlayXGainY inside conditions 2");
 
                     _character.SetAuraTrait(_character, desiredAuraCurse, n_charges);
                     _character.HeroItem.ScrollCombatText(Texts.Instance.GetText("traits_" + traitName), Enums.CombatScrollEffectType.Trait);
@@ -338,7 +335,7 @@ namespace PerkManager
 
         public static void DealIndirectDamageToAllMonsters(Enums.DamageType damageType, int amount)
         {
-            Plugin.Log.LogDebug(debugBase + "Dealing Indirect Damage");
+            // LogDebug(debugBase + "Dealing Indirect Damage");
             NPC[] teamNpc = MatchManager.Instance.GetTeamNPC();
             for (int index = 0; index < teamNpc.Length; ++index)
             {
@@ -354,7 +351,7 @@ namespace PerkManager
         {
             if (array == null)
             {
-                Plugin.Log.LogDebug(debugBase + "Null Array");
+                LogDebug(debugBase + "Null Array");
 
             }
             List<Character> validCharacters = [];
@@ -362,7 +359,7 @@ namespace PerkManager
             {
                 if (array[index] == null)
                 {
-                    Plugin.Log.LogDebug(debugBase + "Null index");
+                    LogDebug(debugBase + "Null index");
                     continue;
                 }
                 Character _character = array[index];
@@ -428,7 +425,7 @@ namespace PerkManager
 
         public static void CastTargetCard(string cardToCast)
         {
-            //Plugin.Log.LogDebug("Binbin PestilyBiohealer - trying to cast card: "+cardToCast);
+            //LogDebug("Binbin PestilyBiohealer - trying to cast card: "+cardToCast);
             CardData card = Globals.Instance.GetCardData(cardToCast);
             MatchManager.Instance.StartCoroutine(MatchManager.Instance.CastCard(_automatic: true, _card: card, _energy: 0));
 
@@ -507,8 +504,8 @@ namespace PerkManager
                         break;
                 }
             }
-            if (hasX && correctCharacterType)
-                LogDebug($"Applying Perk - {id}");
+            // if (hasX && correctCharacterType)
+            // LogDebug($"Applying Perk - {id}");
 
             return hasX && correctCharacterType;
         }
