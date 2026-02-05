@@ -19,6 +19,7 @@ using System.Dynamic;
 using UnityEngine.UIElements;
 using UnityEngine.TextCore.Text;
 using System.Data;
+using static AuraCurseData;
 
 
 namespace PerkManager
@@ -963,6 +964,13 @@ namespace PerkManager
                 character.SetAuraTrait(character, "vitality", 2);
             }
 
+            if (CharacterObjectHavePerk(character, "leech0e"))
+            {
+                // Leech explodes at the end of turn
+                // LogDebug("leech0e");
+                AtOManager.Instance.DoLeachExplosion(character);
+            }
+
 
             if (TeamHasPerk("fury1d") && character.HasEffect("fury"))
             {
@@ -1178,6 +1186,50 @@ namespace PerkManager
 
             switch (_acId)
             {
+
+
+                // leech0d: Charges applied +1. Decrease healing done by Leech by 50%.
+                // leech0e: Leech explodes at the end of turn.
+                // leech0f: Increase curses applied by Leech by 100%. Leech no longer reduces enemy resistances.
+
+                case "leech":
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "leech0d", AppliesTo.Heroes))
+                    {
+                        // LogDebug("leech0d");
+                        __result.HealPerChargeOnExplode *= 0.5f;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "leech0d", AppliesTo.Heroes))
+                    {
+                        // LogDebug("leech0d");
+                        __result.ACChargesPerStackChargeOnExplode *= 2;
+                        __result.ResistModified = Enums.DamageType.None;
+                        __result.ResistModifiedValue = 0;
+                    }
+                    break;
+
+                // infuse0d: Charges applied +1. Infuse on all heroes loses 3 charges per turn.
+                // infuse0e: Max. Infuse charges +4. Infuse no longer increases resistances.
+                // infuse0f: Infuse on heroes increases damage by 0.5 per Reinforce/Insulate/Courage charge rather than 1/Infuse charge.
+                // infuse0g: Infuse on heroes increases the effectiveness of Reinforce/Insulate/Courage by 15% per charge rather than 50%.
+
+                case "infuse":
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "infuse0d", AppliesTo.Heroes))
+                    {
+                        // LogDebug("infuse0d");
+                        __result.AuraConsumed = 3;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "infuse0e", AppliesTo.Heroes))
+                    {
+                        // LogDebug("infuse0e");
+                        __result.MaxCharges += 4;
+                        __result.MaxMadnessCharges += 4;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "infuse0f", AppliesTo.Heroes))
+                    {
+                        // LogDebug("infuse0e");
+                        __result.AuraDamageConditionalBonuses = [];
+                    }
+                    break;
                 case "evasion":
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "evasion0b", AppliesTo.Heroes))
                     {
@@ -1618,6 +1670,14 @@ namespace PerkManager
                         __result.ResistModifiedValue3 = 40;
                     }
 
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "infuse0f", AppliesTo.Heroes) && characterOfInterest.HasEffect("infuse"))
+                    {
+                        __result.AuraDamageType = Enums.DamageType.Slashing;
+                        __result.AuraDamageType = Enums.DamageType.Piercing;
+                        __result.AuraDamageType = Enums.DamageType.Blunt;
+                        __result.AuraDamageIncreasedPerStack = __result.AuraDamageIncreasedPerStack2 = __result.AuraDamageIncreasedPerStack3 = 1;
+                    }
+
                     break;
 
                 case "block":
@@ -1709,6 +1769,13 @@ namespace PerkManager
                     }
                     break;
                 case "insulate":
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "infuse0f", AppliesTo.Heroes) && characterOfInterest.HasEffect("infuse"))
+                    {
+                        __result.AuraDamageType = Enums.DamageType.Fire;
+                        __result.AuraDamageType = Enums.DamageType.Lightning;
+                        __result.AuraDamageType = Enums.DamageType.Cold;
+                        __result.AuraDamageIncreasedPerStack = __result.AuraDamageIncreasedPerStack2 = __result.AuraDamageIncreasedPerStack3 = 1;
+                    }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkinsulate1b", AppliesTo.Heroes))
                     {
                         __result.ResistModifiedValue = 40;
@@ -1907,9 +1974,11 @@ namespace PerkManager
 
                     break;
                 case "dark":
+                    // scourge0e: Dark no longer explodes. Every charge of Scourge increases damage due to other curses by 5%.";
                     // dark2e: Dark explosions deal Fire damage. Dark reduces Fire resistance by 0.25% per charge in addition to reducing Shadow resistance..";
                     // burn1e: Burn increases the damage dealt by Dark explosions by 0.5% per charge.";
                     // sanctify2d: Every 5 stacks of Sanctify increase the number of Dark charges needed for an explosion by 1.";
+
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkdark2b", AppliesTo.ThisHero))
                     {
                         __result.Removable = false;
@@ -1931,9 +2000,11 @@ namespace PerkManager
                         float multiplier = 1 + 0.05f * n_charges;
                         __result.DamageWhenConsumedPerCharge *= multiplier;
                     }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge0e", AppliesTo.Global))
+                    {
+                        __result.ExplodeAtStacks = -1;
+                    }
                     break;
-
-
 
                 case "decay":
                     // decay1d: Decay purges Insulate.";
@@ -1947,6 +2018,13 @@ namespace PerkManager
                     break;
 
                 case "courage":
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "infuse0f", AppliesTo.Heroes) && characterOfInterest.HasEffect("infuse"))
+                    {
+                        __result.AuraDamageType = Enums.DamageType.Holy;
+                        __result.AuraDamageType = Enums.DamageType.Shadow;
+                        __result.AuraDamageType = Enums.DamageType.Mind;
+                        __result.AuraDamageIncreasedPerStack = __result.AuraDamageIncreasedPerStack2 = __result.AuraDamageIncreasedPerStack3 = 1;
+                    }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkcourage1b", AppliesTo.Heroes))
                     {
                         __result.ResistModifiedValue = 40;
@@ -1987,19 +2065,20 @@ namespace PerkManager
                     break;
 
                 case "scourge":
-                    // scourge0d: Scourge +1.";
-                    // scourge0e: Scourge on heroes and monsters loses 3 charges per turn rather than all charges.
+                    // scourge0d: Scourge on monsters also deals 1 Shadow damage per Sight charge (Not working) TODO
+                    // scourge0e: Dark no longer explodes. Every charge of Scourge increases damage due to other curses by 5%.
                     // scourge0f: Scourge on monsters can Stack but increases all resists by 3% per stack.
                     // scourge0g: Scourge deals damage based on Sight rather than Chill.
                     // scourge0h: Scourge on monsters increases burn damage by 15%/stack
                     // scourge0i: Dark explosions deal 10% of their damage to the target's sides for each charge of Scourge
                     // scourge0j: If an enemy has two or less curses, Scourge deals 4x damage
 
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge0e", AppliesTo.Global))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge0d", AppliesTo.Monsters))
                     {
-                        __result.ConsumeAll = false;
-                        __result.AuraConsumed = IfCharacterHas(characterOfInterest, CharacterHas.Trait, "moontouchedtrait4a", AppliesTo.Global) ? 0 : 3;
+                        __result.DamageTypeWhenConsumed = Enums.DamageType.Shadow;
+                        __result.DamageWhenConsumed += characterOfInterest.GetAuraCharges("sight");
                     }
+
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge0f", AppliesTo.Monsters))
                     {
                         __result.GainCharges = true;
@@ -2052,6 +2131,11 @@ namespace PerkManager
                     }
                     break;
             }
+            if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "scourge0e", AppliesTo.Monsters))
+            {
+                __result.DamageWhenConsumed = Mathf.RoundToInt(characterOfInterest.GetAuraCharges("scourge") * 0.05f + 1) * __result.DamageWhenConsumed;
+                __result.DamageWhenConsumedPerCharge *= 1 + characterOfInterest.GetAuraCharges("scourge") * 0.05f;
+            }
         }
 
         [HarmonyPostfix]
@@ -2070,6 +2154,37 @@ namespace PerkManager
                 if (bonusBleedCharges != 0) { __result["bleed"] = bonusBleedCharges; }
             }
 
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(AtOManager), "UpdateResistanceModifiersBasedOnInfuse")]
+        private static bool UpdateResistanceModifiersBasedOnInfusePrefix(string _type, Character _characterCaster, Character _characterTarget, ref AuraCurseData AC)
+        {
+            int infuseCharges = 0;
+            if (_characterCaster != null && _type == "consume")
+            {
+                infuseCharges = _characterCaster.GetAuraCharges("infuse");
+            }
+            else if (_characterTarget != null)
+            {
+                infuseCharges = _characterTarget.GetAuraCharges("infuse");
+            }
+            if (infuseCharges > 0)
+            {
+
+                if (_characterCaster != null && CharacterObjectHavePerk(_characterCaster, "infuse0g"))
+                {
+                    float resistMultiplier = 1f + 0.10f * infuseCharges;
+                    AC.ResistModifiedValue *= resistMultiplier;
+                    AC.ResistModifiedValue2 *= resistMultiplier;
+                    AC.ResistModifiedValue3 *= resistMultiplier;
+                    AC.ResistModifiedPercentagePerStack *= resistMultiplier;
+                    AC.ResistModifiedPercentagePerStack2 *= resistMultiplier;
+                    AC.ResistModifiedPercentagePerStack3 *= resistMultiplier;
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

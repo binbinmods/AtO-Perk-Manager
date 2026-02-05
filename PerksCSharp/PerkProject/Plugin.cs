@@ -278,8 +278,8 @@ namespace PerkManager
             // medsTexts[perkStem + "zeal0f"] = "If this hero dies with Zeal, deal indirect Fire damage equal to 5x their insane to every monster.";
 
             // Custom text for Scourge
-            medsTexts[perkStem + "scourge0d"] = "Scourge +1.";
-            medsTexts[perkStem + "scourge0e"] = "Scourge on heroes and monsters loses 3 charges per turn rather than all charges.";
+            medsTexts[perkStem + "scourge0d"] = "Scourge on enemies also deals 1 Shadow damage per Sight charge. (needs testing, possibly janky atm)";
+            medsTexts[perkStem + "scourge0e"] = "Dark no longer explodes. Every charge of Scourge increases damage due to other curses by 5%. (needs testing, possibly janky atm)";
             medsTexts[perkStem + "scourge0f"] = "Scourge on monsters can stack but increases all resists by 3% per charge.";
             medsTexts[perkStem + "scourge0g"] = "Instead of Chill, Scourge deals 2 Shadow damage per Sight charge.";
             medsTexts[perkStem + "scourge0h"] = "Scourge on monsters increases burn damage by 15%/charge";
@@ -333,6 +333,18 @@ namespace PerkManager
 
             // Custom Text for Regeneration
             medsTexts[perkStem + "regeneration1d"] = "Regeneration on this hero prevents 1 Vulnerable per charge";
+
+            // Custom Text for Infuse
+            medsTexts[perkStem + "infuse0d"] = "Charges applied +1. Infuse on all heroes loses 3 charges per turn.";
+            medsTexts[perkStem + "infuse0e"] = "Max. Infuse charges +4. Infuse no longer increases resistances.";
+            medsTexts[perkStem + "infuse0f"] = "Infuse on heroes increases damage by 1 per Reinforce/Insulate/Courage charge rather than 1 per Infuse charge. (Janky, needs testing)";
+            medsTexts[perkStem + "infuse0g"] = "Infuse on heroes increases the effectiveness of Reinforce/Insulate/Courage by 10% per charge rather than 50%. (Needs testing)";
+
+            // Custom Text for Leech
+            medsTexts[perkStem + "leech0d"] = "Charges applied +1. Decrease healing done by Leech by 50%.";
+            medsTexts[perkStem + "leech0e"] = "Leech explodes at the end of turn.";
+            medsTexts[perkStem + "leech0f"] = "Increase curses applied by Leech by 100%. Leech no longer reduces enemy resistances.";
+
 
             // apply patches
             harmony.PatchAll();

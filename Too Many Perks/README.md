@@ -97,18 +97,18 @@ energy2f: On every round after round 3, this hero gains 1 additional Energy at t
 
 TODO
 
-<!-- ### Perks for Infuse
+### Perks for Infuse
 
 infuse0d: Charges applied +1. Infuse on all heroes loses 3 charges per turn.
 infuse0e: Max. Infuse charges +4. Infuse no longer increases resistances.
-infuse0f: Infuse on heroes increases damage by 0.5 per Reinforce/Insulate/Courage charge rather than 1/Infuse charge.
-infuse0g: Infuse on heroes increases the effectiveness of Reinforce/Insulate/Courage by 15% per charge rather than 50%.
+infuse0f: Infuse on heroes increases damage by 1 per Reinforce/Insulate/Courage charge rather than 1/Infuse charge.
+infuse0g: Infuse on heroes increases the effectiveness of Reinforce/Insulate/Courage by 10% per charge rather than 50%.
 
 ### Perks for Leech
 
 leech0d: Charges applied +1. Decrease healing done by Leech by 50%.
 leech0e: Leech explodes at the end of turn.
-leech0f: Increase curses applied by Leech by 50%. Leech no longer reduces enemy resistances. -->
+leech0f: Increase curses applied by Leech by 100%. Leech no longer reduces enemy resistances.
 
 ## Physical
 
@@ -280,8 +280,8 @@ zeal0j: Zeal on heroes makes Thorns apply half their damage as Burn rather than 
 
 ### Perks for Scourge
 
-scourge0d: Scourge +1.  
-scourge0e: Scourge on heroes and monsters loses 3 charges per turn rather than all charges. // TODO: Replace with -1/dark explosion  
+scourge0d: Scourge on enemies also deals 1 Shadow damage per Sight charge.
+scourge0e: Scourge no longer increases Dark Explosion damage. Every charge of Scourge increases damage due to other curses by 5%.
 scourge0f: Scourge on monsters can stack but increases all resists by 3% per charge.  
 scourge0g: Instead of Chill, Scourge deals 2 Shadow damage per Sight charge.  
 scourge0h: Scourge on monsters increases burn damage by 15%/charge.  

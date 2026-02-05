@@ -119,6 +119,12 @@ def create_new_perk(id:str,
     if id =="mark1f":
         perk.AuraCurseBonus ="mark"
         perk.AuraCurseBonusValue =1
+    if id =="infuse0d":
+        perk.AuraCurseBonus ="infuse"
+        perk.AuraCurseBonusValue = 1
+    if id =="leech0d":
+        perk.AuraCurseBonus ="leech"
+        perk.AuraCurseBonusValue = 1
     # if id =="rust0a":
     #     perk.AuraCurseBonus ="rust"
     #     perk.AuraCurseBonusValue = 1
@@ -590,8 +596,8 @@ def handle_adding_perks_to_vanilla_nodes():
         ("zeal0",7),
         ("scourge0",7),
         ("rust0",5),
-        # ("infuse",0),
-        # ("leech",0),
+        ("infuse0",4),
+        ("leech0",3),
     ]
     for tuple in tuples:
         node_name,n = tuple

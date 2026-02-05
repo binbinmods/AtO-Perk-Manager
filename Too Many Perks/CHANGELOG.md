@@ -1,3 +1,23 @@
+# 1.6.3
+
+Scourge perk reworks:
+
+- Scourge0d
+- Scourge0e
+
+New Infuse perks
+
+- Infuse0d
+- Infuse0e
+- Infuse0f
+- Infuse0g
+
+New Leech perks
+
+- Leech0d
+- Leech0e
+- Leech0f
+
 # 1.6.2
 
 Update for AtO v1.7.3.2
