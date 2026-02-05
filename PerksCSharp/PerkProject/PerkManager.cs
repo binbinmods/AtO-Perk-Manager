@@ -301,6 +301,14 @@ namespace PerkManager
                 paralyzeCounters = [0, 0, 0, 0];
                 mark1dFlag = true;
             }
+            if (theEvent == Enums.EventActivation.AuraCurseRemoved && auxString == "burn" && TeamHasPerk("burn2f") && IsLivingNPC(__instance) && target != null && IsLivingHero(target))
+            {
+                // burn2f: When Burn is Dispelled from a Monster, they suffer Fire damage to the target equal to twice the Burn that was purged.";
+                // LogDebug("burn2f");
+                int n = target.GetAuraCharges("burn");
+                int damageToDeal = 2 * n;
+                __instance.IndirectDamage(Enums.DamageType.Fire, damageToDeal);
+            }
 
 
 
@@ -1171,7 +1179,7 @@ namespace PerkManager
         public static void GlobalAuraCurseModificationByTraitsAndItemsPostfix(ref AtOManager __instance, ref AuraCurseData __result, string _type, string _acId, Character _characterCaster, Character _characterTarget)
         {
 
-            // LogDebug("Executing AC Modifications - General");
+            // LogDebug("Executing GACM Modifications - General");
 
 
             Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
@@ -1191,12 +1199,17 @@ namespace PerkManager
                 // leech0d: Charges applied +1. Decrease healing done by Leech by 50%.
                 // leech0e: Leech explodes at the end of turn.
                 // leech0f: Increase curses applied by Leech by 100%. Leech no longer reduces enemy resistances.
-
+                // leech0g: Rather than healing, when Leech explodes, it deals damage to all enemies equal to the target's Bleed.
                 case "leech":
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "leech0d", AppliesTo.Heroes))
                     {
                         // LogDebug("leech0d");
                         __result.HealPerChargeOnExplode *= 0.5f;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "leech0g", AppliesTo.Heroes))
+                    {
+                        // LogDebug("leech0g");
+                        __result.HealPerChargeOnExplode = 0;
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "leech0d", AppliesTo.Heroes))
                     {
@@ -1703,6 +1716,12 @@ namespace PerkManager
                     break;
                 case "taunt":
                     // taunt1e: Taunt on this hero can stack and increases damage by 1 per charge.";
+                    // taunt1h: Taunt on monsters decreases All Resistances by 5% per charge.
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "taunt1h", AppliesTo.Monsters))
+                    {
+                        // LogDebug("taunt1e");
+                        __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.All, 0, -5f);
+                    }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "taunt1e", AppliesTo.ThisHero))
                     {
                         // LogDebug("taunt1e");
@@ -2185,6 +2204,18 @@ namespace PerkManager
                 }
             }
             return true;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(AtOManager), "DoLeachExplosion")]
+        public static void DoLeachExplosionPostfix(Character target)
+        {
+            // leech0g: Rather than healing, when Leech explodes, it deals damage to all enemies equal to the target's Bleed.
+            if (TeamHasPerk("leech0g") && target.NpcData != null)
+            {
+                int nBleed = target.GetAuraCharges("bleed");
+                DealIndirectDamageToAllMonsters(Enums.DamageType.None, nBleed);
+            }
         }
     }
 }

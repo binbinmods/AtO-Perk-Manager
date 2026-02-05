@@ -1,0 +1,13 @@
+{
+    "Column": 9,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_infuse0f",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_infuse0f",
+    "PerkRequired": "",
+    "PerksConnected": [],
+    "Row": 3,
+    "Sprite": "",
+    "Type": 0
+}

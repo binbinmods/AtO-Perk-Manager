@@ -1,0 +1,21 @@
+{
+    "Column": 9,
+    "Cost": "PerkCostAdvanced",
+    "ID": "nodeperkInfuse0",
+    "LockedInTown": false,
+    "NotStack": false,
+    "Perk": "",
+    "PerkRequired": "",
+    "PerksConnected": [
+        "nodeperkInfuse0a",
+        "nodeperkInfuse0b",
+        "nodeperkInfuse0c",
+        "binbin_perknode_infuse0d",
+        "binbin_perknode_infuse0e",
+        "binbin_perknode_infuse0f",
+        "binbin_perknode_infuse0g"
+    ],
+    "Row": 3,
+    "Sprite": "infuse",
+    "Type": 0
+}

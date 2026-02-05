@@ -12,7 +12,8 @@
         "nodeperkTaunt1d",
         "binbin_perknode_taunt1e",
         "binbin_perknode_taunt1f",
-        "binbin_perknode_taunt1g"
+        "binbin_perknode_taunt1g",
+        "binbin_perknode_taunt1h"
     ],
     "Row": 6,
     "Sprite": "perk",

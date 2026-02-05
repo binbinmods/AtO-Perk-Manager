@@ -568,10 +568,10 @@ def handle_adding_perks_to_vanilla_nodes():
         ("bleed2",4),
         ("thorns1",3),
         ("reinforce1",1),
-        ("taunt1",3),
+        ("taunt1",4),
         ("vulnerable0",1),
         ("sight1",2),
-        ("burn2",1),
+        ("burn2",2),
         ("chill2",3),
         ("spark2",4),
         ("wet1",1),
@@ -597,7 +597,7 @@ def handle_adding_perks_to_vanilla_nodes():
         ("scourge0",7),
         ("rust0",5),
         ("infuse0",4),
-        ("leech0",3),
+        ("leech0",4),
     ]
     for tuple in tuples:
         node_name,n = tuple

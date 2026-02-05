@@ -109,6 +109,7 @@ infuse0g: Infuse on heroes increases the effectiveness of Reinforce/Insulate/Cou
 leech0d: Charges applied +1. Decrease healing done by Leech by 50%.
 leech0e: Leech explodes at the end of turn.
 leech0f: Increase curses applied by Leech by 100%. Leech no longer reduces enemy resistances.
+leech0g: Rather than healing, when Leech explodes, all enemies lose HP equal to the target's Bleed.
 
 ## Physical
 
@@ -169,6 +170,7 @@ block5d: When this hero gains Block, they deal 1 Blunt to themselves and a rando
 taunt1e: Taunt on this hero can stack and increases damage by 1 per charge.  
 taunt1f: Taunt on heroes increases maximum Powerful by 1 per charge.
 taunt1g: Taunt on you is not lost at the start of turn, but 1 charge is consumed when you take damage.
+taunt1h: Taunt on monsters decreases All Resistances by 5% per charge.
 
 ### Perks for Fortify
 
@@ -198,6 +200,7 @@ crack2i: Crack on monsters increases max Vulnerable charges by 1 per 25 stacks o
 ### Perks for Burn
 
 burn2e: Burn increases the damage dealt by Dark explosions by 0.5% per charge.
+burn2f: When Burn is Dispelled from a Monster, they suffer Fire damage to the target equal to twice the Burn that was purged.
 
 ### Perks for Chill
 

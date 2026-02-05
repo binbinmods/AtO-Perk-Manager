@@ -1,5 +1,7 @@
 # 1.6.3
 
+Added Taunt1h, Burn2f along with
+
 Scourge perk reworks:
 
 - Scourge0d
@@ -17,6 +19,7 @@ New Leech perks
 - Leech0d
 - Leech0e
 - Leech0f
+- Leech0g
 
 # 1.6.2
 

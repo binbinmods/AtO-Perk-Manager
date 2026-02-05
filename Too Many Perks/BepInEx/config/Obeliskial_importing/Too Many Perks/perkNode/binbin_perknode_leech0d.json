@@ -1,0 +1,13 @@
+{
+    "Column": 2,
+    "Cost": "PerkCostAdvanced",
+    "ID": "binbin_perknode_leech0d",
+    "LockedInTown": false,
+    "NotStack": true,
+    "Perk": "binbin_mainperk_leech0d",
+    "PerkRequired": "",
+    "PerksConnected": [],
+    "Row": 6,
+    "Sprite": "",
+    "Type": 1
+}
