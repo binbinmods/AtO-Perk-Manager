@@ -338,9 +338,10 @@ namespace PerkManager
 
             // Custom Text for Infuse
             medsTexts[perkStem + "infuse0d"] = "Charges applied +1. Infuse on all heroes loses 3 charges per turn.";
-            medsTexts[perkStem + "infuse0e"] = "Max. Infuse charges +4. Infuse no longer increases resistances.";
+            medsTexts[perkStem + "infuse0e"] = "Max. Infuse charges +4. Infuse on heroes no longer increases resistances.";
             medsTexts[perkStem + "infuse0f"] = "Infuse on heroes increases damage by 1 per Reinforce/Insulate/Courage charge rather than 1 per Infuse charge. (Janky, needs testing)";
             medsTexts[perkStem + "infuse0g"] = "Infuse on heroes increases the effectiveness of Reinforce/Insulate/Courage by 10% per charge rather than 50%. (Needs testing)";
+            medsTexts[perkStem + "infuse0h"] = "Infuse on you loses 1 less charge at the start of turn.";
 
             // Custom Text for Leech
             medsTexts[perkStem + "leech0d"] = "Charges applied +1. Decrease healing done by Leech by 50%.";

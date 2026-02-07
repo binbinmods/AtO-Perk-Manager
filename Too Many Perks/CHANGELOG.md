@@ -13,6 +13,7 @@ New Infuse perks
 - Infuse0e
 - Infuse0f
 - Infuse0g
+- Infuse0h
 
 New Leech perks
 

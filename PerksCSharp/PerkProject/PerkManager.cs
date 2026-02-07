@@ -1224,6 +1224,7 @@ namespace PerkManager
                 // infuse0e: Max. Infuse charges +4. Infuse no longer increases resistances.
                 // infuse0f: Infuse on heroes increases damage by 0.5 per Reinforce/Insulate/Courage charge rather than 1/Infuse charge.
                 // infuse0g: Infuse on heroes increases the effectiveness of Reinforce/Insulate/Courage by 15% per charge rather than 50%.
+                // infuse0h: Infuse on this hero loses one less charge.
 
                 case "infuse":
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "infuse0d", AppliesTo.Heroes))
@@ -1241,6 +1242,11 @@ namespace PerkManager
                     {
                         // LogDebug("infuse0e");
                         __result.AuraDamageConditionalBonuses = [];
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "infuse0h", AppliesTo.ThisHero))
+                    {
+                        // LogDebug("infuse0h");
+                        __result.AuraConsumed -= 1;
                     }
                     break;
                 case "evasion":

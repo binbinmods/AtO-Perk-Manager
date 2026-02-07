@@ -596,7 +596,7 @@ def handle_adding_perks_to_vanilla_nodes():
         ("zeal0",7),
         ("scourge0",7),
         ("rust0",5),
-        ("infuse0",4),
+        ("infuse0",5),
         ("leech0",4),
     ]
     for tuple in tuples:

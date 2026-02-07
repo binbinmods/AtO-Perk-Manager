@@ -100,9 +100,10 @@ TODO
 ### Perks for Infuse
 
 infuse0d: Charges applied +1. Infuse on all heroes loses 3 charges per turn.
-infuse0e: Max. Infuse charges +4. Infuse no longer increases resistances.
+infuse0e: Max. Infuse charges +4. Infuse on heroes no longer increases resistances.
 infuse0f: Infuse on heroes increases damage by 1 per Reinforce/Insulate/Courage charge rather than 1/Infuse charge.
 infuse0g: Infuse on heroes increases the effectiveness of Reinforce/Insulate/Courage by 10% per charge rather than 50%.
+infuse0h: Infuse on you loses 1 less charge at the start of turn
 
 ### Perks for Leech
 
