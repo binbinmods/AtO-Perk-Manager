@@ -155,6 +155,7 @@ thorns1f: Rust on heroes increases Thorns damage by 10% per charge. (UNTESTED)
 ### Perks for Reinforce
 
 reinforce1d: Reinforce on this hero increases Block charges received by 1 per charge of Reinforce.
+reinforce1e: Reinforce on this hero now increases Piercing, Lightning, and Mind Resistance
 
 ### Perks for Vulnerable
 
@@ -220,6 +221,7 @@ spark2g: When this hero applies Spark, the target suffers 2 Crack.
 
 insulate1d: Insulate on this hero prevents their Speed from being lowered by Chill.  
 insulate1e: Insulate on this hero increases Elemental damage by 5% per stack, but only increases Elemental resistances by 15%. Insulate on this hero stacks to 8.
+insulate1f: Insulate on this hero now increases Blunt, Cold, and Shadow Resistance
 
 ### Perks for Shield
 
@@ -329,6 +331,7 @@ decay1g: When you apply Decay, apply 1 Rust.
 ### Perks for Courage
 
 courage1d: Courage increases Shield gained by this hero by 1 per charge.
+courage1e: Courge on this hero now increases Slashing, Fire, and Holy resistance.
 
 ### Perks for Vitality
 

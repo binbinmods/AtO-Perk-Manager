@@ -160,6 +160,7 @@ namespace PerkManager
             // Custom Text for Reinforce
             medsTexts["reinforce2b"] = "Reinforce on heroes instead increases the Slashing, Piercing and Blunt resistances by 40%.";
             medsTexts[perkStem + "reinforce1d"] = "Reinforce on this hero increases Block charges received by 1 per charge of Reinforce.";
+            medsTexts[perkStem + "reinforce1e"] = "Reinforce on this hero now increases Piercing, Lightning, and Mind Resistance";
 
             // Custom Text for Block
             medsTexts[perkStem + "block5b"] = "If Restricted Power is enabled, increases Max Charges to 600.";
@@ -222,6 +223,7 @@ namespace PerkManager
             medsTexts["insulate2b"] = "Insulate on heroes instead increases the Fire, Cold and Lightning resistances by 40%.";
             medsTexts[perkStem + "insulate1d"] = "Insulate on this hero prevents their Speed from being lowered by Chill.";
             medsTexts[perkStem + "insulate1e"] = "Insulate on this hero increases Elemental damage by 5% per stack, but only increases Elemental resistances by 15%. Insulate on this hero stacks to 8";
+            medsTexts[perkStem + "insulate1f"] = "Insulate on this hero now increases Blunt, Cold, and Shadow Resistance";
 
             // Custom Text for Shield
             // medsTexts[perkStem + "shield5a"] = "+ Charges";
@@ -322,6 +324,7 @@ namespace PerkManager
             // Custom Text for Courage
             medsTexts["courage2b"] = "Courage on heroes instead increases the Holy, Shadow, and Mind resistances by 40%.";
             medsTexts[perkStem + "courage1d"] = "Courage increases Shield gained by this hero by 1 per charge.";
+            medsTexts[perkStem + "courage1e"] = "Courage on this hero now increases Slashing, Fire, and Holy Resistance.";
 
             // Custom Text for Vitality
             medsTexts[perkStem + "vitality1d"] = "Vitality on this hero dispels Poison.";

@@ -1,6 +1,6 @@
 # 1.6.3
 
-Added Taunt1h, Burn2f along with
+Added Taunt1h, Burn2f, Courage1e, Reinforce1e, Insulate1f along with
 
 Scourge perk reworks:
 

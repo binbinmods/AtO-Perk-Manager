@@ -1681,6 +1681,7 @@ namespace PerkManager
                 case "reinforce":
                     // reinforce1b: Increased to 40%;
                     // reinforce1d: Reinforce increases Block charges by 2 per charge of Reinforce.";
+                    // reinforce1e: Reinforce on this hero now increases Piercing, Lightning, and Mind Resistance
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkreinforce1b", AppliesTo.Heroes))
                     {
                         // LogDebug("reinforce1b");
@@ -1695,6 +1696,12 @@ namespace PerkManager
                         __result.AuraDamageType = Enums.DamageType.Piercing;
                         __result.AuraDamageType = Enums.DamageType.Blunt;
                         __result.AuraDamageIncreasedPerStack = __result.AuraDamageIncreasedPerStack2 = __result.AuraDamageIncreasedPerStack3 = 1;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "reinforce1e", AppliesTo.ThisHero))
+                    {
+                        __result.AuraDamageType = Enums.DamageType.Mind;
+                        __result.AuraDamageType = Enums.DamageType.Piercing;
+                        __result.AuraDamageType = Enums.DamageType.Lightning;
                     }
 
                     break;
@@ -1794,6 +1801,10 @@ namespace PerkManager
                     }
                     break;
                 case "insulate":
+                    // insulate1d: Insulate on this hero prevents their Speed from being lowered by Chill.  
+                    // insulate1e: Insulate on this hero increases Elemental damage by 5% per stack, but only increases Elemental resistances by 15%. Insulate on this hero stacks to 8.
+                    // insulate1f: Insulate on this hero now increases Blunt, Chill, and Shadow Resistance
+
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "infuse0f", AppliesTo.Heroes) && characterOfInterest.HasEffect("infuse"))
                     {
                         __result.AuraDamageType = Enums.DamageType.Fire;
@@ -1823,6 +1834,13 @@ namespace PerkManager
                         __result.GainCharges = true;
                         __result.MaxCharges = 8;
                         __result.MaxMadnessCharges = 8;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "insulate1f", AppliesTo.ThisHero))
+                    {
+                        // LogDebug("courage1d");
+                        __result.ResistModified = Enums.DamageType.Blunt;
+                        __result.ResistModified2 = Enums.DamageType.Cold;
+                        __result.ResistModified3 = Enums.DamageType.Shadow;
                     }
 
 
@@ -2043,6 +2061,9 @@ namespace PerkManager
                     break;
 
                 case "courage":
+                    // courage1d: Courage increases Shield gained by this hero by 1 per charge.
+                    // courage1e: Courge on this hero now increases Slashing, Fire, and Holy resistance.
+
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "infuse0f", AppliesTo.Heroes) && characterOfInterest.HasEffect("infuse"))
                     {
                         __result.AuraDamageType = Enums.DamageType.Holy;
@@ -2055,6 +2076,13 @@ namespace PerkManager
                         __result.ResistModifiedValue = 40;
                         __result.ResistModifiedValue2 = 40;
                         __result.ResistModifiedValue3 = 40;
+                    }
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "courage1f", AppliesTo.ThisHero))
+                    {
+                        // LogDebug("courage1d");
+                        __result.ResistModified = Enums.DamageType.Slashing;
+                        __result.ResistModified2 = Enums.DamageType.Fire;
+                        __result.ResistModified3 = Enums.DamageType.Holy;
                     }
                     break;
 

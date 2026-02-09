@@ -1,10 +1,10 @@
 {
     "Column": 9,
     "Cost": "PerkCostAdvanced",
-    "ID": "binbin_perknode_infuse0d",
+    "ID": "binbin_perknode_infuse0h",
     "LockedInTown": false,
     "NotStack": true,
-    "Perk": "binbin_mainperk_infuse0d",
+    "Perk": "binbin_mainperk_infuse0h",
     "PerkRequired": "",
     "PerksConnected": [],
     "Row": 3,

@@ -17,6 +17,7 @@ aura_curse_string = '''bless
     furnace
     fury
     haste
+    infuse
     inspire
     insulate
     invulnerable
@@ -49,6 +50,7 @@ aura_curse_string = '''bless
     fatigue
     paralyze
     insane
+    leech
     mark
     poison
     rust
@@ -96,6 +98,7 @@ def create_new_perk(id:str,
     perk.ID = f"{PERK_ID_STEM}{id}" 
     perk.IconTextValue ="+1"
     perk.CardClass ="None"
+    
     if id =="shackle1a":
         perk.AuraCurseBonus ="shackle"
         perk.AuraCurseBonusValue = 1
@@ -190,8 +193,8 @@ def create_new_perk_node_improved(perk:Perk,
                          perk_node_name:str,                         
                          col:int,
                          row:int,
-                         previous_perk:str =None,
-                         sprite:str =None,
+                         previous_perk:str = None,
+                         sprite:str = None,
                          cost:int =3,
                          prevent_stacking:bool = False,
                          locked_in_town:bool = False,
@@ -206,9 +209,10 @@ def create_new_perk_node_improved(perk:Perk,
     perkNode.NotStack =prevent_stacking
     perkNode.LockedInTown = locked_in_town
     perkNode.Type = category
-    perkNode.ID =perk_node_name
+    perkNode.ID = perk_node_name
     perkNode.Cost = "PerkCostAdvanced"
     perkNode.Sprite = sprite
+    
     if (perk_node_name.startswith("binbin_perknode_forttify")):
         perkNode.Sprite = "fortify"
     return perkNode
@@ -291,6 +295,7 @@ def create_perk_from_id(short_ID):
     id = short_ID
     ac = re.split(r'(\d+)', id)[0]
     is_ac = ac in aura_curses
+    
     ac_str = ac if is_ac else ""
     icon = ac if is_ac else ""
     icon = ac if ac in additional_sprites else ""
@@ -305,9 +310,15 @@ def get_perk_inputs_from_id(full_id:str):
     id = full_id.split("_")[-1]
     ac = match_list[0].split("_")[-1]
     is_ac = ac in aura_curses
+    
     ac_str = ac if is_ac else ""
     icon = ac if is_ac else ""
     icon = ac if ac in additional_sprites else ""
+    if ac == "infuse":
+        icon = "infuseperk"
+    if ac == "leech":
+        icon = "leechperk"
+        
     return (id,ac_str,icon)
 
 
@@ -407,12 +418,12 @@ def create_new_perk_node_and_perk_jsons(source_node:PerkNode,full_perk_id:str):
     save_object_to_json(new_perk,PERK_DIR+new_perk.ID)
 
     new_perk_node_name = NODE_ID_STEM+id
-    p = create_new_perk_node_improved(perk =new_perk,
-                        perk_node_name =new_perk_node_name,
-                        col =source_node.Column,
-                        row =source_node.Row,
-                        sprite =icon,
-                        cost =source_node.Cost,
+    p = create_new_perk_node_improved(perk = new_perk,
+                        perk_node_name = new_perk_node_name,
+                        col = source_node.Column,
+                        row = source_node.Row,
+                        sprite = icon,
+                        cost = source_node.Cost,
                         prevent_stacking =True,
                         category =source_node.Type
                         )
@@ -567,7 +578,7 @@ def handle_adding_perks_to_vanilla_nodes():
         ("poison2",5),
         ("bleed2",4),
         ("thorns1",3),
-        ("reinforce1",1),
+        ("reinforce1",2),
         ("taunt1",4),
         ("vulnerable0",1),
         ("sight1",2),
@@ -580,7 +591,7 @@ def handle_adding_perks_to_vanilla_nodes():
         ("dark2",1),
         ("sanctify2",2),
         ("decay1",4),
-        ("courage1",1),
+        ("courage1",2),
         ("vitality1",1),
         ("bless1",1),
         ("powerful1",2),
@@ -589,7 +600,7 @@ def handle_adding_perks_to_vanilla_nodes():
         ("fortify1",3),
         ("sharp1",3),
         ("energy2",3),
-        ("insulate1",2),
+        ("insulate1",3),
         ("regeneration1",1),
         ("stanza0",2),
         ("crack2",6),
@@ -603,6 +614,7 @@ def handle_adding_perks_to_vanilla_nodes():
         node_name,n = tuple
 
         node:PerkNode = get_perk_node_from_name(f"{VANILLA_NODE_STEM}{node_name.capitalize()}",["VanillaPerkData"])
+        
         add_perks_to_existing_node(node,n,True)
 
 
