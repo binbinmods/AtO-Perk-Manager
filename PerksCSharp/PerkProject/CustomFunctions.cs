@@ -333,7 +333,7 @@ namespace PerkManager
             return stacks;
         }
 
-        public static void DealIndirectDamageToAllMonsters(Enums.DamageType damageType, int amount)
+        public static void DealIndirectDamageToAllMonsters(Enums.DamageType damageType, int amount, Character source = null)
         {
             // LogDebug(debugBase + "Dealing Indirect Damage");
             NPC[] teamNpc = MatchManager.Instance.GetTeamNPC();
@@ -342,7 +342,7 @@ namespace PerkManager
                 NPC npc = teamNpc[index];
                 if (npc != null && npc.Alive && !npc.IsHero)
                 {
-                    npc.IndirectDamage(damageType, amount);
+                    npc.IndirectDamage(damageType, amount, source);
                 }
             }
         }

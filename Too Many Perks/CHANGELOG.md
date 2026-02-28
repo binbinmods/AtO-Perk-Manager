@@ -1,3 +1,15 @@
+# 1.6.4
+
+Update for AtO v1.7.4.2
+
+Nerfed crack2e, crack2h, poison2e and bleed2f
+
+Updated crack2d
+
+Updated icons on shards perks
+
+Rust0d should now work properly
+
 # 1.6.3
 
 Added Taunt1h, Burn2f, Courage1e, Reinforce1e, Insulate1f along with

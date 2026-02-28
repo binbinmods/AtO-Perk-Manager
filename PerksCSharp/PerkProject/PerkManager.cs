@@ -307,7 +307,7 @@ namespace PerkManager
                 // LogDebug("burn2f");
                 int n = target.GetAuraCharges("burn");
                 int damageToDeal = 2 * n;
-                __instance.IndirectDamage(Enums.DamageType.Fire, damageToDeal);
+                __instance.IndirectDamage(Enums.DamageType.Fire, damageToDeal, null);
             }
 
 
@@ -376,7 +376,7 @@ namespace PerkManager
                 int n = target.GetAuraCharges("poison");
                 float multiplier = target.HasEffect("rust") ? 0.3f : 0.2f;
                 int damageToDeal = RoundToInt(n * multiplier);
-                target.IndirectDamage(Enums.DamageType.Mind, damageToDeal);
+                target.IndirectDamage(Enums.DamageType.Mind, damageToDeal, __instance);
             }
 
             if (theEvent == Enums.EventActivation.AuraCurseSet && IsLivingHero(target) && target.HasEffect("courage") && CharacterObjectHavePerk(target, "courage1d") && auxString == "shield")
@@ -442,8 +442,8 @@ namespace PerkManager
                 Character targetCharacter = GetRandomCharacter(teamNpc);
                 if (targetCharacter.Alive && targetCharacter != null && target.Alive && target != null)
                 {
-                    targetCharacter.IndirectDamage(damageType, modifiedDamage);
-                    target.IndirectDamage(damageType, modifiedDamage);
+                    targetCharacter.IndirectDamage(damageType, modifiedDamage, target);
+                    target.IndirectDamage(damageType, modifiedDamage, target);
                 }
             }
 
@@ -536,7 +536,7 @@ namespace PerkManager
                     int n = target.GetAuraCharges("bleed");
                     // LogDebug("bleed2g Bleed charges: " + n);
                     int toDeal = RoundToInt(n * 0.25f);
-                    DealIndirectDamageToAllMonsters(Enums.DamageType.None, toDeal);
+                    DealIndirectDamageToAllMonsters(Enums.DamageType.None, toDeal, __instance);
 
                 }
 
@@ -566,7 +566,7 @@ namespace PerkManager
                     if (npcSides[index].Alive && npcSides[index] != null)
                     {
                         // LogDebug($"spark2f dealing damage to: {npcSides[index].SourceName}");
-                        npcSides[index].IndirectDamage(Enums.DamageType.Lightning, toDeal);
+                        npcSides[index].IndirectDamage(Enums.DamageType.Lightning, toDeal, __instance);
                     }
                 }
 
@@ -1022,23 +1022,22 @@ namespace PerkManager
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Character), nameof(Character.IndirectDamage))]
-        public static void IndirectDamagePostfix(
+        public static void IndirectDamagePrefix(
             ref Character __instance,
             Enums.DamageType damageType,
             ref int damage,
+            Character casterCharacter,
             AudioClip sound = null,
-            string effect = "",
-            string sourceCharacterName = "",
-            string sourceCharacterId = "")
+            string effect = "")
         {
             // Thorns1f: Bless increases thorns damage by 2% per charge.
-            LogDebug("IndirectDamagePostfix");
+            LogDebug("IndirectDamagePrefix");
             if (MatchManager.Instance == null)
             {
                 return;
             }
 
-            Character sourceCharacter = MatchManager.Instance.GetCharacterById(sourceCharacterId);
+            Character sourceCharacter = casterCharacter;
 
             if (TeamHasPerk("thorns1f") && IsLivingHero(sourceCharacter) && sourceCharacter.HasEffect("bless") && effect == "thorns")
             {
@@ -1121,7 +1120,7 @@ namespace PerkManager
                 int damageToDealHoly = __instance.DamageWithCharacterBonus(damageToDeal, Enums.DamageType.Holy, Enums.CardClass.None);
                 // int damageToDealFire = __instance.DamageWithCharacterBonus(damageToDeal, Enums.DamageType.Fire, Enums.CardClass.None);
 
-                DealIndirectDamageToAllMonsters(Enums.DamageType.Holy, damageToDealHoly);
+                DealIndirectDamageToAllMonsters(Enums.DamageType.Holy, damageToDealHoly, __instance);
                 // DealIndirectDamageToAllMonsters(Enums.DamageType.Fire, damageToDealFire);
             }
 
@@ -1190,6 +1189,14 @@ namespace PerkManager
             if (characterOfInterest != null)
             {
                 hasRust = characterOfInterest.HasEffect("rust");
+            }
+
+            float rustMultiplier = hasRust ? 1.5f : 1.0f;
+            if (TeamHasPerk("mainperkrust0b") && hasRust && (_acId == "crack" || _acId == "poison" || _acId == "slow"))
+            {
+                // rust0b: Rust on enemies instead increases the effect of Crack, Poison and Slow by 20% per charge
+                int nRust = characterOfInterest.GetAuraCharges("rust");
+                rustMultiplier = 1.0f + 0.2f * nRust;
             }
 
             switch (_acId)
@@ -1336,19 +1343,15 @@ namespace PerkManager
                         __result.GainCharges = true;
                         __result.MaxCharges = 10;
                         __result.MaxMadnessCharges = 10;
-                        __result.CharacterStatModifiedValuePerStack = -1;
-                        __result.ChargesAuxNeedForOne1 = hasRust ? 2 : 1;
-                        __result.CharacterStatChargesMultiplierNeededForOne = hasRust ? 2 : 1;
+                        __result.CharacterStatModifiedValuePerStack = -1 * rustMultiplier;
                     }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "slow0c", AppliesTo.Monsters))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "slow0c", AppliesTo.Heroes))
                     {
                         // LogDebug("slow0c");
                         __result.GainCharges = true;
                         __result.MaxCharges = 10;
                         __result.MaxMadnessCharges = 10;
-                        __result.CharacterStatModifiedValuePerStack = -1;
-                        __result.ChargesAuxNeedForOne1 = hasRust ? 2 : 1;
-                        __result.CharacterStatChargesMultiplierNeededForOne = hasRust ? 2 : 1;
+                        __result.CharacterStatModifiedValuePerStack = -1 * rustMultiplier;
                     }
                     break;
 
@@ -1462,29 +1465,28 @@ namespace PerkManager
 
                 case "crack":
                     // insane2d: Crack on monsters increases Blunt damage by an addition 1 for every 50 charges of Insane on that monster.";
-                    // crack2d: Crack on monsters reduces Speed by 1 for every 5 charges.";
+                    // crack2d: Crack on monsters reduces Speed by 0.2.";
                     // crack2e: Crack on monsters reduces Lightning resistance by 0.3% per charge.
                     // crack2f: Crack increases fire damage too
                     // crack2g: Crack increases mind damage too
-                    // crack2h: Crack on monsters reduces Slashing resistance by 0.3% per charge.
+                    // crack2h: Crack on monsters reduces Slashing resistance by 0.15% per charge.
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "insane2d", AppliesTo.Monsters))
                     {
                         // LogDebug("insane2d");
                         int n = characterOfInterest.GetAuraCharges("insane");
-                        __result.IncreasedDirectDamageReceivedPerStack += hasRust ? FloorToInt(0.03f * n) : FloorToInt(0.02f * n);
+                        __result.IncreasedDirectDamageReceivedPerStack += FloorToInt(0.02f * rustMultiplier * n);
                     }
 
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2d", AppliesTo.Monsters))
                     {
                         // LogDebug("crack2d");
                         __result.CharacterStatModified = Enums.CharacterStat.Speed;
-                        __result.CharacterStatModifiedValue = -1;
-                        __result.CharacterStatChargesMultiplierNeededForOne = hasRust ? 10 : 5;
+                        __result.CharacterStatModifiedValuePerStack = -1 * rustMultiplier * 0.2f;
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2e", AppliesTo.Monsters))
                     {
                         // LogDebug("crack2e");
-                        float amountToModify = hasRust ? -0.45f : -0.3f;
+                        float amountToModify = -0.2f * rustMultiplier;
                         __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Lightning, 0, amountToModify);
                     }
 
@@ -1492,18 +1494,18 @@ namespace PerkManager
                     {
                         // LogDebug("crack2f");
                         __result.IncreasedDamageReceivedType2 = Enums.DamageType.Fire;
-                        __result.IncreasedDirectDamageReceivedPerStack2 = hasRust ? 1.125f : 0.75f;
+                        __result.IncreasedDirectDamageReceivedPerStack2 = 0.75f * rustMultiplier;
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2g", AppliesTo.Global))
                     {
                         // LogDebug("crack2g");
                         __result.IncreasedDamageReceivedType2 = Enums.DamageType.Mind;
-                        __result.IncreasedDirectDamageReceivedPerStack2 = hasRust ? 1.125f : 0.75f;
+                        __result.IncreasedDirectDamageReceivedPerStack2 = 0.75f * rustMultiplier;
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "crack2h", AppliesTo.Global))
                     {
                         // LogDebug("crack2h");
-                        float amountToModify = hasRust ? -0.45f : -0.3f;
+                        float amountToModify = -0.15f * rustMultiplier;
                         __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Slashing, 0, amountToModify);
                         __result = __instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Piercing, 0, amountToModify);
                     }
@@ -1592,13 +1594,13 @@ namespace PerkManager
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "poison2d", AppliesTo.Global))
                     {
                         // LogDebug("poison2d");
-                        __result.MaxMadnessCharges = hasRust ? 450 : 300;
+                        __result.MaxMadnessCharges = Mathf.RoundToInt(300 * rustMultiplier);
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "poison2e", AppliesTo.Global))
                     {
                         // LogDebug("poison2e");
                         __result.ResistModified3 = Enums.DamageType.Slashing;
-                        __result.ResistModifiedPercentagePerStack3 = hasRust ? -0.3f : -0.2f;
+                        __result.ResistModifiedPercentagePerStack3 = -0.18f * rustMultiplier;
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "poison2f", AppliesTo.Monsters))
                     {
@@ -1632,7 +1634,7 @@ namespace PerkManager
                     // bleed2c: Can no longer be dispelled unless specified
                     // bleed2d: If Restricted Power is enabled, increases Max Charges to 300.";
                     // bleed2e: When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
-                    // bleed2f: Bleed on monsters reduces Piercing resist by 0.25% per charge.";
+                    // bleed2f: Bleed on heroes and monsters reduces Piercing resist by 0.20% per charge.";
                     // bleed2g: When this hero kills an enemy with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
                     // decay1f: Every stack of decay increases the damage dealt by Bleed by 20%.";
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "mainperkbleed2b", AppliesTo.ThisHero))
@@ -1653,11 +1655,11 @@ namespace PerkManager
                         __result.MaxMadnessCharges = 300;
 
                     }
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "bleed2f", AppliesTo.Monsters))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "bleed2f", AppliesTo.Global))
                     {
                         // LogDebug("bleed2f");
                         __result.ResistModified3 = Enums.DamageType.Piercing;
-                        __result.ResistModifiedPercentagePerStack3 = -0.25f;
+                        __result.ResistModifiedPercentagePerStack3 = -0.20f;
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "decay1f", AppliesTo.Global))
                     {
@@ -1946,7 +1948,7 @@ namespace PerkManager
                         __result.PreventedAuraCurseStackPerStack = 0;
                         __result.RemoveAuraCurse = noneAC;
                     }
-                    bool hasRust0d = IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust0bd", AppliesTo.Monsters);
+                    bool hasRust0d = IfCharacterHas(characterOfInterest, CharacterHas.Perk, "rust0d", AppliesTo.Monsters);
                     if (hasRust0d)
                     {
                         __result.IncreasedDirectDamageReceivedPerStack *= 2.25f;

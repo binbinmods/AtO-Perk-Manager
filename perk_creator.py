@@ -215,6 +215,8 @@ def create_new_perk_node_improved(perk:Perk,
     
     if (perk_node_name.startswith("binbin_perknode_forttify")):
         perkNode.Sprite = "fortify"
+    if (perk_node_name.startswith("binbin_perknode_shards")):
+        perkNode.Sprite = "dust"
     return perkNode
 
 
@@ -331,18 +333,18 @@ def create_perk_nodes_from_base(base:str):
 
     #print(perk_base.PerksConnected)
     for connected_perk in perk_base.PerksConnected:
-        id,ac_str,icon = get_perk_inputs_from_id(connected_perk)
-        perk = create_new_perk(id =id,aura_curse = ac_str,icon =icon)
+        id, ac_str, icon = get_perk_inputs_from_id(connected_perk)
+        perk = create_new_perk(id = id, aura_curse = ac_str, icon = icon)
 
         new_perk_node_name = NODE_ID_STEM+id
-        p = create_new_perk_node_improved(perk =perk,
-                            perk_node_name =new_perk_node_name,
-                            col =perk_base.Column,
-                            row =perk_base.Row,
+        p = create_new_perk_node_improved(perk = perk,
+                            perk_node_name = new_perk_node_name,
+                            col = perk_base.Column,
+                            row = perk_base.Row,
                             sprite =icon,
-                            cost =perk_base.Cost,
-                            prevent_stacking =True,
-                            category =perk_base.Type
+                            cost = perk_base.Cost,
+                            prevent_stacking = True,
+                            category = perk_base.Type
                             )
         #print(p.ID)
         save_object_to_json(p,NODE_DIR+p.ID)
@@ -367,6 +369,8 @@ def create_all_perk_jsons(tuple_array):
         id,r,c,n,category = tuple
         print(id)
         p:PerkNode = create_new_perk_base(id,r,c,n,category)
+        if p.Sprite == "leech":
+            p.Sprite = "leechperk"
         save_object_to_json(p,f"{NODE_DIR}{p.ID}")
         #print(p.PerksConnected)
         create_perk_nodes_from_base(id)
@@ -376,6 +380,9 @@ def add_perks_to_existing_node(node:PerkNode, n_perks_to_add,is_vanilla):
     connected_nodes:list[str] = node.PerksConnected
     if len(connected_nodes) == 0:
         raise ValueError("Incorrect Node type")
+    
+    if node.Sprite == "leech":
+        node.Sprite = "leechperk"
     
     last_letter = ord('a')
     for existing_node in connected_nodes:
@@ -388,6 +395,7 @@ def add_perks_to_existing_node(node:PerkNode, n_perks_to_add,is_vanilla):
         raise ValueError("Non-Vanilla implemenation not added yet")
 
     perk_base = node.ID.replace("nodeperk",'').lower()
+
     for i in range(n_perks_to_add):
         next_perk_id = PERK_ID_STEM+perk_base+chr(last_letter+i+1)
         id,ac_str,icon = get_perk_inputs_from_id(next_perk_id)

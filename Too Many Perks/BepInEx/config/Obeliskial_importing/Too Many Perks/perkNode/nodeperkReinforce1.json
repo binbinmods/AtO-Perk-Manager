@@ -10,7 +10,8 @@
         "nodeperkReinforce1a",
         "nodeperkReinforce1b",
         "nodeperkReinforce1c",
-        "binbin_perknode_reinforce1d"
+        "binbin_perknode_reinforce1d",
+        "binbin_perknode_reinforce1e"
     ],
     "Row": 4,
     "Sprite": "reinforce",

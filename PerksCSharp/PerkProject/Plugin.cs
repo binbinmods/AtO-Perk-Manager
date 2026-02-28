@@ -136,7 +136,7 @@ namespace PerkManager
 
             // Custom Text for Poison
             medsTexts[perkStem + "poison2d"] = "If Restricted Power is enabled, increases Max Charges to 300.";
-            medsTexts[perkStem + "poison2e"] = "Poison on heroes and monsters reduces Slashing resistance by 0.20% per charge.";
+            medsTexts[perkStem + "poison2e"] = "Poison on heroes and monsters reduces Slashing resistance by 0.18% per charge.";
             medsTexts[perkStem + "poison2f"] = "Poison on monsters deals Shadow Damage.";
             medsTexts[perkStem + "poison2g"] = "Once per turn, when a monster with Poison dies, transfer 50% of their Poison charges to a random monster.";
             medsTexts[perkStem + "poison2h"] = "-1 Poison. When this hero applies Poison, deal indirect Mind damage to the target equal to 20% of their Poison charges.";
@@ -145,7 +145,7 @@ namespace PerkManager
             // Custom Text for Bleed
             medsTexts[perkStem + "bleed2d"] = "If Restricted Power is enabled, increases Max Charges to 300.";
             medsTexts[perkStem + "bleed2e"] = "When this hero hits an enemy with Bleed, they heal for 25% of the target's Bleed charges.";
-            medsTexts[perkStem + "bleed2f"] = "Bleed on monsters reduces Piercing resist by 0.25% per charge.";
+            medsTexts[perkStem + "bleed2f"] = "Bleed on heroes and monsters reduces Piercing resist by 0.20% per charge.";
             medsTexts[perkStem + "bleed2g"] = "When a monster dies with Bleed, all monsters lose HP equal to 25% of the killed target's Bleed charges.";
             medsTexts["bleed2b"] = "Bleed on this hero deals damage at the end of turn but cannot be dispelled unless specified. Fury on this hero is capped at 50 charges.";
             medsTexts["bleed2c"] = "Bleed Charges +2. Bleed on enemies deals damage at the end of turn but cannot be prevented or dispelled unless specified.";
@@ -192,11 +192,11 @@ namespace PerkManager
             medsTexts[perkStem + "fury1d"] = "For all heroes, at the end of turn, spread 70% of Fury to adjacent heroes. Fury on heroes loses all charges at end of turn.";
 
             // Custom Text for Crack
-            medsTexts[perkStem + "crack2d"] = "Crack on monsters reduces Speed by 1 for every 5 charges.";
-            medsTexts[perkStem + "crack2e"] = "Crack on monsters reduces Lightning resist by 0.3% per charge.";
+            medsTexts[perkStem + "crack2d"] = "Crack on monsters reduces Speed by 0.2 per charge.";
+            medsTexts[perkStem + "crack2e"] = "Crack on monsters reduces Lightning resist by 0.2% per charge.";
             medsTexts[perkStem + "crack2f"] = "Crack on monsters increases Fire damage received by 0.5 per charge in addition to Blunt damage.[Not compatible with the Mind version.]";
             medsTexts[perkStem + "crack2g"] = "Crack on monsters increases Mind damage received by 0.5 per charge in addition to Blunt damage. [Overrides the Burn version.]";
-            medsTexts[perkStem + "crack2h"] = "Crack on monsters reduces Slashing and Piercing resist by 0.3% per charge.";
+            medsTexts[perkStem + "crack2h"] = "Crack on monsters reduces Slashing and Piercing resist by 0.15% per charge.";
             medsTexts[perkStem + "crack2i"] = "Crack on monsters increases max Vulnerable charges by 1 per 25 charges of Crack.";
 
             // Custom Text for Burn
