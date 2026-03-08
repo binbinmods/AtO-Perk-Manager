@@ -487,10 +487,10 @@ namespace PerkManager
             }
             if (theEvent == Enums.EventActivation.BeginCombat && IsLivingHero(__instance) && CharacterObjectHavePerk(__instance, "rust0g"))
             {
-                // rust0g:At the start of combat, apply 2 Rust to eveyone.";
+                // rust0g:At the start of combat, apply 2 Rust to everyone.";
                 // LogDebug("rust0g");
                 bool allHeroes = true;
-                bool allNpcs = false;
+                bool allNpcs = true;
                 ApplyAuraCurseTo("rust", 2, allHeroes, allNpcs, false, false, ref __instance, ref teamHero, ref teamNpc, "", "");
             }
 
@@ -972,11 +972,13 @@ namespace PerkManager
                 character.SetAuraTrait(character, "vitality", 2);
             }
 
-            if (CharacterObjectHavePerk(character, "leech0e"))
+            if (TeamHasPerk("leech0e"))
             {
                 // Leech explodes at the end of turn
                 // LogDebug("leech0e");
                 AtOManager.Instance.DoLeachExplosion(character);
+                // character.ConsumeEffectCharges("leech", character.GetAuraCharges("leech"));
+                character.HealAuraCurse(GetAuraCurseData("leech"));
             }
 
 

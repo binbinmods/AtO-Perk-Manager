@@ -1,0 +1,33 @@
+[config]
+schemaVersion = "1.6.5"
+
+[package]
+namespace = "Binbin"
+name = "Too_Many_Perks"
+versionNumber = "1.6.5"
+description = "Adds too many new Perks. Some are not particularly balanced. Let me know if you have issues or think something should be changed."
+websiteUrl = "https://github.com/binbinmods/AtO-Perk-Manager"
+containsNsfwContent = false
+
+[package.dependencies]
+meds-Obeliskial_Essentials = "1.5.1"
+meds-Obeliskial_Content = "1.5.6"
+
+
+[build]
+icon = "./icon.png"
+readme = "./README.md"
+outdir = "./build"
+
+[[build.copy]]
+source = "./Too Many Perks"
+target = ""
+
+
+[publish]
+repository = "https://thunderstore.io"
+communities = [ "across-the-obelisk", ]
+[publish.categories]
+across-the-obelisk = [ "mods", ]
+
+

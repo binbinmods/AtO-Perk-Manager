@@ -1,3 +1,9 @@
+# 1.6.5
+
+Rust0g now properly applies to everyone
+
+Leech0e now properly works and should consume charges
+
 # 1.6.4
 
 Update for AtO v1.7.4.2

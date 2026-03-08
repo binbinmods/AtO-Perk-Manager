@@ -267,7 +267,7 @@ namespace PerkManager
             medsTexts[perkStem + "rust0d"] = "Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.";
             medsTexts[perkStem + "rust0e"] = "Rust on enemies does not Prevent or Dispel Reinforce. Rust on enemies reduces Physical resistance by 5% per charge.";
             medsTexts[perkStem + "rust0f"] = "Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.";
-            medsTexts[perkStem + "rust0g"] = "At the start of combat, apply 2 Rust to eveyone.";
+            medsTexts[perkStem + "rust0g"] = "At the start of combat, apply 2 Rust to everyone.";
             medsTexts[perkStem + "rust0h"] = "When you apply Rust to a monster, Purge 1 (untested).";
 
 
@@ -348,7 +348,7 @@ namespace PerkManager
 
             // Custom Text for Leech
             medsTexts[perkStem + "leech0d"] = "Charges applied +1. Decrease healing done by Leech by 50%.";
-            medsTexts[perkStem + "leech0e"] = "Leech explodes at the end of turn.";
+            medsTexts[perkStem + "leech0e"] = "Leech explodes at the end of turn. Consumes all Leech charges.";
             medsTexts[perkStem + "leech0f"] = "Increase curses applied by Leech by 100%. Leech no longer reduces enemy resistances.";
             medsTexts[perkStem + "leech0g"] = "Rather than healing, when Leech explodes, all enemies lose HP equal to the target's Bleed.";
 

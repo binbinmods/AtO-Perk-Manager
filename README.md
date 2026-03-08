@@ -108,7 +108,7 @@ infuse0h: Infuse on you loses 1 less charge at the start of turn
 ### Perks for Leech
 
 leech0d: Charges applied +1. Decrease healing done by Leech by 50%.
-leech0e: Leech explodes at the end of turn.
+leech0e: Leech explodes at the end of turn. Consumes all Leech charges.
 leech0f: Increase curses applied by Leech by 100%. Leech no longer reduces enemy resistances.
 leech0g: Rather than healing, when Leech explodes, all enemies lose HP equal to the target's Bleed.
 
@@ -271,7 +271,7 @@ paralyze1c: Once per enemy per combat, when an enemy reaches 100 Spark, apply 1 
 rust0d: Rather than decreasing the effectiveness of Wet, Rust increases the effectiveness of Wet by 50%.  
 rust0e: Rust on enemies does not Prevent or Dispel Reinforce. Rust on enemies reduces Physical resistance by 5% per charge.
 rust0f: Rust on this hero does not Prevent or Dispel Reinforce. At the start of your turn, suffer 2 Rust.
-rust0g: At the start of combat, apply 2 Rust to eveyone.
+rust0g: At the start of combat, apply 2 Rust to everyone.
 rust0h: When you apply Rust to an enemy, Purge 1.
 
 ### Perks for Zeal
