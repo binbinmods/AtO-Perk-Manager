@@ -1,3 +1,11 @@
+# 1.6.6
+
+Sharp1f and Mitigate1e should now be working properly.
+
+Updated text on crack2f and crack2g to properly reflect values used.
+
+Buffed energize1d
+
 # 1.6.5
 
 Rust0g now properly applies to everyone

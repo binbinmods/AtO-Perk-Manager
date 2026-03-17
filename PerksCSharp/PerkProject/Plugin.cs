@@ -194,8 +194,8 @@ namespace PerkManager
             // Custom Text for Crack
             medsTexts[perkStem + "crack2d"] = "Crack on monsters reduces Speed by 0.2 per charge.";
             medsTexts[perkStem + "crack2e"] = "Crack on monsters reduces Lightning resist by 0.2% per charge.";
-            medsTexts[perkStem + "crack2f"] = "Crack on monsters increases Fire damage received by 0.5 per charge in addition to Blunt damage.[Not compatible with the Mind version.]";
-            medsTexts[perkStem + "crack2g"] = "Crack on monsters increases Mind damage received by 0.5 per charge in addition to Blunt damage. [Overrides the Burn version.]";
+            medsTexts[perkStem + "crack2f"] = "Crack on monsters increases Fire damage received by 0.75 per charge in addition to Blunt damage.[Not compatible with the Mind version.]";
+            medsTexts[perkStem + "crack2g"] = "Crack on monsters increases Mind damage received by 0.75 per charge in addition to Blunt damage. [Overrides the Burn version.]";
             medsTexts[perkStem + "crack2h"] = "Crack on monsters reduces Slashing and Piercing resist by 0.15% per charge.";
             medsTexts[perkStem + "crack2i"] = "Crack on monsters increases max Vulnerable charges by 1 per 25 charges of Crack.";
 
@@ -240,9 +240,9 @@ namespace PerkManager
 
             // Custom Text for Energize
             medsTexts[perkStem + "energize1a"] = "At start of your first turn, gain 1 Energize.";
-            medsTexts[perkStem + "energize1b"] = "Energize gives 2 energy per charge, but you can only have a maximum of 1 Energize.";
-            medsTexts[perkStem + "energize1c"] = "Energize increases All Damage by 1 per charge.";
-            medsTexts[perkStem + "energize1d"] = "If you end your turn with 4 or more energy, gain 1 Energize.";
+            medsTexts[perkStem + "energize1b"] = "Energize on this hero gives 2 Energy per charge, but you can only have a maximum of 1 Energize.";
+            medsTexts[perkStem + "energize1c"] = "Energize on this hero increases All Damage by 1 per charge.";
+            medsTexts[perkStem + "energize1d"] = "If you end your turn with 2 or more Energy, gain 1 Energize.";
             medsTexts[perkStem + "energize1e"] = "This hero is immune to Fatigue.";
 
 

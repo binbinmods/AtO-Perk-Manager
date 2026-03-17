@@ -1138,10 +1138,10 @@ namespace PerkManager
 
             }
 
-            // energize1b: If you end your turn with 4 or more energy, gain 1 Energize.";
+            // energize1b: If you end your turn with 2 or more energy, gain 1 Energize.";
             if (CharacterObjectHavePerk(__instance, "energize1d"))
             {
-                if (__instance.EnergyCurrent >= 4)
+                if (__instance.EnergyCurrent >= 2)
                 {
                     __instance.SetAuraTrait(__instance, "energize", 1);
                 }
@@ -1558,6 +1558,7 @@ namespace PerkManager
                     {
                         // LogDebug("mitigate1b");
                         __result.ConsumedAtTurnBegin = false;
+                        __result.ConsumedAtTurn = false;
                         __result.MaxCharges = 12;
                         __result.MaxMadnessCharges = 12;
                     }
@@ -1872,7 +1873,7 @@ namespace PerkManager
                     break;
                 case "energize":
                     // energize1b: Energize gives 2 energy per charge, but you can only have a maximum of 1 Energize.";
-                    // energize1c: Energize increases all damage 1 per charge.";
+                    // energize1c: Energize increases All Damage by 1 per charge.";
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "energize1b", AppliesTo.ThisHero))
                     {
                         __result.MaxCharges = 1;
@@ -1916,6 +1917,7 @@ namespace PerkManager
                     {
                         // LogDebug("chill2f");
                         __result.CharacterStatChargesMultiplierNeededForOne = 10;
+
                     }
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Perk, "chill2g", AppliesTo.ThisHero))
                     {
@@ -2196,19 +2198,21 @@ namespace PerkManager
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(Character), nameof(Character.GetTraitAuraCurseModifiers))]
-        public static void GetTraitAuraCurseModifiersPostfix(ref Character __instance, ref Dictionary<string, int> __result)
+        // [HarmonyPatch(typeof(Character), nameof(Character.GetTraitAuraCurseModifiers))]
+        // public static void GetTraitAuraCurseModifiersPostfix(ref Character __instance, ref Dictionary<string, int> __result)
+        // {
+        [HarmonyPatch(typeof(Character), nameof(Character.GetAuraCurseQuantityModification))]
+        public static void GetAuraCurseQuantityModificationPostfix(ref Character __instance, ref int __result, string id, Enums.CardClass CC)
         {
             // Sharp1f: For every 8 Sharp, gain +1 Bleed
 
             string perkOfInterest = perkBase + "sharp1f";
-            if (IsLivingHero(__instance) && AtOManager.Instance.CharacterHavePerk(__instance.SubclassName, perkOfInterest))
+            if (IsLivingHero(__instance) && AtOManager.Instance.CharacterHavePerk(__instance.SubclassName.ToLower(), perkOfInterest) && id == "bleed")
             {
                 LogDebug($"Executing Perk {perkOfInterest}");
                 int nSharp = __instance.EffectCharges("sharp");
-                int bonusBleedCharges = FloorToInt(nSharp * 0.125f);
-
-                if (bonusBleedCharges != 0) { __result["bleed"] = bonusBleedCharges; }
+                int bonusBleedCharges = nSharp / 8;
+                __result += bonusBleedCharges;
             }
 
         }
