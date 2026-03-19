@@ -1,3 +1,7 @@
+# 1.6.7
+
+Fixed bug with Thorns1f not working
+
 # 1.6.6
 
 Sharp1f and Mitigate1e should now be working properly.

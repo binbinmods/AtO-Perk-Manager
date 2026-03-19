@@ -1,10 +1,10 @@
 [config]
-schemaVersion = "1.6.6"
+schemaVersion = "1.6.7"
 
 [package]
 namespace = "Binbin"
 name = "Too_Many_Perks"
-versionNumber = "1.6.6"
+versionNumber = "1.6.7"
 description = "Adds too many new Perks. Some are not particularly balanced. Let me know if you have issues or think something should be changed."
 websiteUrl = "https://github.com/binbinmods/AtO-Perk-Manager"
 containsNsfwContent = false
