@@ -1,3 +1,7 @@
+# 1.6.8
+
+Update for AtO v1.7.5
+
 # 1.6.7
 
 Fixed bug with Thorns1f not working
